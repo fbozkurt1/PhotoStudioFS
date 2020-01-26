@@ -1,0 +1,96 @@
+﻿@model IEnumerable<Appointment>
+
+@{
+    ViewData["Title"] = "Index";
+    ViewData["IsDataTableUsed"] = true;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- row -->
+<div class="row mt-4">
+    <div class="col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Randevularınız</div>
+
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="dataTable" class="table table-striped table-bordered text-nowrap w-100">
+                        <thead>
+                            <tr>
+                                <th class="wd-15p">Çekim Türü</th>
+                                <th class="wd-20p">Çekim Tarihi</th>
+                                <th class="wd-15p">Randevu Onayı</th>
+                                <th class="wd-15p">Çekim Durumu</th>
+                                <th class="wd-25p">İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var appointment in Model)
+                            {
+                                <tr>
+                                    <td>@appointment.Type</td>
+                                    <td>
+                                        @appointment.AppointmentDateStart.ToShortDateString()
+                                        @appointment.AppointmentDateStart.ToString("HH:mm")-@appointment.AppointmentDateEnd.ToString("HH:mm")
+                                    </td>
+
+                                    @if (appointment.IsApproved == 0)
+                                    {
+                                        <td><span class="badge badge-warning">Onay Bekliyor</span></td>
+                                    }
+                                    else if (appointment.IsApproved == 1)
+                                    {
+                                        <td><span class="badge badge-info">Onaylandı</span></td>
+                                    }
+                                    else
+                                    {
+                                        <td><span class="badge badge-success">Reddedildi</span></td>
+                                    }
+
+                                    @if (appointment.IsApproved == 1)
+                                    {
+                                        @if (appointment.State == 0)
+                                        {
+                                            <td><span class="badge badge-warning">Çekim Bekliyor</span></td>
+                                        }
+                                        else if (appointment.State == 1)
+                                        {
+                                            <td><span class="badge badge-info">Fotoğraflar Hazırlanıyor</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td><span class="badge badge-success">Fotoğraflar Yüklendi</span></td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    <td>
+                                        @if (appointment.IsApproved == 1 && appointment.State == 2)
+                                        {
+                                            <a class="btn btn-sm btn-info"
+                                               asp-controller="CustomerSection"
+                                               asp-action="GetPhotos"
+                                               asp-route-appointmentId="@appointment.Id"
+                                               asp-route-customerId="@appointment.Customer.Id">
+                                                Fotoğrafları Gör & İndir
+                                            </a>
+                                        }
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- table-wrapper -->
+        </div>
+        <!-- section-wrapper -->
+    </div>
+</div>
+<!-- row end -->

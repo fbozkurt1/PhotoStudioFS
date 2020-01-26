@@ -1,0 +1,35 @@
+﻿<!--app-header-->
+
+
+<div class="app-header header d-flex">
+    <div class="container-fluid">
+        <div class="d-flex">
+            <a class="header-brand" href="index.html">
+                <img src="~/Client/images/logo.png" class="header-brand-img main-logo" alt="Sinem Kobaner">
+                @*<img src="~/Admin/images/brand/icon.png" class="header-brand-img icon-logo" alt="Hogo logo">*@
+            </a><!-- logo-->
+            <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-toggle="sidebar" href="#"></a>
+            <a href="#" data-toggle="search" class="nav-link nav-link  navsearch"><i class="fa fa-search"></i></a><!-- search icon -->
+
+            <div class="d-flex order-lg-2 ml-auto header-rightmenu">
+                <div class="dropdown">
+                    <a class="nav-link icon full-screen-link" id="fullscreen-button">
+                        <i class="fe fe-maximize-2"></i>
+                    </a>
+                </div><!-- full-screen -->
+
+                <div class="dropdown header-user">
+                    <a class="nav-link leading-none siderbar-link" data-toggle="sidebar-right" data-target=".sidebar-right">
+                        <span class="mr-3 d-none d-lg-block ">
+                            <span class="text-gray-white"><span class="ml-2">@ViewData["Username"]</span></span>
+                        </span>
+                        <span class="avatar avatar-md brround"><img src="~/Admin/images/users/female/33.png" alt="Profile-img" class="avatar avatar-md brround"></span>
+                    </a>
+
+                </div><!-- profile -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--app-header end-->

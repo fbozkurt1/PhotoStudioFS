@@ -1,0 +1,134 @@
+﻿@model PhotoStudioFS.Models.User
+
+@{
+    ViewData["Title"] = "Sinem Kobaner / Müşteri Detayları";
+    ViewData["PageName"] = "Müşteri Detayları";
+    ViewData["IsDataTableUsed"] = true;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Müşteri Bilgileri</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2">
+                <label class="text-left">Adı ve Soyadı</label>
+            </div>
+            :
+            <div class="col-md-6">
+                <label class="text-left font-weight-bold">@Model.FullName</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label class="text-left">Telefon Numarası</label>
+            </div>
+            :
+            <div class="col-md-6">
+                <label class="text-left font-weight-bold">@Model.PhoneNumber</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label class="text-left">Email Adresi</label>
+            </div>
+            :
+            <div class="col-md-6">
+                <label class="text-left font-weight-bold">@Model.Email</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label class="text-left">Kayıt Tarihi</label>
+            </div>
+            :
+            <div class="col-md-6">
+                <label class="text-left font-weight-bold">@Model.CreatedAt.ToShortDateString()</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Müşteri Randevu Bilgileri</h3>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="dataTable" class="table table-striped table-bordered text-nowrap w-100">
+                <thead class="text-center font-weight-bold">
+                    <tr>
+                        <th class="wd-15p">Türü</th>
+                        <th class="wd-15p">Tarih</th>
+                        <th class="wd-15p">Saat</th>
+                        <th class="wd-20p">Çekim Durumu</th>
+                        <th class="wd-20p">Çekim Ücreti</th>
+                        <th class="wd-25p">İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var appointment in ViewBag.Appointments)
+                    {
+
+                        <tr>
+                            <td>@appointment.Type</td>
+                            <td>@appointment.AppointmentDateStart.ToShortDateString()</td>
+                            <td>@appointment.AppointmentDateStart.ToString("HH:mm") - @appointment.AppointmentDateEnd.ToString("HH:mm")</td>
+
+                            @if (appointment.State == 0)
+                            {
+                                <td><span class="badge badge-warning">Çekim Bekliyor</span></td>
+                            }
+                            else if (appointment.State == 1)
+                            {
+                                <td><span class="badge badge-info">Fotoğraflar Hazırlanıyor</span></td>
+                            }
+                            else
+                            {
+                                <td><span class="badge badge-success">Fotoğraflar Yüklendi</span></td>
+                            }
+                            <td>@appointment.Price ₺</td>
+                            <td>
+                                <a class="btn btn-sm btn-primary" asp-controller="Appointment" asp-action="Edit" asp-route-id="@appointment.Id">
+                                    Düzenle
+                                </a>
+                                |
+                                <a class="btn btn-sm btn-info"
+                                   asp-controller="Photo"
+                                   asp-action="Index"
+                                   asp-route-appointmentId="@appointment.Id"
+                                   asp-route-customerId="@Model.Id">
+                                    Fotoğraf Yükle
+                                </a>
+                                |
+                                <button class="btn btn-sm btn-danger"
+                                        onclick="deleteAppointment(this)"
+                                        data-appDate="@appointment.AppointmentDateStart.ToShortDateString()"
+                                        data-appDateHour="@appointment.AppointmentDateStart.ToString("HH:mm") - @appointment.AppointmentDateEnd.ToString("HH:mm")"
+                                        data-fullName="@Model.FullName"
+                                        data-email="@Model.Email"
+                                        data-id="@appointment.Id">
+                                    Sil
+                                </button>
+                                @*<a class="btn btn-sm btn-danger" href="@Url.Action("Delete","Appointment",new {id=appointment.Id, customerEmail=Model.Email })">Sil</a>*@
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script src="~/Admin/js/custom/customer.js"></script>
+
+}

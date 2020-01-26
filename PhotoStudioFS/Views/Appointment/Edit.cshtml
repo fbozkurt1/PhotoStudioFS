@@ -1,0 +1,105 @@
+﻿@model PhotoStudioFS.Models.Appointment
+
+@{
+    ViewData["Title"] = "Sinem Kobaner";
+    ViewData["PageName"] = "Randevu Talebi Düzenle";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["IsDataTableUsed"] = false;
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Randevu Talebi Düzenle</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-10">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="ScheduleId" />
+                    <input type="hidden" name="redirectTo" value="@ViewData["RedirectTo"]" />
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Phone" class="control-label"></label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Type" class="control-label"></label>
+                        <input asp-for="Type" class="form-control" />
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Message" class="control-label"></label>
+                        <textarea asp-for="Message" class="form-control">
+                            
+                        </textarea>
+                        <span asp-validation-for="Message" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AppointmentDateStart" class="control-label"></label>
+                        <input asp-for="AppointmentDateStart" class="form-control" />
+                        <span asp-validation-for="AppointmentDateStart" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AppointmentDateEnd" class="control-label"></label>
+                        <input asp-for="AppointmentDateEnd" class="form-control" />
+                        <span asp-validation-for="AppointmentDateEnd" class="text-danger"></span>
+                    </div>
+                    <div hidden class="form-group">
+                        <label asp-for="CreatedAt" class="control-label"></label>
+                        <input asp-for="CreatedAt" class="form-control" />
+                        <span asp-validation-for="CreatedAt" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control float" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PricePaid" class="control-label"></label>
+                        <input asp-for="PricePaid" class="form-control float" />
+                        <span asp-validation-for="PricePaid" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="State" class="control-label"></label>
+                        <select class="form-control" asp-for="State">
+                            <option value="0">Çekim Bekliyor</option>
+                            <option value="1">Çekim Yapıldı ( Fotoğraflar Hazırlanıyor )</option>
+                            <option value="2">Tamamlandı ( Fotoğraflar Yüklendi )</option>
+                        </select>
+                        <span asp-validation-for="IsApproved" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IsApproved" class="control-label"></label>
+                        <select class="form-control" asp-for="IsApproved">
+                            <option value="0">Onay Bekliyor</option>
+                            <option value="1">Onayla</option>
+                            <option value="2">Reddet</option>
+                        </select>
+                        <span asp-validation-for="IsApproved" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Kaydet" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+}

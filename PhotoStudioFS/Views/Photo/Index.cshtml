@@ -1,0 +1,153 @@
+﻿
+@{
+    ViewData["Title"] = "Sinem Kobaner / Fotoğraf Yükleme";
+    ViewData["PageName"] = "Fotoğraf Yükleme";
+    ViewData["IsDataTableUsed"] = false;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section Styles{
+    <link href="~/FileUpload/file-upload-with-preview.min.css" rel="stylesheet" />
+}
+
+
+<div class="row mt-4">
+    <div class="col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Müşteri ve Randevu Bilgileri</div>
+                <div class="card-options">
+                    @* ekstra buttonlar*@
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input hidden disabled type="text" id="customerId" name="customerId" value="@ViewBag.Customer.Id" />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="text-left">Adı ve Soyadı</label>
+                            </div>
+                            :
+                            <div class="col-md-6">
+                                <label class="text-left font-weight-bold">@ViewBag.Customer.FullName</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="text-left">Telefon Numarası</label>
+                            </div>
+                            :
+                            <div class="col-md-6">
+                                <label class="text-left font-weight-bold">@ViewBag.Customer.PhoneNumber</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="text-left">Email Adresi</label>
+                            </div>
+                            :
+                            <div class="col-md-6">
+                                <label class="text-left font-weight-bold">@ViewBag.Customer.Email</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <input hidden disabled type="text" id="appointmentId" name="appointmentId" value="@ViewBag.Appointment.Id" />
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="text-left">Çekim Türü</label>
+                            </div>
+                            :
+                            <div class="col-md-6">
+                                <label class="text-left font-weight-bold">@ViewBag.Appointment.Type</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="text-left">Randevu Tarihi</label>
+                            </div>
+                            :
+                            <div class="col-md-6">
+                                <label class="text-left font-weight-bold">
+                                    @ViewBag.Appointment.AppointmentDateStart.ToShortDateString()
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="text-left">Çekim Saati</label>
+                            </div>
+                            :
+                            <div class="col-md-6">
+                                <label class="text-left font-weight-bold">
+                                    @ViewBag.Appointment.AppointmentDateStart.ToString("HH:ss") - @ViewBag.Appointment.AppointmentDateEnd.ToString("HH:ss")
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- table-wrapper -->
+        </div>
+        <!-- section-wrapper -->
+    </div>
+</div>
+<!-- Customer and Appointment Info End-->
+
+
+<div class="row mt-4 text-center">
+    <div class="col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Fotoğraf Yükleme</div>
+                <div class="card-options">
+                    @* ekstra buttonlar*@
+                    <a class="btn btn-primary" id="inputUploadPhotos">
+                        <i class="fa fa-cloud-upload fa-2x"></i>
+                        Kaydet
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="loader-upload">
+                    
+                    <label id="current-progress-count" class="font-weight-bold" style="color:black; font-size:x-large;"></label>
+                    <br />
+
+                    <label id="current-progress" class="font-weight-bold"></label>
+
+                    <img src="~/Admin/images/icons/loader.svg" alt="loader">
+                </div>
+                <div class="custom-file-container" data-upload-id="divUploadPhotos">
+                    <label class="pull-right" style="font-size:medium;">
+                        Fotoğrafları Temizle
+                        <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Fotoğrafları Temizle">
+                            <i class="fa fa-times fa-2x"></i>
+                        </a>
+                    </label>
+                    <label class="custom-file-container__custom-file">
+                        <input type="file" class="custom-file-container__custom-file__custom-file-input"
+                               accept="*" multiple aria-label="Fotoğraf Seç">
+                        <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
+                        <span class="custom-file-container__custom-file__custom-file-control"></span>
+                    </label>
+                    <div class="custom-file-container__image-preview">
+
+                    </div>
+                </div>
+            </div>
+            <!-- table-wrapper -->
+        </div>
+        <!-- section-wrapper -->
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script src="~/FileUpload/file-upload-with-preview.min.js"></script>
+    <script src="~/Admin/js/custom/photo.js"></script>
+
+}

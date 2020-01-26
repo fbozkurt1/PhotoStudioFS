@@ -1,0 +1,211 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using PhotoStudioFS.Models
+@using System.Security.Claims
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@{
+    var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+    var user = UserManager.FindByIdAsync(currentUserId).Result;
+    var userRole = await UserManager.GetRolesAsync(user);
+    ViewData["Username"] = user.FullName;
+    ViewData["UserRole"] = userRole[0];
+    ViewDataDictionary data = new ViewDataDictionary(ViewData);
+
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="Hogo– Creative Admin Multipurpose Responsive Bootstrap4 Dashboard HTML Template" name="description">
+    <meta content="Spruko Technologies Private Limited" name="author">
+    <meta name="keywords" content="html admin template, bootstrap admin template premium, premium responsive admin template, admin dashboard template bootstrap, bootstrap simple admin template premium, web admin template, bootstrap admin template, premium admin template html5, best bootstrap admin template, premium admin panel template, admin template" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="~/Client/images/logo.ico" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Client/images/logo.ico" />
+
+    <!-- Title -->
+    <title>@ViewBag.Title</title>
+    <!--Bootstrap.min css-->
+    <link rel="stylesheet" href="~/Admin/plugins/bootstrap/css/bootstrap.min.css">
+
+    <!-- Dashboard css -->
+    <link href="~/Admin/css/style.css" rel="stylesheet" />
+
+    <!-- Custom scroll bar css-->
+    <link href="~/Admin/plugins/scroll-bar/jquery.mCustomScrollbar.css" rel="stylesheet" />
+
+    <!-- Sidemenu css -->
+    <link href="~/Admin/plugins/toggle-sidebar/full-sidemenu.css" rel="stylesheet" />
+
+    <!--Daterangepicker css-->
+    <link href="~/Admin/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+
+    <!--Select2 css -->
+    <link href="~/Admin/plugins/select2/select2.min.css" rel="stylesheet" />
+
+    <!-- Time picker css-->
+    <link href="~/Admin/plugins/time-picker/jquery.timepicker.min.css" rel="stylesheet" />
+
+    <!-- Date Picker css-->
+    <link href="~/Admin/plugins/date-picker/spectrum.css" rel="stylesheet" />
+
+    <!-- Sidebar Accordions css -->
+    <link href="~/Admin/plugins/accordion1/css/easy-responsive-tabs.css" rel="stylesheet">
+
+    <!-- Rightsidebar css -->
+    <link href="~/Admin/plugins/sidebar/sidebar.css" rel="stylesheet">
+
+    <!---Font icons css-->
+    <link href="~/Admin/plugins/iconfonts/plugin.css" rel="stylesheet" />
+    <link href="~/Admin/plugins/iconfonts/icons.css" rel="stylesheet" />
+    <link href="~/Admin/fonts/fonts/font-awesome.min.css" rel="stylesheet">
+
+    <!-- File Uploads css-->
+    <link href="~/Admin/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
+
+    <!--Mutipleselect css-->
+    <link rel="stylesheet" href="~/Admin/plugins/multipleselect/multiple-select.css">
+
+    <!-- Owl Theme css-->
+    <link href="~/Admin/plugins/owl-carousel/owl.carousel.css" rel="stylesheet">
+
+
+    @if ((bool)ViewData["IsDataTableUsed"])
+    {
+        <!-- Data table css -->
+        <link href="~/Admin/plugins/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/Admin/plugins/datatable/responsivebootstrap4.min.css" rel="stylesheet" />
+    }
+
+    <!---Sweetalert Css-->
+    <link href="~/Admin/plugins/sweet-alert/jquery.sweet-modal.min.css" rel="stylesheet" />
+    <link href="~/Admin/plugins/sweet-alert/sweetalert.css" rel="stylesheet" />
+
+    @RenderSection("Styles", false)
+
+
+</head>
+<body class="app sidebar-mini rtl">
+    <!--Global-Loader-->
+    <div id="global-loader">
+        <img src="~/Admin/images/icons/loader.svg" alt="loader">
+    </div>
+
+    <div class="page">
+        <div class="page-main">
+
+            @await Html.PartialAsync("_HeaderAdmin", data)
+            @await Html.PartialAsync("_SidebarAdmin", data)
+            <div class="app-content  my-3 my-md-5 toggle-content">
+                <div class="side-app">
+                    @await Html.PartialAsync("_BreadcrumbAdmin")
+
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to top -->
+    <a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+    <!-- Jquery js-->
+    <script src="~/Admin/js/vendors/jquery-3.2.1.min.js"></script>
+
+    <!--Bootstrap.min js-->
+    <script src="~/Admin/plugins/bootstrap/popper.min.js"></script>
+    <script src="~/Admin/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--Jquery Sparkline js-->
+    <script src="~/Admin/js/vendors/jquery.sparkline.min.js"></script>
+
+    <!-- Chart Circle js-->
+    <script src="~/Admin/js/vendors/circle-progress.min.js"></script>
+
+    <!-- Star Rating js-->
+    <script src="~/Admin/plugins/rating/jquery.rating-stars.js"></script>
+
+    <!--Moment js-->
+    <script src="~/Admin/plugins/moment/moment.min.js"></script>
+
+    <!-- Daterangepicker js-->
+    <script src="~/Admin/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!--Side-menu js-->
+    <script src="~/Admin/plugins/toggle-sidebar/sidemenu.js"></script>
+
+    <!-- Sidebar Accordions js -->
+    <script src="~/Admin/plugins/accordion1/js/easyResponsiveTabs.js"></script>
+
+    <!-- Custom scroll bar js-->
+    <script src="~/Admin/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <!--Owl Carousel js -->
+    <script src="~/Admin/plugins/owl-carousel/owl.carousel.js"></script>
+    <script src="~/Admin/plugins/owl-carousel/owl-main.js"></script>
+
+    <!-- Rightsidebar js -->
+    <script src="~/Admin/plugins/sidebar/sidebar.js"></script>
+
+    <!-- Charts js-->
+    @*<script src="~/Admin/plugins/chart/chart.bundle.js"></script>
+        <script src="~/Admin/plugins/chart/utils.js"></script>*@
+
+    <!-- File uploads js -->
+    <script src="~/Admin/plugins/fileuploads/js/dropify.js"></script>
+    <script src="~/Admin/plugins/fileuploads/js/dropify-demo.js"></script>
+
+    <!--Select2 js -->
+    <script src="~/Admin/plugins/select2/select2.full.min.js"></script>
+    <script src="~/Admin/js/select2.js"></script>
+
+    <!-- Timepicker js -->
+    <script src="~/Admin/plugins/time-picker/jquery.timepicker.min.js"></script>
+    <script src="~/Admin/plugins/time-picker/toggles.min.js"></script>
+
+    <!-- Datepicker js -->
+    <script src="~/Admin/plugins/date-picker/spectrum.js"></script>
+    <script src="~/Admin/plugins/date-picker/jquery-ui.js"></script>
+    <script src="~/Admin/plugins/input-mask/jquery.maskedinput.js"></script>
+
+    <!--MutipleSelect js-->
+    <script src="~/Admin/plugins/multipleselect/multiple-select.js"></script>
+    <script src="~/Admin/plugins/multipleselect/multi-select.js"></script>
+
+    <!--Morris  Charts js-->
+    @*<script src="~/Admin/plugins/morris/raphael-min.js"></script>
+            <script src="~/Admin/plugins/morris/morris.js"></script>
+
+        <!-- Custom-charts js-->
+        @*<script src="~/Admin/js/index1.js"></script>*@
+
+    @if ((bool)ViewData["IsDataTableUsed"])
+    {
+        <script src="~/Admin/plugins/datatable/jquery.dataTables.min.js"></script>
+        <script src="~/Admin/plugins/datatable/dataTables.bootstrap4.min.js"></script>
+        <script src="~/Admin/plugins/datatable/datatable.js"></script>
+        <script src="~/Admin/plugins/datatable/dataTables.responsive.min.js"></script>
+    }
+
+
+    <!-- Sweet alert js-->
+    <script src="~/Admin/plugins/sweet-alert/jquery.sweet-modal.min.js"></script>
+    <script src="~/Admin/plugins/sweet-alert/sweetalert.min.js"></script>
+    <script src="~/Admin/js/sweet-alert.js"></script>
+
+    <script src="~/Admin/js/Admin.js"></script>
+    <script src="~/Common/Axios/axios.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+
+
+    <script src="~/Admin/js/custom.js"></script>
+    <script src="~/Common/common.js"></script>
+</body>
+</html>

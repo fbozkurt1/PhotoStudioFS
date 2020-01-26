@@ -1,0 +1,239 @@
+﻿@model IEnumerable<Contact>
+@{
+    ViewData["Title"] = "Sinem Kobaner / İletişim İstekleri";
+    ViewData["PageName"] = "İletişim İstekleri";
+    ViewData["IsDataTableUsed"] = true;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container">
+    <div class="card bg-transparent">
+        <div class="card-body p-6">
+            <div class="panel panel-primary">
+                <div class=" tab-menu-heading">
+                    <div class="tabs-menu1 " style="font-weight:600;">
+                        <!-- Tabs -->
+                        <ul class="nav panel-tabs">
+                            <li class="">
+                                <a href="#tabUnreadContactRequests" class="active" data-toggle="tab">Okunmayanlar</a>
+                            </li>
+                            <li>
+                                <a href="#tabReadContactRequests" data-toggle="tab">Okunanlar</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body tabs-menu-body">
+                    <div class="tab-content">
+                        <div class="tab-pane active " id="tabUnreadContactRequests">
+                            @if (!Model.Any())
+                            {
+                                <h3>
+                                    Hiç <b>Okunmamış İletişim İsteğiniz</b> yok!
+                                </h3>
+                            }
+                            @foreach (var contact in Model)
+                            {
+                                string switchSpanId = "switchSpan" + @contact.Id;
+                                string switchInputId = "switchInput" + @contact.Id;
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">
+                                                    @contact.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                                                </h3>
+                                                <div class="card-options d-none d-sm-block">
+                                                    <label class="custom-switch m-0">
+
+                                                        <span id="@switchSpanId" class="mr-1">Okunmadı</span>
+                                                        <input id="@switchInputId"
+                                                               data-id="@contact.Id"
+                                                               onchange="updateIsReadState(this)"
+                                                               type="checkbox" value="0" class="custom-switch-input">
+                                                        <span class="custom-switch-indicator"></span>
+
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <span>@contact.Message</span>
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="row">
+                                                    <div class="col-md-3 text-left">
+                                                        <label class="form-control-label">Adı : </label>
+                                                        <span class="font-weight-semibold">@contact.Name</span>
+                                                    </div>
+                                                    |
+                                                    <div class="col-md-3 text-left">
+                                                        <label class="form-control-label">Telefon : </label>
+                                                        <span class="font-weight-semibold">@contact.Phone</span>
+                                                    </div>
+                                                    |
+                                                    <div class="col-md-4 text-left">
+                                                        <label class="form-control-label">Email : </label>
+                                                        <span class="font-weight-semibold">@contact.Email</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="tab-pane " id="tabReadContactRequests">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Okunmuş İletişim İstekleri</div>
+                                </div>
+                                <div class="card-body">
+                              
+                                            <div class="table-responsive">
+                                                <table id="dataTable" class="table table-striped table-bordered text-nowrap w-100">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="wd-15p">Adı-Soyadı</th>
+                                                            <th class="wd-15p">Email</th>
+                                                            <th class="wd-15p">Telefon</th>
+                                                            <th class="wd-15p">Tarih</th>
+                                                            <th class="wd-20p">Durum</th>
+                                                            <th class="wd-25p">İşlem</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        @foreach (var contact in ViewBag.ReadContactRequests)
+                                                        {
+
+                                                            <tr>
+                                                                <td>@contact.Name</td>
+                                                                <td>@contact.Email</td>
+                                                                <td>@contact.Phone</td>
+                                                                <td>@contact.CreatedAt.ToShortDateString()</td>
+                                                                <td>@contact.Subject</td>
+                                                                <td>
+                                                                    <button class="btn btn-sm btn-info"
+                                                                            onclick="showContactRequestDetail(this)"
+                                                                            data-name="@contact.Name"
+                                                                            data-email="@contact.Email"
+                                                                            data-date="@contact.CreatedAt.ToShortDateString()"
+                                                                            data-subject="@contact.Subject"
+                                                                            data-message="@contact.Message"
+                                                                            data-phone="@contact.Phone"
+                                                                            data-id="@contact.Id">
+                                                                        Mesajı Gör
+                                                                    </button> |
+                                                                    <button class="btn btn-sm btn-danger"
+                                                                            onclick="deleteContactRequest(this)"
+                                                                            data-name="@contact.Name"
+                                                                            data-date="@contact.CreatedAt.ToShortDateString()"
+                                                                            data-id="@contact.Id">
+                                                                        Sil
+                                                                    </button>
+                                                                </td>
+
+                                                            </tr>
+                                                        }
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h3 class="modal-title" id="eventModalTitle">İletişim İsteği</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h4 class="font-weight-bold" id="contactModalSubtitle"></h4>
+
+                    <div class="row mt-2">
+                        <div class="col-md-10">
+                            <label for="contactModalPhone" class="form-control-label">Telefon</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-phone tx-16 lh-0 op-6"></i>
+                                    </div>
+                                </div><!-- input-group-prepend -->
+
+                                <input disabled class="form-control" id="contactModalPhone" type="text">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-10">
+                            <label for="contactModalEmail" class="form-control-label">Email</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-envelope tx-16 lh-0 op-6"></i>
+                                    </div>
+                                </div><!-- input-group-prepend -->
+
+                                <input disabled class="form-control" id="contactModalEmail" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-md-10">
+                            <label for="contactModalSubject" class="form-control-label">Konu</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-book tx-16 lh-0 op-6"></i>
+                                    </div>
+                                </div><!-- input-group-prepend -->
+
+                                <input disabled class="form-control" id="contactModalSubject" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-md-10">
+                            <label for="contactModalMessage" class="form-control-label">Mesaj</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-info tx-16 lh-0 op-6"></i>
+                                    </div>
+                                </div><!-- input-group-prepend -->
+
+                                <textarea disabled cols="30" rows="7" class="form-control" id="contactModalMessage" type="text">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal End-->
+
+</div>
+
+@section Scripts{
+    <script src="~/Admin/js/custom/contact.js"></script>
+}

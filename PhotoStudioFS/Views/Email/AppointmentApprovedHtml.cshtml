@@ -1,0 +1,20 @@
+﻿@using PhotoStudioFS.Models.ViewModels
+@model EmailButtonLinkViewModel
+
+@{
+    Layout = "~/Views/Email/_EmailLayoutHtml.cshtml";
+    ViewContext.ViewData["EmailTitle"] = "Fotoğraf İşleri";
+}
+
+<p>
+    Sayın <b>@Model.Info.FullName</b> , <br />
+    <b>@Model.Info.Date.ToShortDateString()</b> tarihli randevu talebiniz onaylanmıştır.
+    <br />
+    Hesabınıza giriş yaparak randevunuzun durumunu kontrol edebilirsiniz.
+</p>
+
+@await Html.PartialAsync("Email/_EmailButton", new EmailButtonViewModel("Hesabıma Giriş Yap", Model.ButtonLink))
+
+<p>
+    Fotoğraf İşleri - Sinem Kobaner
+</p>

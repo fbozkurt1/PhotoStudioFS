@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewData["Title"] = "Randevu Takvimi Oluştur";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["IsDataTableUsed"] = false;
+    ViewData["PageName"] = "Randevu Takvimi Oluştur";
+}
+@section Styles{
+
+    <link href='~/Fullcalendar/core/main.css' rel='stylesheet' />
+    <link href='~/Fullcalendar/daygrid/main.css' rel='stylesheet' />
+    <link href='~/Fullcalendar/timegrid/main.css' rel='stylesheet' />
+
+}
+
+<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="eventModalTitle">Randevu Saati Oluştur</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5 id="eventModalDateInfo"></h5><br />
+                <input hidden type="text" id="eventModalDate" value="" />
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group ">
+                            <label class="form-label">Çekim Türü</label>
+                            <select id="photoShootType" class="form-control select2 custom-select" style="width:100%;" data-placeholder="Çekim Türü Seçiniz">
+                                <option disabled selected value="0">
+                                    Çekim Türü Seçiniz
+                                </option>
+                                <option value="1">Doğum Çekimi</option>
+                                <option value="2">Düğün Çekimi</option>
+                                <option value="3">Dış Çekim</option>
+                                <option value="4">İç Çekim</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <label for="startTime" class="form-control-label">Başlangıç Saati</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-clock-o tx-16 lh-0 op-6"></i>
+                                </div>
+                            </div><!-- input-group-prepend -->
+
+                            <input class="form-control" id="startTime" placeholder="Başlangıç Saatini Seçiniz" type="text">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row mt-2 mb-2">
+                    <div class="col-md-8">
+                        <label for="endTime" class="form-control-label">Bitiş Saati</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-clock-o tx-16 lh-0 op-6"></i>
+                                </div>
+                            </div><!-- input-group-prepend -->
+                            <input class="form-control" id="endTime" placeholder="Bitiş Saatini Seçiniz" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="button" onclick="addSchedule()" class="btn btn-primary" data-save="modal">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0 card-title">Randevu Takvimi Oluştur</h3>
+            </div>
+            <div class="card-body">
+                <div id='scheduleFullcalendar'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="~/Fullcalendar/core/main.js"></script>
+    <script src='~/Fullcalendar/daygrid/main.js'></script>
+    <script src='~/Fullcalendar/timegrid/main.js'></script>
+    <script src='~/Fullcalendar/interaction/main.js'></script>
+    <script src="~/Fullcalendar/core/locales/tr.js"></script>
+    <script src="~/Admin/js/custom/schedule.js"></script>
+
+
+}

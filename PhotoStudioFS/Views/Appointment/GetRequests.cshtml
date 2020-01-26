@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Appointment>
+@{
+    ViewData["Title"] = "Randevu Talepleri";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["IsDataTableUsed"] = false;
+    ViewData["PageName"] = "Randevu Talepleri";
+}
+
+    <div class="container">
+        @if (!Model.Any())
+        {
+            <h3>
+                Henüz <b>Randevu Talebi</b> yok!
+            </h3>
+        }
+        @foreach (var appointment in Model)
+        {
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                @appointment.AppointmentDateStart.ToString("dd/MM/yyyy HH:mm") &nbsp; - &nbsp; @appointment.AppointmentDateEnd.ToString("dd/MM/yyyy HH:mm")
+                            </h3>
+                            <div class="card-options d-none d-sm-block">
+                                <a class="btn btn-primary btn-sm"
+                                   asp-controller="Appointment" asp-action="Edit" asp-route-id="@appointment.Id">
+                                    Onayla
+                                </a>
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <span>@appointment.Message</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-md-3 text-left">
+                                    <label class="form-control-label">Adı : </label>
+                                    <span class="font-weight-semibold">@appointment.Name</span>
+                                </div>
+                                |
+                                <div class="col-md-3 text-left">
+                                    <label class="form-control-label">Telefon : </label>
+                                    <span class="font-weight-semibold">@appointment.Phone</span>
+                                </div>
+                                |
+                                <div class="col-md-4 text-left">
+                                    <label class="form-control-label">Email : </label>
+                                    <span class="font-weight-semibold">@appointment.Email</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>

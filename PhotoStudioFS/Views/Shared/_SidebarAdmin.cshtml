@@ -1,0 +1,120 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using PhotoStudioFS.Models
+
+@inject SignInManager<User> SignInManager
+<!-- Sidebar menu-->
+<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+<aside class="app-sidebar toggle-sidebar">
+    <div class="app-sidebar__user pb-0">
+        @*<div class="user-body">
+                <span class="avatar avatar-xxl brround text-center cover-image" data-image-src="~/Admin/images/users/male/11.jpg"></span>
+            </div>*@
+        <div class="user-info">
+            <a href="#" class="ml-2">
+                <span class="text-dark app-sidebar__user-name font-weight-semibold">@ViewData["Username"]</span><br>
+                <span class="text-gray-dark app-sidebar__user-name text-sm">@ViewData["UserRole"]</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="tab-menu-heading siderbar-tabs border-0  p-0">
+        <div class="tabs-menu ">
+            <!-- Tabs -->
+            <ul class="nav panel-tabs">
+                <li><a asp-controller="Admin" asp-action="Index" class="active"><i class="fa fa-home fs-17"></i></a></li>
+                <li>
+                    <a asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/Account/Login" title="Çıkış Yap">
+                        <i class="fa fa-power-off fs-17"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="panel-body tabs-menu-body side-tab-body p-0 border-0 ">
+        <div class="tab-content">
+            <div class="tab-pane active " id="index1">
+                <ul class="side-menu toggle-menu">
+                    @if (ViewData["UserRole"].Equals("Admin") || ViewData["UserRole"].Equals("Employee"))
+                    {
+                        @if (ViewData["UserRole"].Equals("Admin"))
+                        {
+                            <li>
+                                <a class="side-menu__item" asp-controller="Employee" asp-action="Index">
+                                    <i class="side-menu__icon typcn typcn-arrow-move-outline"></i>
+                                    <span class="side-menu__label">Personel İşlemleri</span>
+                                </a>
+                            </li>
+                        }
+                        <li>
+                            <a class="side-menu__item" asp-controller="Customer" asp-action="Index">
+                                <i class="side-menu__icon typcn typcn-location-outline"></i>
+                                <span class="side-menu__label">Müşteri İşlemleri</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="side-menu__item" asp-controller="Admin" asp-action="Index">
+                                <i class="side-menu__icon typcn typcn-location-outline"></i>
+                                <span class="side-menu__label">Bekleyen Çekimler</span>
+                            </a>
+                        </li>
+                        <li class="slide">
+                            <a class="side-menu__item" data-toggle="slide" href="#">
+                                <i class="side-menu__icon typcn typcn-device-desktop"></i>
+                                <span class="side-menu__label">Mesajlar</span>
+                                <i class="angle fa fa-angle-right"></i>
+                            </a>
+                            <ul class="slide-menu">
+                                <li>
+                                    <a class="slide-item" asp-controller="Contact" asp-action="Index">
+                                        <span>İletişim İstekleri</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="slide-item" asp-controller="Feedback" asp-action="Index">
+                                        <span>Değerlendirme</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="slide">
+                            <a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon typcn typcn-device-desktop"></i><span class="side-menu__label">Randevu İşlemleri</span><i class="angle fa fa-angle-right"></i></a>
+                            <ul class="slide-menu">
+                                <li>
+                                    <a class="slide-item" asp-controller="Appointment" asp-action="GetRequests">
+                                        <span>Randevu Talepleri</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="slide-item" asp-controller="Appointment" asp-action="Index">
+                                        <span>Randevu Takvimi</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="slide-item" asp-controller="Schedule" asp-action="Index">
+                                        <span>Randevu Takvimi Oluştur</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="side-menu__item" asp-controller="Notification" asp-action="Index">
+                                <i class="side-menu__icon typcn typcn-location-outline"></i>
+                                <span class="side-menu__label">Mail ve Bildirim Gönder</span>
+                            </a>
+                        </li>
+                    }
+                    else if (ViewData["UserRole"].Equals("Customer"))
+                    {
+                        <li>
+                            <a class="side-menu__item" asp-controller="CustomerSection" asp-action="Index">
+                                <i class="side-menu__icon typcn typcn-location-outline"></i>
+                                <span class="side-menu__label">Randevularım</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</aside>
+<!--sidemenu end-->

@@ -1,0 +1,55 @@
+﻿@model PhotoStudioFS.Models.User
+
+@{
+    ViewData["Title"] = "Sinem Kobaner / Müşteri Ekle";
+    ViewData["PageName"] = "Müşteri Ekle";
+    ViewData["IsDataTableUsed"] = false;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Yeni Müşteri Ekle</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="FullName" class="form-control-label"></label>
+                        <input id="name" type="text" class="form-control" asp-for="FullName">
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Telefon Numarası</label>
+                        <input id="phone" type="tel" class="form-control" asp-for="PhoneNumber">
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="form-control-label"></label>
+                        <input id="email" type="email" class="form-control" asp-for="Email">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="CreatedAt" class="control-label">Kayıt Tarihi</label>
+                        <input asp-for="CreatedAt" class="form-control" />
+                        <span asp-validation-for="CreatedAt" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="custom-control custom-checkbox">
+                            <input class="custom-control-input" asp-for="IsEnabled" /> <span class="custom-control-label">Aktif Mi ? </span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Kaydet" class="btn btn-primary" />
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

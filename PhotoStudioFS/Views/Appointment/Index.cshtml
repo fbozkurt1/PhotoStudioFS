@@ -1,0 +1,143 @@
+﻿
+@{
+    ViewData["Title"] = "Randevu Listesi";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["IsDataTableUsed"] = false;
+    ViewData["PageName"] = "Randevu Listesi";
+}
+@section Styles{
+
+    <link href='~/Fullcalendar/core/main.css' rel='stylesheet' />
+    <link href='~/Fullcalendar/daygrid/main.css' rel='stylesheet' />
+    <link href='~/Fullcalendar/timegrid/main.css' rel='stylesheet' />
+
+}
+
+<!-- Modal -->
+<div class="modal fade" id="appInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h3 class="modal-title" id="eventModalTitle">Randevu Bilgisi</h3>
+                <div class="ml-auto">
+                    <button id="btnEditAppointment"
+                            onclick="editAppointment(this)"
+                            class="btn btn-primary btn-sm">
+                        Düzenle
+                    </button>
+                    <button id="btnCustomerDetails"
+                            onclick="customerDetails(this)"
+                            class="btn btn-info btn-sm">
+                        Müşteri Detayları
+                    </button>
+                </div>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
+            </div>
+            <div class="modal-body">
+                <h4 id="infoModalSubtitle"></h4>
+
+                <div class="row mt-2">
+                    <div class="col-md-10">
+                        <label for="infoCustomerPhone" class="form-control-label">Telefon</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-phone tx-16 lh-0 op-6"></i>
+                                </div>
+                            </div><!-- input-group-prepend -->
+
+                            <input disabled class="form-control" id="infoCustomerPhone" type="text">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-10">
+                        <label for="infoCustomerEmail" class="form-control-label">Email</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-envelope tx-16 lh-0 op-6"></i>
+                                </div>
+                            </div><!-- input-group-prepend -->
+
+                            <input disabled class="form-control" id="infoCustomerEmail" type="text">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-10">
+                        <label for="infoCustomerEmail" class="form-control-label">Çekim Türü</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-camera-retro tx-16 lh-0 op-6"></i>
+                                </div>
+                            </div><!-- input-group-prepend -->
+
+                            <input disabled class="form-control" id="infoCustomerShootType" type="text">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-5">
+                        <label for="infoStartTime" class="form-control-label">Başlangıç Saati</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-clock-o tx-16 lh-0 op-6"></i>
+                                </div>
+                            </div><!-- input-group-prepend -->
+
+                            <input disabled class="form-control" id="infoStartTime" type="text">
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="infoEndTime" class="form-control-label">Bitiş Saati</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-clock-o tx-16 lh-0 op-6"></i>
+                                </div>
+                            </div><!-- input-group-prepend -->
+
+                            <input disabled class="form-control" id="infoEndTime" type="text">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal End-->
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0 card-title">Gelecek Randevular</h3>
+            </div>
+            <div class="card-body">
+                <div id='appFullcalendar'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/Fullcalendar/core/main.js"></script>
+    <script src='~/Fullcalendar/daygrid/main.js'></script>
+    <script src='~/Fullcalendar/timegrid/main.js'></script>
+    <script src='~/Fullcalendar/interaction/main.js'></script>
+    <script src="~/Fullcalendar/core/locales/tr.js"></script>
+    <script src="~/Admin/js/custom/appointment.js"></script>
+}

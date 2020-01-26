@@ -1,0 +1,59 @@
+﻿@model Appointment
+@{
+    ViewData["Title"] = "Sinem Kobaner";
+}
+
+<div class="row block-9 mb-5">
+    <div class="col-md-6 ftco-animate">
+
+        @await Html.PartialAsync("_ContactRequestPartial")
+
+
+    </div>
+
+    <div class="col-md-6 ftco-animate">
+        <form id="formAppointment" asp-action="Create" asp-controller="Appointment" class="contact-form p-4 p-md-5 py-md-5">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input id="appName" name="Name" type="text" class="form-control" placeholder="Adınız ve Soyadınız" required>
+            </div>
+            <div class="form-group">
+                <input id="appEmail" name="Email" type="text" class="form-control" placeholder="Email Adresiniz" required>
+            </div>
+            <div class="form-group">
+                <input id="appPhone" name="Phone" type="tel" class="form-control" placeholder="Telefon Numaranız" required>
+            </div>
+            <div class="form-group">
+                <select id="appType" name="Type" class="form-control" required>
+                    @*<option value="0">Çekim Türü Seçiniz</option>*@
+                    <option value="0">@ViewBag.contact.Name</option>
+                    <option value="1">Doğum Çekimi</option>
+                    <option value="2">Düğün Çekimi</option>
+                    <option value="3">Dış Çekim</option>
+                    <option value="4">İç Çekim</option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input name="Date" id="appDate" type="text" class="form-control" placeholder="Randevu Tarihi" required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <select name="DateHour" id="appDateHour" class="form-control" required>
+                            <option value="-1">Randevu Saati</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <textarea name="Message" id="appMessage" cols="30" rows="7" class="form-control" placeholder="Randevu talebiniz hakkında ekstra belirtmek istediğiniz durumlar" required></textarea>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Randevu Talep Et" class="btn btn-primary py-3 px-5">
+            </div>
+        </form>
+    </div>
+
+</div>

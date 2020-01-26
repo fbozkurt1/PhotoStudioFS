@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Photo>
+
+@{
+    ViewData["Title"] = "Photos";
+    ViewData["IsDataTableUsed"] = false;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- row -->
+
+<div class="row mt-4">
+    <div class="col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Fotoğraflarınız</div>
+                <div class="card-options">
+                    <button onclick="downloadPhotos(this)"
+                            id="btnDownload"
+                            data-customerid="@ViewData["CustomerId"]"
+                            data-appointmentid="@ViewData["AppointmentId"]"
+                            data-customerfullname="@ViewData["UserFullName"]"
+                            class="btn btn-sm btn-primary">
+                        <i class="fa fa-download"></i> Fotoğrafları İndir
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row text-center text-lg-left">
+                    <div id="loader-upload">
+
+                        @*<label id="current-progress-count" class="font-weight-bold" style="color:black; font-size:x-large;"></label>
+                            <br />*@
+
+                        <label id="current-progress" class="font-weight-bold">Fotoğraflarınız indirilmeye hazırlanıyor. Lütfen bekleyiniz!</label>
+
+                        <img src="~/Admin/images/icons/loader.svg" alt="loader">
+                    </div>
+                    @foreach (var photo in Model)
+                    {
+                        <div class="col-lg-3 col-md-4 col-6">
+                            <a href="#" class="d-block mb-4 h-100">
+                                <img class="img-fluid img-thumbnail" src="@photo.ThumbnailPath" alt="">
+                            </a>
+                        </div>
+
+                    }
+                </div>
+            </div>
+            <!-- table-wrapper -->
+        </div>
+        <!-- section-wrapper -->
+    </div>
+</div>
+<!-- row end -->
+
+@section Scripts {
+
+    <script src="~/Admin/js/custom/customerSectionPhotos.js"></script>
+
+}

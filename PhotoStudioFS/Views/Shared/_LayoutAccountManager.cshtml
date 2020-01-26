@@ -1,0 +1,110 @@
+﻿
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="tr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="Sinem Kobaner" name="description">
+    <meta content="Sinem Kobaner" name="author">
+    <meta name="keywords" content="sinem,kobaner,fotoğraf,işleri,resim" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="~/Client/images/logo.ico" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Client/images/logo.ico" />
+
+    <!-- Title -->
+    <title>Sinem Kobaner</title>
+
+    <!--Bootstrap.min css-->
+    <link rel="stylesheet" href="~/Admin/plugins/bootstrap/css/bootstrap.min.css">
+
+    <!-- Dashboard css -->
+    <link href="~/Admin/css/style.css" rel="stylesheet" />
+
+    <!-- Custom scroll bar css-->
+    <link href="~/Admin/plugins/scroll-bar/jquery.mCustomScrollbar.css" rel="stylesheet" />
+
+    <!-- Sidemenu css -->
+    <link href="~/Admin/plugins/toggle-sidebar/full-sidemenu.css" rel="stylesheet" />
+
+    <!--Daterangepicker css-->
+    <link href="~/Admin/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+
+    <!-- Sidebar Accordions css -->
+    <link href="~/Admin/plugins/accordion1/css/easy-responsive-tabs.css" rel="stylesheet">
+
+    <!-- Rightsidebar css -->
+    <link href="~/Admin/plugins/sidebar/sidebar.css" rel="stylesheet">
+
+    <!---Font icons css-->
+    <link href="~/Admin/plugins/iconfonts/plugin.css" rel="stylesheet" />
+    <link href="~/Admin/plugins/iconfonts/icons.css" rel="stylesheet" />
+    <link href="~/Admin/fonts/fonts/font-awesome.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <!-- page -->
+    <div class="page">
+
+        <!-- page-content -->
+        <div class="page-content">
+            <div class="container text-center text-dark">
+                <div class="row">
+                    <div class="col-lg-4 d-block mx-auto">
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="text-center mb-6">
+                                            <img src="~/Client/images/logo.png" style="width:40%;" class="" alt="Sinem Kobaner">
+                                        </div>
+                                        @RenderBody()
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- page-content end -->
+    </div>
+    <!-- page End-->
+    <!-- Jquery js-->
+    <script src="~/Admin/js/vendors/jquery-3.2.1.min.js"></script>
+
+    <!--Bootstrap.min js-->
+    <script src="~/Admin/plugins/bootstrap/popper.min.js"></script>
+    <script src="~/Admin/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--Jquery Sparkline js-->
+    <script src="~/Admin/js/vendors/jquery.sparkline.min.js"></script>
+
+    <!-- Chart Circle js-->
+    <script src="~/Admin/js/vendors/circle-progress.min.js"></script>
+
+    <!-- Star Rating js-->
+    <script src="~/Admin/plugins/rating/jquery.rating-stars.js"></script>
+
+    <!-- Sidebar Accordions js -->
+    <script src="~/Admin/plugins/accordion1/js/easyResponsiveTabs.js"></script>
+
+    <!--Moment js-->
+    <script src="~/Admin/plugins/moment/moment.min.js"></script>
+
+    <!-- Daterangepicker js-->
+    <script src="~/Admin/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Custom scroll bar js-->
+    <script src="~/Admin/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <!-- Custom js-->
+    <script src="~/Admin/js/custom.js"></script>
+
+</body>
+</html>

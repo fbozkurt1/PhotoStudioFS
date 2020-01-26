@@ -1,0 +1,33 @@
+﻿@model PhotoStudioFS.Models.Contact
+
+<form id="formContact" asp-action="Create" asp-controller="Contact" class="contact-form p-4 p-md-5 py-md-5">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <input asp-for="Name" class="form-control" placeholder="@Html.DisplayNameFor(c => c.Name)" required />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input asp-for="Email" class="form-control" placeholder="@Html.DisplayNameFor(c => c.Email)" required />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input asp-for="Phone" class="form-control" placeholder="@Html.DisplayNameFor(c => c.Phone)" required />
+        <span asp-validation-for="Phone" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input asp-for="Subject" class="form-control" placeholder="@Html.DisplayNameFor(c => c.Subject)" required />
+        <span asp-validation-for="Subject" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <textarea asp-for="Message" class="form-control"
+                  cols="30" rows="7"
+                  placeholder="@Html.DisplayNameFor(c => c.Message)" required>
+        </textarea>
+        <span asp-validation-for="Message" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Mesaj Gönder" class="btn btn-primary py-3 px-5">
+    </div>
+</form>
+
