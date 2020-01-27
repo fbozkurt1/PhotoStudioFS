@@ -91,6 +91,7 @@ namespace PhotoStudioFS
                 };
                 options.SlidingExpiration = true;
             });
+            services.BuildServiceProvider().GetService<photostudioContext>().Database.Migrate();
             services.AddAuthentication();
             services.AddAuthorization();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -114,7 +115,7 @@ namespace PhotoStudioFS
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            //app.UseAuthentication();
+            app.UseAuthentication();
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>

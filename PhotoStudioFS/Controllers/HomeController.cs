@@ -20,9 +20,6 @@ namespace PhotoStudioFS.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Contact = new Contact();
-            var cont = unitOfWork.Contacts.Get(1);
-            ViewBag.contact = cont;
             return View();
         }
 
