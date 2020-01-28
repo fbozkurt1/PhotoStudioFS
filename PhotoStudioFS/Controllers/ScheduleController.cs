@@ -25,7 +25,7 @@ namespace PhotoStudioFS.Controllers
             return View();
         }
         [HttpGet]
-        public JsonResult GetAllSchedules(string start, string end, string photoType)
+        public async Task<JsonResult> GetAllSchedules(string start, string end, string photoType)
         {
 
             List<ScheduleView> schedulesView = new List<ScheduleView>();
@@ -42,9 +42,9 @@ namespace PhotoStudioFS.Controllers
             IEnumerable<Schedule> schedules;
 
             if (string.IsNullOrEmpty(photoType) || string.IsNullOrWhiteSpace(photoType))
-                schedules = unitOfWork.Schedules.GetSchedules(dtStart, dtEnd);
+                schedules = await unitOfWork.Schedules.GetSchedules(dtStart, dtEnd);
             else
-                schedules = unitOfWork.Schedules.GetSchedulesByPhotoType(dtStart, dtEnd, photoType);
+                schedules = await unitOfWork.Schedules.GetSchedulesByPhotoType(dtStart, dtEnd, photoType);
 
             if (schedules != null)
             {

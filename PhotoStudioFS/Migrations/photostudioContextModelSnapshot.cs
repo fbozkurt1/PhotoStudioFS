@@ -14,22 +14,23 @@ namespace PhotoStudioFS.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
+                    .HasMaxLength(255)
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
                     b.Property<string>("Name")
-                        .HasMaxLength(256);
+                        .HasMaxLength(255);
 
                     b.Property<string>("NormalizedName")
-                        .HasMaxLength(256);
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -69,6 +70,7 @@ namespace PhotoStudioFS.Migrations
                     b.Property<string>("ClaimValue");
 
                     b.Property<string>("UserId")
+                        .HasMaxLength(255)
                         .IsRequired();
 
                     b.HasKey("Id");
@@ -87,6 +89,7 @@ namespace PhotoStudioFS.Migrations
                     b.Property<string>("ProviderDisplayName");
 
                     b.Property<string>("UserId")
+                                        .HasMaxLength(255)
                         .IsRequired();
 
                     b.HasKey("LoginProvider", "ProviderKey");
@@ -98,7 +101,7 @@ namespace PhotoStudioFS.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserId").HasMaxLength(255);
 
                     b.Property<string>("RoleId");
 
@@ -111,7 +114,7 @@ namespace PhotoStudioFS.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserId").HasMaxLength(255);
 
                     b.Property<string>("LoginProvider");
 
@@ -263,6 +266,7 @@ namespace PhotoStudioFS.Migrations
             modelBuilder.Entity("PhotoStudioFS.Models.User", b =>
                 {
                     b.Property<string>("Id")
+                                        .HasMaxLength(255)
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
@@ -273,7 +277,7 @@ namespace PhotoStudioFS.Migrations
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(256);
+                        .HasMaxLength(255);
 
                     b.Property<bool>("EmailConfirmed");
 
@@ -290,10 +294,10 @@ namespace PhotoStudioFS.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
+                        .HasMaxLength(255);
 
                     b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
+                        .HasMaxLength(255);
 
                     b.Property<string>("PasswordHash");
 
@@ -306,7 +310,7 @@ namespace PhotoStudioFS.Migrations
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
-                        .HasMaxLength(256);
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 

@@ -19,7 +19,6 @@ namespace PhotoStudioFS.Models
         public int AppointmentId { get; set; }
         public Appointment Appointment { get; set; }
 
-
         public string CustomerId { get; set; }
         public User Customer { get; set; }
 

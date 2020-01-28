@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -41,6 +42,7 @@ namespace PhotoStudioFS
             //services.BuildServiceProvider().GetService<photostudioContext>().Database.Migrate();
 
             services.AddIdentity<User, IdentityRole>()
+                .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddEntityFrameworkStores<photostudioContext>()
                 .AddDefaultTokenProviders();
 
@@ -74,25 +76,43 @@ namespace PhotoStudioFS
                 options.User.RequireUniqueEmail = true;
 
             });
-            services.ConfigureApplicationCookie(options =>
-            {
-                // Cookie settings
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-                options.LoginPath = "/Account/Login";
-                options.LogoutPath = "/Account/Logout";
-                options.AccessDeniedPath = "/Account/AccessDenied";
-                options.Cookie = new CookieBuilder
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
                 {
-                    Name = "AspNetCoreIdentityCookie", //Oluşturulacak Cookie'yi isimlendiriyoruz.
-                    HttpOnly = false, //Kötü niyetli insanların client-side tarafından Cookie'ye erişmesini engelliyoruz.
-                    SameSite = SameSiteMode.Lax, //Top level navigasyonlara sebep olmayan requestlere Cookie'nin gönderilmemesini belirtiyoruz.
-                    SecurePolicy = CookieSecurePolicy.Always //HTTPS üzerinden erişilebilir yapıyoruz.
-                };
-                options.SlidingExpiration = true;
-            });
-            services.BuildServiceProvider().GetService<photostudioContext>().Database.Migrate();
-            services.AddAuthentication();
+                    // Cookie settings
+                    options.Cookie.HttpOnly = true;
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                    options.LoginPath = "/Account/Login";
+                    options.LogoutPath = "/Account/Logout";
+                    options.AccessDeniedPath = "/Account/AccessDenied";
+                    options.Cookie = new CookieBuilder
+                    {
+                        Name = "AspNetCoreIdentityCookie", //Oluşturulacak Cookie'yi isimlendiriyoruz.
+                        HttpOnly = false, //Kötü niyetli insanların client-side tarafından Cookie'ye erişmesini engelliyoruz.
+                        SameSite = SameSiteMode.Lax, //Top level navigasyonlara sebep olmayan requestlere Cookie'nin gönderilmemesini belirtiyoruz.
+                        SecurePolicy = CookieSecurePolicy.Always //HTTPS üzerinden erişilebilir yapıyoruz.
+                    };
+                    options.SlidingExpiration = true;
+                });
+
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    // Cookie settings
+            //    options.Cookie.HttpOnly = true;
+            //    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+            //    options.LoginPath = "/Account/Login";
+            //    options.LogoutPath = "/Account/Logout";
+            //    options.AccessDeniedPath = "/Account/AccessDenied";
+            //    options.Cookie = new CookieBuilder
+            //    {
+            //        Name = "AspNetCoreIdentityCookie", //Oluşturulacak Cookie'yi isimlendiriyoruz.
+            //        HttpOnly = false, //Kötü niyetli insanların client-side tarafından Cookie'ye erişmesini engelliyoruz.
+            //        SameSite = SameSiteMode.Lax, //Top level navigasyonlara sebep olmayan requestlere Cookie'nin gönderilmemesini belirtiyoruz.
+            //        SecurePolicy = CookieSecurePolicy.Always //HTTPS üzerinden erişilebilir yapıyoruz.
+            //    };
+            //    options.SlidingExpiration = true;
+            //});
+            //services.BuildServiceProvider().GetService<photostudioContext>().Database.Migrate();
             services.AddAuthorization();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -127,6 +147,10 @@ namespace PhotoStudioFS
                 routes.MapRoute(
                         name: "admin",
                         template: "admin/{controller=Admin}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                        name: "api",
+                        template: "{controller=Api}/{action=Index}/{id?}");
 
             });
 

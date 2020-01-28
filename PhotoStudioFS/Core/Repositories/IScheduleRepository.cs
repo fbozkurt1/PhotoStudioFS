@@ -9,7 +9,7 @@ namespace PhotoStudioFS.Core.Repositories
     public interface IScheduleRepository : IRepository<Schedule>
     {
 
-        IEnumerable<Schedule> GetSchedulesByPhotoType(DateTime start, DateTime end, string photoType);
-        IEnumerable<Schedule> GetSchedules(DateTime start, DateTime end);
+        Task<IEnumerable<Schedule>> GetSchedulesByPhotoType(DateTime start, DateTime end, string photoType);
+        Task<IEnumerable<Schedule>> GetSchedules(DateTime start, DateTime end);
     }
 }
