@@ -69,6 +69,7 @@ $(document).ready(($) => {
     $('#formContact').submit((event) => {
 
         event.preventDefault();
+
         const formId = '#formContact';
 
         const formData = $(formId).serialize();

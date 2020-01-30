@@ -28,7 +28,7 @@ namespace PhotoStudioFS.Models
 
         public bool IsRead { get; set; } = false;
 
-        [DataType(DataType.DateTime), Required]
+        [DataType(DataType.DateTime)]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
     }
 }

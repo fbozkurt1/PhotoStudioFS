@@ -16,6 +16,7 @@ using PhotoStudioFS.Data;
 using PhotoStudioFS.Helpers;
 using PhotoStudioFS.Helpers.Email;
 using PhotoStudioFS.Models;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace PhotoStudioFS
 {
@@ -114,6 +115,22 @@ namespace PhotoStudioFS
             //});
             //services.BuildServiceProvider().GetService<photostudioContext>().Database.Migrate();
             services.AddAuthorization();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("CoreSwagger", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "Swagger on ASP.NET Core",
+                    Version = "1.0.0",
+                    Description = "Try Swagger on (ASP.NET Core 2.1)",
+                    Contact = new Microsoft.OpenApi.Models.OpenApiContact()
+                    {
+                        Name = "Swagger Implementation Fuat Bozkurt",
+                        Email = "fuatbozkurt1@gmail.com"
+                    },
+                    TermsOfService = new System.Uri("http://swagger.io/terms/")
+                });
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -132,6 +149,15 @@ namespace PhotoStudioFS
             }
 
             //context.Database.Migrate();
+            app.UseSwagger()
+            .UseSwaggerUI(c =>
+            {
+                //TODO: Either use the SwaggerGen generated Swagger contract (generated from C# classes)
+                c.SwaggerEndpoint("/swagger/CoreSwagger/swagger.json", "Swagger Test .Net Core");
+
+                //TODO: Or alternatively use the original Swagger contract that's included in the static files
+                // c.SwaggerEndpoint("/swagger-original.json", "Swagger Petstore Original");
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

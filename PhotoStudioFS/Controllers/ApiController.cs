@@ -24,9 +24,9 @@ namespace PhotoStudioFS.Controllers
         protected photostudioContext context { get; set; }
         protected UserManager<User> userManager { get; private set; }
         protected SignInManager<User> signInManager { get; private set; }
-        public ApiController(UserManager<User> userManager, 
-            SignInManager<User> signInManager, 
-            photostudioContext context, 
+        public ApiController(UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            photostudioContext context,
             IRazorViewToStringRenderer razorView)
         {
             this.context = context;
@@ -45,8 +45,8 @@ namespace PhotoStudioFS.Controllers
             if (string.IsNullOrEmpty(start) || string.IsNullOrWhiteSpace(start) || start == null)
                 return BadRequest("start değeri boş olamaz!");
 
-            //if (string.IsNullOrEmpty(photoShootType) || string.IsNullOrWhiteSpace(photoShootType) || photoShootType == null)
-            //    return BadRequest("photoShootType değeri boş olamaz!");
+            if (string.IsNullOrEmpty(photoShootType) || string.IsNullOrWhiteSpace(photoShootType) || photoShootType == null)
+                return BadRequest("photoShootType değeri boş olamaz!");
 
             DateTime dtStart = Convert.ToDateTime(start, CultureInfo.GetCultureInfo("tr-TR"));
             DateTime dtEnd = dtStart.AddDays(1);
