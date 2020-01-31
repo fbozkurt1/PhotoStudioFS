@@ -25,11 +25,11 @@
             </div>
             <div class="form-group">
                 <select id="appType" name="Type" class="form-control" required>
-                    <option value="0">Çekim Türü Seçiniz</option>
-                    <option value="1">Doğum Çekimi</option>
-                    <option value="2">Düğün Çekimi</option>
-                    <option value="3">Dış Çekim</option>
-                    <option value="4">İç Çekim</option>
+                    <option selected disabled value="0">Çekim Türü Seçiniz</option>
+                    @foreach (var shoot in ViewBag.ShootTypes)
+                    {
+                        <option value="@shoot.Id">@shoot.Name</option>
+                    }
                 </select>
             </div>
             <div class="row">

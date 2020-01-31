@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using PhotoStudioFS.Models;
+using PhotoStudioFS.Models.Setting;
 
 namespace PhotoStudioFS.Data
 {
@@ -18,6 +19,7 @@ namespace PhotoStudioFS.Data
         public virtual DbSet<Schedule> Schedules { get; set; }
         public virtual DbSet<Appointment> Appointments { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
+        public virtual DbSet<ShootType> ShootTypes { get; set; }
 
     }
 }

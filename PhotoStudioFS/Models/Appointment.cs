@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhotoStudioFS.Models.Setting;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,8 +22,12 @@ namespace PhotoStudioFS.Models
         [MaxLength(15), Display(Name = "Telefon"), Required, Phone]
         public string Phone { get; set; }
 
-        [MaxLength(20), Display(Name = "Çekim Türü"), Required]
-        public string Type { get; set; }
+        //[MaxLength(20), Display(Name = "Çekim Türü"), Required]
+        //public string Type { get; set; }
+
+        public int ShootTypeId { get; set; }
+        public ShootType ShootType { get; set; }
+
 
         [MaxLength(1000), Display(Name = "Müşteri Mesajı")]
         public string Message { get; set; }
@@ -41,14 +46,18 @@ namespace PhotoStudioFS.Models
 
         public int ScheduleId { get; set; }
 
+
         [Display(Name = "Çekim Durumu"), Range(0, 2)]
         public short State { get; set; } = 0; // 0- bekliyor, 1- çekim tamamlandı (resimler hazırlanıyor), 2- Hazır (resimler yüklendi)
+
 
         [DataType(DataType.DateTime), Required]
         public DateTime StateUpdateDate { get; set; } = DateTime.Now;
 
+
         [Column(TypeName = "decimal(9, 2)"), Display(Name = "Çekim Ücreti"), Required]
         public decimal Price { get; set; }
+
 
         [Column(TypeName = "decimal(9, 2)"), Display(Name = "Ödenen Toplam Ücret")]
         public decimal PricePaid { get; set; } = 0;
@@ -70,6 +79,7 @@ namespace PhotoStudioFS.Models
         public string CreatedAt { get; set; } = DateTime.Now.ToString();
         public short IsApproved { get; set; } = 0;
         public int ScheduleId { get; set; }
+        public int ShootTypeId { get; set; }
         public short State { get; set; } = 0; // 0- bekliyor, 1- çekim tamamlandı (resimler hazırlanıyor), 2- Hazır (resimler yüklendi)
 
     }
@@ -83,6 +93,7 @@ namespace PhotoStudioFS.Models
         public string end { get; set; }
         public string endHour { get; set; }
         public string photoShootType { get; set; }
+        public int photoShootTypeId { get; set; }
         public bool isEmpty { get; set; }
         public bool allDay { get; set; }
         public string color { get; set; }

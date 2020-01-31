@@ -180,7 +180,7 @@ namespace PhotoStudioFS
 
             });
 
-            //IdentityDataInitializer.SeedDataAsync(serviceProvider).Wait();
+            IdentityDataInitializer.SeedDataAsync(serviceProvider).Wait();
 
         }
     }

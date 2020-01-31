@@ -113,6 +113,8 @@ const Api = {
 
     deleteContactRequest: function (id) {
         return postData(`/Contact/Delete/${id}`);
+    },
+    updateShootType: function (id, data) {
+        return postData(`/Setting/EditShootType/${id}`, data);
     }
-
 };

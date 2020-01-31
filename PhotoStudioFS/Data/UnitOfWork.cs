@@ -20,6 +20,7 @@ namespace PhotoStudioFS.Data
             Appointments = new AppointmentRepository(_context);
             Contacts = new ContactRepository(_context);
             Feedbacks = new FeedbackRepository(_context);
+            ShootTypes = new ShootType(_context);
         }
         public IPhotoRepository Photos { get; private set; }
 
@@ -30,6 +31,8 @@ namespace PhotoStudioFS.Data
         public IContactRepository Contacts { get; set; }
 
         public IFeedbackRepository Feedbacks { get; set; }
+
+        public IShootType ShootTypes { get; set; }
 
         public async Task<int> Complete()
         {

@@ -13,6 +13,7 @@ namespace PhotoStudioFS.Core
         IAppointmentRepository Appointments { get; }
         IFeedbackRepository Feedbacks { get; }
         IContactRepository Contacts { get; }
+        IShootType ShootTypes { get; }
         Task<int> Complete();
     }
 }

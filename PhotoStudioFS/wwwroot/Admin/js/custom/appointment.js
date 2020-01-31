@@ -52,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let eventInfo = info.event.extendedProps;
             $(infoModal).modal('show');
 
-            //$(infoModal + ' #infoCustomerName').val(eventInfo.name);
             $(infoModal + ' #infoModalSubtitle').text(eventInfo.name + " - " + eventInfo.startDate);
             $(infoModal + ' #infoCustomerPhone').val(eventInfo.phone);
             $(infoModal + ' #infoCustomerEmail').val(eventInfo.email);

@@ -22,6 +22,7 @@ namespace PhotoStudioFS.Data.Repositories
         {
             return await photostudioContext.Appointments
                 .Include(a => a.Customer)
+                .Include(a => a.ShootType)
                 .Where(a => a.IsApproved == isApproved)
                 .OrderByDescending(a => a.CreatedAt).ToListAsync();
         }
@@ -30,6 +31,7 @@ namespace PhotoStudioFS.Data.Repositories
         {
             return await photostudioContext.Appointments
                 .Include(a => a.Customer)
+                .Include(a => a.ShootType)
                 .Where(a => a.State == state && a.CustomerId != null)
                 .OrderBy(a => a.CreatedAt).ToListAsync();
         }
@@ -52,6 +54,7 @@ namespace PhotoStudioFS.Data.Repositories
         {
             return await photostudioContext.Appointments
                 .Include(a => a.Customer)
+                .Include(a => a.ShootType)
                 .Where(a => a.CustomerId == customerId)
                 .OrderByDescending(a => a.AppointmentDateStart).ToListAsync();
         }

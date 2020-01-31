@@ -57,7 +57,8 @@ namespace PhotoStudioFS.Controllers
                     end = appointment.AppointmentDateEnd.ToString("yyyy-MM-ddTHH:mm"),
                     endHour = appointment.AppointmentDateEnd.ToString("HH:mm").Trim(),
                     title = appointment.Name,
-                    photoShootType = appointment.Type,
+                    photoShootType = appointment.ShootType.Name,
+                    photoShootTypeId = appointment.ShootType.Id,
                     color = appointment.AppointmentDateStart >= DateTime.Now ? "#6ced15" : "#ed4734",
                     scheduleId = appointment.ScheduleId,
                     name = appointment.Name,
@@ -93,7 +94,7 @@ namespace PhotoStudioFS.Controllers
                     AppointmentDateEnd = Convert.ToDateTime(appointmentView.Date + " " + appointmentView.DateHourEnd, CultureInfo.GetCultureInfo("tr-TR")),
                     CreatedAt = DateTime.Now,
                     IsApproved = 0,
-                    Type = appointmentView.Type,
+                    ShootTypeId = appointmentView.ShootTypeId,
                     ScheduleId = appointmentView.ScheduleId
                 };
 

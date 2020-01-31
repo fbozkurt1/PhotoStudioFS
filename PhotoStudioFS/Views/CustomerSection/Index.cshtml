@@ -12,7 +12,6 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-title">Randevularınız</div>
-
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -30,7 +29,7 @@
                             @foreach (var appointment in Model)
                             {
                                 <tr>
-                                    <td>@appointment.Type</td>
+                                    <td>@appointment.ShootType.Name</td>
                                     <td>
                                         @appointment.AppointmentDateStart.ToShortDateString()
                                         @appointment.AppointmentDateStart.ToString("HH:mm")-@appointment.AppointmentDateEnd.ToString("HH:mm")

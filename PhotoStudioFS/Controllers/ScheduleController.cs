@@ -25,7 +25,7 @@ namespace PhotoStudioFS.Controllers
             return View();
         }
         [HttpGet]
-        public async Task<JsonResult> GetAllSchedules(string start, string end, string photoType)
+        public async Task<JsonResult> GetAllSchedules(string start, string end, int photoType)
         {
 
             List<ScheduleView> schedulesView = new List<ScheduleView>();
@@ -41,7 +41,7 @@ namespace PhotoStudioFS.Controllers
             }
             IEnumerable<Schedule> schedules;
 
-            if (string.IsNullOrEmpty(photoType) || string.IsNullOrWhiteSpace(photoType))
+            if (photoType == 0)
                 schedules = await unitOfWork.Schedules.GetSchedules(dtStart, dtEnd);
             else
                 schedules = await unitOfWork.Schedules.GetSchedulesByPhotoType(dtStart, dtEnd, photoType);
@@ -60,7 +60,8 @@ namespace PhotoStudioFS.Controllers
                         end = schedule.end.ToString("yyyy-MM-ddTHH:mm"),
                         endHour = schedule.end.ToString("HH:mm").Trim(),
                         title = schedule.title,
-                        photoShootType = schedule.photoShootType,
+                        photoShootType = schedule.ShootType.Name,
+                        photoShootTypeId = schedule.ShootType.Id,
                         color = schedule.isEmpty == true ? "#6ced15" : "#ed4734"
                     });
                 }
@@ -91,7 +92,7 @@ namespace PhotoStudioFS.Controllers
                     start = start,
                     end = end,
                     title = scheduleView.title,
-                    photoShootType = scheduleView.photoShootType
+                    ShootTypeId = scheduleView.photoShootTypeId
                 };
                 await unitOfWork.Schedules.Add(schedule);
                 await unitOfWork.Complete();

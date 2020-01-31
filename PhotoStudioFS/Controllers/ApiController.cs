@@ -40,13 +40,13 @@ namespace PhotoStudioFS.Controllers
         /* APPOINTMENT REQUESTS */
 
         [HttpGet("GetAvailableAppointmentDates")]
-        public async Task<ActionResult<IEnumerable<ScheduleView>>> GetAvailableAppointmentDates(string start, string photoShootType)
+        public async Task<ActionResult<IEnumerable<ScheduleView>>> GetAvailableAppointmentDates(string start, int photoShootType)
         {
             if (string.IsNullOrEmpty(start) || string.IsNullOrWhiteSpace(start) || start == null)
                 return BadRequest("start değeri boş olamaz!");
 
-            if (string.IsNullOrEmpty(photoShootType) || string.IsNullOrWhiteSpace(photoShootType) || photoShootType == null)
-                return BadRequest("photoShootType değeri boş olamaz!");
+            //if (string.IsNullOrEmpty(photoShootType) || string.IsNullOrWhiteSpace(photoShootType) || photoShootType == null)
+            //    return BadRequest("photoShootType değeri boş olamaz!");
 
             DateTime dtStart = Convert.ToDateTime(start, CultureInfo.GetCultureInfo("tr-TR"));
             DateTime dtEnd = dtStart.AddDays(1);
@@ -69,7 +69,8 @@ namespace PhotoStudioFS.Controllers
                             end = schedule.end.ToString("yyyy-MM-ddTHH:mm"),
                             endHour = schedule.end.ToString("HH:mm").Trim(),
                             title = schedule.title,
-                            photoShootType = schedule.photoShootType,
+                            photoShootType = schedule.ShootType.Name,
+                            photoShootTypeId = schedule.ShootType.Id,
                             color = schedule.isEmpty == true ? "#6ced15" : "#ed4734"
                         });
                     }
@@ -97,7 +98,7 @@ namespace PhotoStudioFS.Controllers
                     AppointmentDateEnd = Convert.ToDateTime(appointmentView.Date + " " + appointmentView.DateHourEnd, CultureInfo.GetCultureInfo("tr-TR")),
                     CreatedAt = DateTime.Now,
                     IsApproved = 0,
-                    Type = appointmentView.Type,
+                    ShootTypeId = appointmentView.ShootTypeId,
                     ScheduleId = appointmentView.ScheduleId
                 };
 

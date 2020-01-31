@@ -18,8 +18,10 @@ namespace PhotoStudioFS.Controllers
         {
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var shootTypes = await unitOfWork.ShootTypes.Find(s => s.IsActive == true);
+            ViewBag.ShootTypes = shootTypes;
             return View();
         }
 

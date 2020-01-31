@@ -13,11 +13,11 @@ namespace PhotoStudioFS.Data.Repositories
         public ScheduleRepository(photostudioContext context) : base(context)
         { }
 
-        public async Task<IEnumerable<Schedule>> GetSchedulesByPhotoType(DateTime start, DateTime end, string photoType)
+        public async Task<IEnumerable<Schedule>> GetSchedulesByPhotoType(DateTime start, DateTime end, int photoType)
         {
 
             return await photostudioContext.Schedules
-                .Where(s => s.isEmpty == true && s.start >= start && s.end <= end && s.photoShootType.Equals(photoType))
+                .Where(s => s.isEmpty == true && s.start >= start && s.end <= end && s.ShootTypeId == photoType)
                 .ToListAsync();
         }
 
