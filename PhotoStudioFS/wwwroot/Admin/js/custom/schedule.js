@@ -149,13 +149,14 @@ function addSchedule() {
     const startTime = $('#startTime').val();
     const endTime = $('#endTime').val();
     const eventDate = $('#eventModalDate').val();
-    const photoShootType = $('#photoShootType').select2('data')[0].text;
-    const photoShootTypeVal = $('#photoShootType').select2('data')[0].id;
+    //const photoShootType = $('#photoShootType').select2('data')[0].text;
+    const photoShootTypeId = $('#photoShootType').select2('data')[0].id;
 
-    if (endTime <= startTime || photoShootTypeVal == 0) {
+
+    if (endTime <= startTime || photoShootTypeId == 0) {
         swal({
             title: "Uyarı",
-            text: photoShootTypeVal == 0 ? "Lütfen Çekim Türünü seçiniz" :
+            text: photoShootTypeId == 0 ? "Lütfen Çekim Türünü seçiniz" :
                 "Randevu takvimi başlangıç saati, bitiş saatinden büyük ya da eşit olamaz!",
             type: "warning",
             showCancelButton: false,
@@ -166,41 +167,36 @@ function addSchedule() {
         const start = eventDate + ' ' + startTime + ':00';
         const end = eventDate + ' ' + endTime + ':00';
 
-        $.ajax({
-            url: '/Schedule/AddSchedule',
-            method: "POST",
-            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-            data: {
-                start,
-                end,
-                allDay: false,
-                isEmpty: true,
-                title: photoShootType,
-                photoShootType: photoShootType
-            }
-        }).done(data => {
-            $('#eventModal').modal('hide');
-            swal({
-                title: "Başarılı",
-                text: "Randevu saati başarıyla eklendi!",
-                type: "success",
-                showCancelButton: false,
-                confirmButtonText: 'Tamam'
-            }, (isConfirm) => {
-                if (isConfirm) {
-                    setTimeout("location.reload();", 500);
+        let formData = new FormData();
+        formData.append("start", start);
+        formData.append("end", end);
+        formData.append("photoShootTypeId", photoShootTypeId);
+
+        Api.addSchedule(formData)
+            .then(res => {
+                if (res.status == 200) {
+                    $('#eventModal').modal('hide');
+                    swal({
+                        title: "Başarılı",
+                        text: "Randevu saati başarıyla eklendi!",
+                        type: "success",
+                        showCancelButton: false,
+                        confirmButtonText: 'Tamam'
+                    }, (isConfirm) => {
+                        if (isConfirm) {
+                            setTimeout("location.reload();", 500);
+                        }
+                    });
                 }
+            })
+            .catch(err => {
+                swal({
+                    title: "Uyarı",
+                    text: err.response.data,
+                    type: "warning",
+                    showCancelButton: false,
+                    confirmButtonText: 'Tamam'
+                });
             });
-
-        }).fail((jqXHR, textStatus) => {
-
-            swal({
-                title: "Uyarı",
-                text: jqXHR.responseText,
-                type: "warning",
-                showCancelButton: false,
-                confirmButtonText: 'Tamam'
-            });
-        });
     }
 }

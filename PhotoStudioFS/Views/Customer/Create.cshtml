@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-md-12">
                 <form asp-action="Create" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="FullName" class="form-control-label"></label>
                         <input id="name" type="text" class="form-control" asp-for="FullName">
@@ -32,16 +32,15 @@
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
 
-                    <div class="form-group">
+                    @*<div class="form-group">
                         <label asp-for="CreatedAt" class="control-label">Kayıt Tarihi</label>
                         <input asp-for="CreatedAt" class="form-control" />
                         <span asp-validation-for="CreatedAt" class="text-danger"></span>
-                    </div>
-
+                    </div>*@
 
                     <div class="form-group">
                         <label class="custom-control custom-checkbox">
-                            <input class="custom-control-input" asp-for="IsEnabled" /> <span class="custom-control-label">Aktif Mi ? </span>
+                            <input class="custom-control-input" asp-for="IsEnabled" /> <span class="custom-control-label">Durum (Aktif / Değil) </span>
                         </label>
                     </div>
                     <div class="form-group">

@@ -13,5 +13,6 @@ namespace PhotoStudioFS.Core.Repositories
         Task<int> GetCountAppointmentsByState(short state);
         Task<int> GetCountAppointmentsByIsApproved(short isApproved);
         Task<IEnumerable<Appointment>> GetAppointmentsByCustomer(string customerId);
+        Task<Appointment> GetAppointment(int id);
     }
 }

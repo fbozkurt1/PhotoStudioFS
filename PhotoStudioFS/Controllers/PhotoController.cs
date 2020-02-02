@@ -27,7 +27,7 @@ namespace PhotoStudioFS.Controllers
             var customer = await userManager.FindByIdAsync(customerId);
             if (customer == null)
                 return NotFound("Kullanıcı bulunamadı");
-            var appointment = await unitOfWork.Appointments.Get(appointmentId);
+            var appointment = await unitOfWork.Appointments.GetAppointment(appointmentId);
             if (appointment == null)
                 return NotFound("Randevu Bulunamadı");
 
@@ -61,8 +61,6 @@ namespace PhotoStudioFS.Controllers
             var appointment = await unitOfWork.Appointments.Get(photoView.AppointmentId);
             if (appointment == null)
                 return NotFound("Randevu Bulunamadı");
-
-
 
             var amazon = new AmazonS3Service(
                 appSettings.Value.AccessKey,
@@ -105,10 +103,5 @@ namespace PhotoStudioFS.Controllers
 
 
         }
-
-        //private string GetPathAndFilename(string filename)
-        //{
-        //    return this.hostingEnvironment.WebRootPath + "\\uploads\\" + filename;
-        //}
     }
 }

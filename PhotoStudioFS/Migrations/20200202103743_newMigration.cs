@@ -1,12 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PhotoStudioFS.Migrations
 {
-    public partial class AddShootTypeSetting : Migration
+    public partial class newMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<int>(
+                name: "ShootTypeId",
+                table: "ShootTypes",
+                nullable: true);
+
             migrationBuilder.AlterColumn<string>(
                 name: "UserName",
                 table: "AspNetUsers",
@@ -61,25 +65,33 @@ namespace PhotoStudioFS.Migrations
                 oldMaxLength: 255,
                 oldNullable: true);
 
-            migrationBuilder.CreateTable(
-                name: "ShootTypes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
-                    IsActive = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ShootTypes", x => x.Id);
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_ShootTypes_ShootTypeId",
+                table: "ShootTypes",
+                column: "ShootTypeId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_ShootTypes_ShootTypes_ShootTypeId",
+                table: "ShootTypes",
+                column: "ShootTypeId",
+                principalTable: "ShootTypes",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "ShootTypes");
+            migrationBuilder.DropForeignKey(
+                name: "FK_ShootTypes_ShootTypes_ShootTypeId",
+                table: "ShootTypes");
+
+            migrationBuilder.DropIndex(
+                name: "IX_ShootTypes_ShootTypeId",
+                table: "ShootTypes");
+
+            migrationBuilder.DropColumn(
+                name: "ShootTypeId",
+                table: "ShootTypes");
 
             migrationBuilder.AlterColumn<string>(
                 name: "UserName",

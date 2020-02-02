@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,8 +25,17 @@ namespace PhotoStudioFS.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userRoles = await GetCurrentUserRoles();
+
+                var actionToRedirect = GetActionToRedirectByRoles(userRoles);
+                if (!actionToRedirect.Equals(""))
+                    return RedirectToAction("Index", actionToRedirect);
+
+            }
             return View();
         }
 
@@ -37,8 +47,7 @@ namespace PhotoStudioFS.Controllers
                 var user = await userManager.FindByEmailAsync(loginViewModel.Email);
                 if (user == null)
                 {
-                    ModelState.AddModelError("NotUser", "Böyle bir kullanıcı bulunmamaktadır.");
-                    ModelState.AddModelError("NotUser2", "E-posta veya şifre yanlış.");
+                    ModelState.AddModelError("NotUser", "E-posta veya şifre yanlış.");
                 }
                 else
                 {
@@ -49,14 +58,9 @@ namespace PhotoStudioFS.Controllers
                     {
                         var userRoleList = await userManager.GetRolesAsync(user);
 
-                        if (userRoleList.IndexOf(Roles.Admin) >= 0 || userRoleList.IndexOf(Roles.Employee) >= 0)
-                        {
-                            return RedirectToAction("Index", "Admin");
-                        }
-                        else if (userRoleList.IndexOf(Roles.Customer) >= 0)
-                        {
-                            return RedirectToAction("Index", "CustomerSection");
-                        }
+                        var actionToRedirect = GetActionToRedirectByRoles(userRoleList);
+                        if (!actionToRedirect.Equals(""))
+                            return RedirectToAction("Index", actionToRedirect);
 
                     }
                     else
@@ -162,9 +166,45 @@ namespace PhotoStudioFS.Controllers
             return View("ForgotPassword", forgotPasswordView);
         }
 
+        [HttpGet]
         public async Task Logout()
         {
             await signInManager.SignOutAsync();
+        }
+
+        private string GetActionToRedirectByRoles(IList<string> roles)
+        {
+            if (!roles.Any())
+                return "";
+
+            if (roles.IndexOf(Roles.Admin) >= 0 || roles.IndexOf(Roles.Employee) >= 0)
+            {
+                return "Admin";
+            }
+            else if (roles.IndexOf(Roles.Customer) >= 0)
+            {
+                return "CustomerSection";
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        private async Task<IList<string>> GetCurrentUserRoles()
+        {
+            try
+            {
+                var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var user = userManager.FindByIdAsync(currentUserId).Result;
+                var userRoles = await userManager.GetRolesAsync(user);
+                return userRoles;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
         }
     }
 }

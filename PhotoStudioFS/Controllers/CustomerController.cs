@@ -49,7 +49,7 @@ namespace PhotoStudioFS.Controllers
                 return NotFound();
             }
 
-            ViewBag.Appointments = await unitOfWork.Appointments.Find(a => a.Customer == user);
+            ViewBag.Appointments = await unitOfWork.Appointments.GetAppointmentsByCustomer(user.Id);
             return View(user);
         }
 
@@ -65,7 +65,11 @@ namespace PhotoStudioFS.Controllers
 
             if (ModelState.IsValid)
             {
-
+                if (await userManager.FindByEmailAsync(user.Email) != null)
+                {
+                    ModelState.AddModelError("NotUser", "Bu mail adresine kayıtlı müşteri zaten var. Bir mail adresine sahip yalnızca bir kullanıcı olabilir.");
+                    return View(user);
+                }
                 user.UserName = user.Email;
                 var result = await userManager.CreateAsync(user);
                 if (result.Succeeded)
@@ -92,8 +96,8 @@ namespace PhotoStudioFS.Controllers
                         });
 
                     return RedirectToAction(nameof(Index));
-
                 }
+                ModelState.AddModelError("NotUser", "Kullanıcı oluşturulamadı. Lütfen kurallara uygun olarak tekrar deneyiniz!");
 
             }
             return View(user);

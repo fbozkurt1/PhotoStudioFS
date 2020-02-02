@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using PhotoStudioFS.Data;
 using PhotoStudioFS.Helpers;
 using PhotoStudioFS.Helpers.Email;
+using PhotoStudioFS.Helpers.Extensions.Alerts;
 using PhotoStudioFS.Models;
 using PhotoStudioFS.Models.ViewModels;
 
@@ -72,10 +73,39 @@ namespace PhotoStudioFS.Controllers
             return Json(appointmentSchedulesView);
 
         }
+
         public async Task<IActionResult> GetRequests()
         {
             var appointments = await unitOfWork.Appointments.GetAppointmentsByIsApproved(0);
             return View(appointments);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Create(string email, string redirectTo, string error)
+        {
+            var customer = await userManager.FindByEmailAsync(email);
+            if (customer == null)
+            {
+                return Redirect(redirectTo);
+
+            }
+            var appointment = new Appointment()
+            {
+                Customer = customer,
+                CustomerId = customer.Id,
+                Name = customer.FullName,
+                Email = customer.Email,
+                Phone = customer.PhoneNumber,
+                IsApproved = 1,
+                State = 0
+            };
+            ViewBag.ShootTypes = await unitOfWork.ShootTypes.Find(s => s.IsActive == true);
+            ViewBag.RedirectTo = Request.Headers["Referer"];
+            if (error is null)
+                return View(appointment);
+            else
+                return View(appointment).WithDanger("Hata!", error);
         }
 
         [HttpPost]
@@ -110,7 +140,7 @@ namespace PhotoStudioFS.Controllers
                 var resultMail = await emailSender
                     .SendNotifyEmail(url,
                         TemplateNames.AppointmentRequest,
-                        "Randevunuz Talebiniz İletildi",
+                        "Randevunuz Talebiniz Oluşturuldu",
                         new MailReceiverInfo()
                         {
                             FullName = appointment.Name,
@@ -127,14 +157,63 @@ namespace PhotoStudioFS.Controllers
 
         }
 
-        public async Task<IActionResult> Edit(int? id)
+        [HttpPost]
+        public async Task<IActionResult> CreateToCustomer(Appointment appointment, string redirectTo)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var appointment = await unitOfWork.Appointments.Get((int)id);
+            if (ModelState.IsValid)
+            {
+                var customer = await userManager.FindByIdAsync(appointment.CustomerId);
+                if (customer == null)
+                {
+                    ModelState.AddModelError("NotUser", "Lütfen müşteriyi seçip tekrar deneyiniz!");
+                    return RedirectToAction("Create",
+                        new
+                        {
+                            email = appointment.Email,
+                            redirectTo = redirectTo,
+                            error = "Müşterinin verileri bulunamadı! Lütfen müşteriyi seçip tekrar deneyiniz."
+                        });
+                }
+                var shootType = await unitOfWork.ShootTypes.Get(appointment.ShootTypeId);
+                if (shootType == null || !shootType.IsActive)
+                {
+                    ModelState.AddModelError("NotShootType", "Lütfen Çekim Türü seçiniz!");
+                    return View();
+                }
+                Schedule schedule = new Schedule()
+                {
+                    allDay = false,
+                    start = appointment.AppointmentDateStart,
+                    end = appointment.AppointmentDateEnd,
+                    isEmpty = false,
+                    ShootTypeId = appointment.ShootTypeId,
+                };
+
+                await unitOfWork.Schedules.Add(schedule);
+                await unitOfWork.Complete();
+
+                appointment.ScheduleId = schedule.id;
+
+                await unitOfWork.Appointments.Add(appointment);
+                await unitOfWork.Complete();
+
+                await SendNotify(appointment, new Appointment() { State = 0, IsApproved = 0, Email = appointment.Email }, customer);
+
+                if (redirectTo != null && !redirectTo.Equals("") && !string.IsNullOrEmpty(redirectTo))
+                {
+                    return Redirect(redirectTo);
+                }
+                return RedirectToAction("Details", "Customer", new { email = appointment.Email });
+            }
+            return RedirectToAction("Create", "Appointment", new { email = appointment.Email, redirectTo = redirectTo });
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+
+            var appointment = await unitOfWork.Appointments.GetAppointment(id);
+
             if (appointment == null)
             {
                 return NotFound();
@@ -156,6 +235,11 @@ namespace PhotoStudioFS.Controllers
             {
                 try
                 {
+                    var shootType = await unitOfWork.ShootTypes.Get(appointment.ShootTypeId);
+                    if (shootType == null)
+                    {
+                        return NotFound("Çekim Türü bulunamadı");
+                    }
                     var oldAppointment = await unitOfWork.Appointments.Get(appointment.Id);
                     if (oldAppointment == null)
                     {
@@ -164,30 +248,37 @@ namespace PhotoStudioFS.Controllers
 
                     bool scheduleIsEmpty = appointment.IsApproved == 2 ? true : false;
 
-                    if (!await UpdateScheduleIsEmptyField(appointment.ScheduleId, scheduleIsEmpty))
+                    if (!await UpdateScheduleIsEmptyField(oldAppointment.ScheduleId, scheduleIsEmpty))
                         return NotFound("Schedule Bulunamadı");
 
-                    if (appointment.IsApproved == 1)
+                    if (oldAppointment.Customer == null)
                     {
-                        var customer = await AddUser(appointment, oldAppointment);
+                        var customer = await AddUserIfNotExist(oldAppointment);
                         if (customer == null)
                         {
-                            return NotFound("Kullanıcı Eklenemedi");
+                            ModelState.AddModelError("NotUser", "Müşteri hesabı oluşturulamadı. Lütfen tekrar deneyiniz!");
+                            return View(appointment);
                         }
-                        appointment.CustomerId = customer.Id;
-
+                        oldAppointment.CustomerId = customer.Id;
+                        oldAppointment.Customer = customer;
+                    }
+                    if (!await SendNotify(appointment, oldAppointment, oldAppointment.Customer))
+                    {
+                        ModelState.AddModelError("NotUser2", "Kullanıcıya randevusuyla ilgili bildirim gönderilemedi. Lütfen tekrar deneyiniz!");
+                        return View(appointment);
                     }
 
-                    unitOfWork.Appointments.Update(appointment);
+                    oldAppointment.IsApproved = appointment.IsApproved;
+                    oldAppointment.State = appointment.State;
+                    unitOfWork.Appointments.Update(oldAppointment);
                     await unitOfWork.Complete();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
 
-                    return NotFound();
+                    return UnprocessableEntity();
 
                 }
-                //return RedirectToAction(nameof(GetRequests));
                 return Redirect(redirectTo);
 
             }
@@ -223,75 +314,122 @@ namespace PhotoStudioFS.Controllers
 
         }
 
-        private async Task<User> AddUser(Appointment appointment, Appointment oldAppointment)
+        private async Task<User> AddUserIfNotExist(Appointment appointment)
         {
-            try
+            var user_ = await userManager.FindByEmailAsync(appointment.Email);
+            if (user_ == null)
             {
-                var user_ = await userManager.FindByEmailAsync(appointment.Email);
-                if (user_ == null)
+                var user = new User()
                 {
-                    var user = new User()
-                    {
-                        FullName = appointment.Name,
-                        Email = appointment.Email,
-                        UserName = appointment.Email,
-                        PhoneNumber = appointment.Phone
-                    };
+                    FullName = appointment.Name,
+                    Email = appointment.Email,
+                    UserName = appointment.Email,
+                    PhoneNumber = appointment.Phone
+                };
 
-                    var result = await userManager.CreateAsync(user);
-
-                    if (result.Succeeded)
-                    {
-                        await userManager.AddToRoleAsync(user, Roles.Customer);
-                        user_ = await userManager.FindByEmailAsync(user.Email);
-                        var token = userManager.GeneratePasswordResetTokenAsync(user_).Result;
-
-                        var url = Url.Action("CreatePassword", "Account",
-                            new { Token = token, Email = user_.Email, FullName = user_.FullName }, protocol: HttpContext.Request.Scheme);
-
-                        var resultMail = await emailSender.SendNotifyEmail(
-                            url,
-                            TemplateNames.CreatePassword,
-                            "Randevunuz Onaylandı",
-                            new MailReceiverInfo()
-                            {
-                                FullName = appointment.Name,
-                                Email = appointment.Email,
-                                Type = "Appointment",
-                                Date = appointment.AppointmentDateStart
-                            });
-
-                        return user;
-                    }
-                    else
-                        return null;
-                }
-                else
+                var result = await userManager.CreateAsync(user);
+                if (result.Succeeded)
                 {
-                    if (appointment.State != oldAppointment.State && appointment.State == 1)
-                    {
-                        var url = Url.Action("Login", "Account", new { }, protocol: HttpContext.Request.Scheme);
+                    await userManager.AddToRoleAsync(user, Roles.Customer);
 
-                        var resultMail = await emailSender.SendNotifyEmail(
-                            url,
-                            TemplateNames.AppointmentApproved,
-                            "Randevunuz Onaylandı",
-                            new MailReceiverInfo()
-                            {
-                                FullName = appointment.Name,
-                                Email = appointment.Email,
-                                Date = appointment.AppointmentDateStart
-                            });
-                    }
-                    return user_;
+                    var token = userManager.GeneratePasswordResetTokenAsync(user).Result;
+
+                    var url = Url.Action("CreatePassword", "Account",
+                        new { Token = token, Email = user.Email, FullName = user.FullName }, protocol: HttpContext.Request.Scheme);
+
+                    var resultMail = await emailSender.SendNotifyEmail(
+                        url,
+                        TemplateNames.CreatePassword,
+                        "Hesabınız Oluşturuldu!",
+                        new MailReceiverInfo()
+                        {
+                            FullName = user.FullName,
+                            Email = user.Email,
+                            Type = "NewAccount",
+                            Date = DateTime.Now
+                        });
+
+                    return user;
                 }
-
-            }
-            catch (Exception)
-            {
                 return null;
             }
+            return user_;
         }
+
+        private async Task<bool> SendNotify(Appointment appointment, Appointment oldAppointment, User user)
+        {
+            var url = Url.Action("Login", "Account", new { }, protocol: HttpContext.Request.Scheme);
+            bool isAppointmentNotifySent = true, isPhotoStateNotifySent = true;
+            // State of appointment
+            if (appointment.IsApproved != oldAppointment.IsApproved)
+            {
+                string template = "", subject = "";
+                bool isWillSend = false;
+                if (appointment.IsApproved == 1) // if appointment is approved
+                {
+                    template = TemplateNames.AppointmentApproved;
+                    subject = "Randevunuz Onaylandı";
+                    isWillSend = true;
+                }
+                else if (appointment.IsApproved == 2) // if appointment is rejected
+                {
+                    template = TemplateNames.AppointmentRejected;
+                    subject = "Randevunuz Maalesef Onaylanamadı :(";
+                    isWillSend = true;
+                }
+                if (isWillSend)
+                {
+                    isAppointmentNotifySent = await emailSender.SendNotifyEmail(
+                               url,
+                               template,
+                               subject,
+                               new MailReceiverInfo()
+                               {
+                                   FullName = user.FullName,
+                                   Email = user.Email,
+                                   Date = oldAppointment.AppointmentDateStart,
+                               });
+                }
+            }
+            // State of photo shoot
+            if (appointment.State != oldAppointment.State)
+            {
+                string template = "", subject = "", emailType = "";
+                bool isWillSend = false;
+                template = TemplateNames.PhotoStatesNotify;
+
+                if (appointment.State == 1)
+                {
+                    subject = "Fotoğraflarınız/Videolarınız Hazırlanıyor";
+                    emailType = "Preparing";
+                    isWillSend = true;
+                }
+                else if (appointment.State == 2)
+                {
+                    subject = "Fotoğraflarınız/Videolarınız Hazır!";
+                    emailType = "Ready";
+                    isWillSend = true;
+                }
+                if (isWillSend)
+                {
+                    isPhotoStateNotifySent = await emailSender.SendNotifyEmail(
+                           url,
+                           template,
+                           subject,
+                           new MailReceiverInfo()
+                           {
+                               FullName = user.FullName,
+                               Email = user.Email,
+                               Date = oldAppointment.AppointmentDateStart,
+                               Type = emailType
+                           });
+                }
+            }
+
+            return isAppointmentNotifySent && isPhotoStateNotifySent;
+
+        }
+
         private async Task<bool> UpdateScheduleIsEmptyField(int id, bool isEmpty)
         {
             try

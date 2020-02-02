@@ -2,48 +2,96 @@
 
 @{
     ViewData["Title"] = "Sinem Kobaner";
-    ViewData["PageName"] = "Randevu Talebi Düzenle";
+    ViewData["PageName"] = "Randevu Oluştur";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     ViewData["IsDataTableUsed"] = false;
 }
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Müşteri Bilgileri</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2">
+                <label class="text-left">Adı ve Soyadı</label>
+            </div>
+            :@ViewData["deneme"]
+            <div class="col-md-6">
+                <label class="text-left font-weight-bold">@Model.Customer.FullName</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label class="text-left">Telefon Numarası</label>
+            </div>
+            :
+            <div class="col-md-6">
+                <label class="text-left font-weight-bold">@Model.Customer.PhoneNumber</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label class="text-left">Email Adresi</label>
+            </div>
+            :
+            <div class="col-md-6">
+                <label class="text-left font-weight-bold">@Model.Customer.Email</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label class="text-left">Kayıt Tarihi</label>
+            </div>
+            :
+            <div class="col-md-6">
+                <label class="text-left font-weight-bold">@Model.Customer.CreatedAt.ToShortDateString()</label>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Randevu Talebi Düzenle</h3>
+        <h3 class="card-title">Randevu Oluştur</h3>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-10">
-                <form asp-action="Edit">
+                <form asp-controller="Appointment" asp-action="CreateToCustomer">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="Id" />
                     <input type="hidden" asp-for="ScheduleId" />
-                    <input type="hidden" asp-for="ShootTypeId" />
+                    <input type="hidden" asp-for="@Model.CustomerId" />
                     <input type="hidden" name="redirectTo" value="@ViewData["RedirectTo"]" />
-                    <div class="form-group">
+                    <div hidden class="form-group">
                         <label asp-for="Name" class="control-label"></label>
                         <input asp-for="Name" class="form-control" />
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    <div hidden class="form-group">
                         <label asp-for="Email" class="control-label"></label>
                         <input asp-for="Email" class="form-control" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    <div hidden class="form-group">
                         <label asp-for="Phone" class="control-label"></label>
                         <input asp-for="Phone" class="form-control" />
                         <span asp-validation-for="Phone" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="ShootType.Name" class="control-label"></label>
-                        <input readonly asp-for="ShootType.Name" class="form-control" />
-                        <span asp-validation-for="ShootType.Name" class="text-danger"></span>
+                        <label asp-for="ShootType.Name" class="control-label">
+                        </label>
+                        <select class="form-control" name="ShootTypeId" id="ShootTypeId">
+                            <option selected disabled value="0">Çekim Türü Seçiniz</option>
+                            @foreach (var shoot in ViewBag.ShootTypes)
+                            {
+                                <option value="@shoot.Id">@shoot.Name</option>
+                            }
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Message" class="control-label"></label>
+                        <label for="Message" class="control-label">Ekstra Mesaj</label>
                         <textarea asp-for="Message" class="form-control">
-                            
                         </textarea>
                         <span asp-validation-for="Message" class="text-danger"></span>
                     </div>
@@ -69,7 +117,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="PricePaid" class="control-label"></label>
-                        <input asp-for="PricePaid" class="form-control float" />
+                        <input asp-for="PricePaid" class="form-control" />
                         <span asp-validation-for="PricePaid" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -99,9 +147,10 @@
 
     </div>
 </div>
-
 @section Scripts {
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
 
     <script src="~/Admin/js/custom/customValidation.js"></script>
 

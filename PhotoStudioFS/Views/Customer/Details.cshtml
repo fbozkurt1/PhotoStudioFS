@@ -55,6 +55,13 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Müşteri Randevu Bilgileri</h3>
+        <div class="card-options d-none d-sm-block">
+            <a class="btn btn-primary btn-sm"
+               asp-controller="Appointment" asp-action="Create" asp-route-email="@Model.Email">
+                <i class="fa fa-plus"></i>Yeni Randevu Ekle
+            </a>
+
+        </div>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -75,7 +82,7 @@
                     {
 
                         <tr>
-                            <td>@appointment.Type</td>
+                            <td>@appointment.ShootType.Name</td>
                             <td>@appointment.AppointmentDateStart.ToShortDateString()</td>
                             <td>@appointment.AppointmentDateStart.ToString("HH:mm") - @appointment.AppointmentDateEnd.ToString("HH:mm")</td>
 

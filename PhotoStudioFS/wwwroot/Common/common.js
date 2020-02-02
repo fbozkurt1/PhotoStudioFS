@@ -102,7 +102,6 @@ const Api = {
             { responseType: 'blob' }
         );
     },
-
     getAppointment: function (appointmentId) {
         return getData(`/Appointment/Edit`, { id: appointmentId })
     },
@@ -116,5 +115,18 @@ const Api = {
     },
     updateShootType: function (id, data) {
         return postData(`/Setting/EditShootType/${id}`, data);
+    },
+    addSchedule: function (data) {
+        return postData(`/Schedule/AddSchedule`, data);
+    },
+    getSchedules: function (start, end, shootId) {
+        return getData(`/Schedule/GetAllSchedules`, {
+            start,
+            end,
+            photoType: shootId
+        });
+    },
+    addAppointment: function (data) {
+        return postData(`/Appointment/Create`, data);
     }
 };

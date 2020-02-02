@@ -55,8 +55,8 @@ namespace PhotoStudioFS.Models
         public DateTime StateUpdateDate { get; set; } = DateTime.Now;
 
 
-        [Column(TypeName = "decimal(9, 2)"), Display(Name = "Çekim Ücreti"), Required]
-        public decimal Price { get; set; }
+        [Column(TypeName = "decimal(9, 2)"), Display(Name = "Çekim Ücreti")]
+        public decimal Price { get; set; } = 0;
 
 
         [Column(TypeName = "decimal(9, 2)"), Display(Name = "Ödenen Toplam Ücret")]
@@ -65,13 +65,13 @@ namespace PhotoStudioFS.Models
         public string CustomerId { get; set; }
         public User Customer { get; set; }
     }
+
     public class AppointmentView
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public string Type { get; set; }
         public string Message { get; set; }
         public string Date { get; set; }
         public string DateHourStart { get; set; }
@@ -80,6 +80,7 @@ namespace PhotoStudioFS.Models
         public short IsApproved { get; set; } = 0;
         public int ScheduleId { get; set; }
         public int ShootTypeId { get; set; }
+        public string ShootType { get; set; }
         public short State { get; set; } = 0; // 0- bekliyor, 1- çekim tamamlandı (resimler hazırlanıyor), 2- Hazır (resimler yüklendi)
 
     }

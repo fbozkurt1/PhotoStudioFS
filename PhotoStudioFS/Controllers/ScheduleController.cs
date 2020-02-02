@@ -20,9 +20,10 @@ namespace PhotoStudioFS.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var shootTypes = await unitOfWork.ShootTypes.Find(s => s.IsActive == true);
+            return View(shootTypes);
         }
         [HttpGet]
         public async Task<JsonResult> GetAllSchedules(string start, string end, int photoType)
@@ -42,11 +43,19 @@ namespace PhotoStudioFS.Controllers
             IEnumerable<Schedule> schedules;
 
             if (photoType == 0)
+            {
                 schedules = await unitOfWork.Schedules.GetSchedules(dtStart, dtEnd);
+            }
             else
+            {
+                var shootType = await unitOfWork.ShootTypes.Get(photoType);
+                if (shootType == null)
+                {
+                    return null;
+                }
                 schedules = await unitOfWork.Schedules.GetSchedulesByPhotoType(dtStart, dtEnd, photoType);
-
-            if (schedules != null)
+            }
+            if (schedules != null && schedules.Any())
             {
                 foreach (var schedule in schedules)
                 {
@@ -59,7 +68,7 @@ namespace PhotoStudioFS.Controllers
                         startHour = schedule.start.ToString("HH:mm").Trim(),
                         end = schedule.end.ToString("yyyy-MM-ddTHH:mm"),
                         endHour = schedule.end.ToString("HH:mm").Trim(),
-                        title = schedule.title,
+                        title = schedule.ShootType.Name,
                         photoShootType = schedule.ShootType.Name,
                         photoShootTypeId = schedule.ShootType.Id,
                         color = schedule.isEmpty == true ? "#6ced15" : "#ed4734"
@@ -78,10 +87,13 @@ namespace PhotoStudioFS.Controllers
                 {
                     return BadRequest("Başlangıç saati bitiş saatinden büyük veya aynı olamaz!");
                 }
-                if (string.IsNullOrEmpty(scheduleView.title) || string.IsNullOrWhiteSpace(scheduleView.title))
+
+                var shootType = await unitOfWork.ShootTypes.Get(scheduleView.photoShootTypeId);
+                if (shootType == null)
                 {
-                    return BadRequest("Gönderilen veri hatalı!");
+                    return BadRequest("Çekim Türü bulunamadı. Lütfen tekrar deneyiniz!");
                 }
+
                 var start = Convert.ToDateTime(scheduleView.start);
                 var end = Convert.ToDateTime(scheduleView.end);
 
@@ -91,8 +103,7 @@ namespace PhotoStudioFS.Controllers
                     isEmpty = scheduleView.isEmpty,
                     start = start,
                     end = end,
-                    title = scheduleView.title,
-                    ShootTypeId = scheduleView.photoShootTypeId
+                    ShootTypeId = shootType.Id
                 };
                 await unitOfWork.Schedules.Add(schedule);
                 await unitOfWork.Complete();

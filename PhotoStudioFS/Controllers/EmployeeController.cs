@@ -64,7 +64,11 @@ namespace PhotoStudioFS.Controllers
 
             if (ModelState.IsValid)
             {
-
+                if (await userManager.FindByEmailAsync(user.Email) != null)
+                {
+                    ModelState.AddModelError("NotUser", "Bu mail adresine kayıtlı personel zaten var. Bir mail adresine sahip yalnızca bir kullanıcı olabilir.");
+                    return View(user);
+                }
                 user.UserName = user.Email;
                 var result = await userManager.CreateAsync(user);
                 if (result.Succeeded)
@@ -93,7 +97,7 @@ namespace PhotoStudioFS.Controllers
 
                     return RedirectToAction(nameof(Index));
                 }
-                return BadRequest("Kullanıcı oluşturulamadı!");
+                ModelState.AddModelError("NotUser", "Kullanıcı oluşturulamadı. Lütfen kurallara uygun olarak tekrar deneyiniz!");
             }
             return View(user);
         }

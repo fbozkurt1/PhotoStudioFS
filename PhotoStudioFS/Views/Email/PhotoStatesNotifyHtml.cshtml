@@ -1,0 +1,34 @@
+﻿@using PhotoStudioFS.Models.ViewModels
+@model EmailButtonLinkViewModel
+
+@{
+    Layout = "~/Views/Email/_EmailLayoutHtml.cshtml";
+    ViewContext.ViewData["EmailTitle"] = "Fotoğraf İşleri";
+}
+@if (Model.Info.Type.Equals("Preparing"))
+{
+    <p>
+        Sayın <b>@Model.Info.FullName</b> , <br />
+        <b>@Model.Info.Date.ToShortDateString()</b> tarihli randevunuz için fotoğraflarınız/videolarınız hazırlanmaya başlanmıştır.
+        Fotoğraflarınız/videolarınız hazır olduğu zaman bilgilendirileceksiniz.
+        Fotoğraflarınızın veya videolarınızın durumunu hesabınıza giriş yaparak takip edebilirsiniz ve hazır olduğunda hesabınız üzerinden indirebilirsiniz.
+        <br />
+    </p>
+}
+else if (Model.Info.Type.Equals("Ready"))
+{
+    <p>
+        Sayın <b>@Model.Info.FullName</b> , <br />
+        <b>@Model.Info.Date.ToShortDateString()</b> tarihli randevunuzun fotoğrafların/videoların hazırlanma işlemi bitmiştir.
+        <br />
+        Hesabınıza giriş yaparak fotoğraflarınızı/videolarınızı indirebilirsiniz.
+        <br />
+    </p>
+}
+
+
+@await Html.PartialAsync("Email/_EmailButton", new EmailButtonViewModel("Hesabıma Giriş Yap", Model.ButtonLink))
+<br />
+<p>
+    Fotoğraf İşleri - Sinem Kobaner
+</p>

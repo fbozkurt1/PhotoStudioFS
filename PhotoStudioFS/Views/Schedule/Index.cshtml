@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<PhotoStudioFS.Models.Setting.ShootType>
 @{
     ViewData["Title"] = "Randevu Takvimi Oluştur";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -33,10 +33,10 @@
                                 <option disabled selected value="0">
                                     Çekim Türü Seçiniz
                                 </option>
-                                <option value="1">Doğum Çekimi</option>
-                                <option value="2">Düğün Çekimi</option>
-                                <option value="3">Dış Çekim</option>
-                                <option value="4">İç Çekim</option>
+                                @foreach (var shoot in Model)
+                                {
+                                    <option value="@shoot.Id">@shoot.Name</option>
+                                }
                             </select>
                         </div>
                     </div>

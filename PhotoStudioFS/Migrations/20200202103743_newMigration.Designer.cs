@@ -9,8 +9,8 @@ using PhotoStudioFS.Data;
 namespace PhotoStudioFS.Migrations
 {
     [DbContext(typeof(photostudioContext))]
-    [Migration("20200127185436_AddInitialMigration")]
-    partial class AddInitialMigration
+    [Migration("20200202103743_newMigration")]
+    partial class newMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -164,17 +164,17 @@ namespace PhotoStudioFS.Migrations
 
                     b.Property<int>("ScheduleId");
 
+                    b.Property<int>("ShootTypeId");
+
                     b.Property<short>("State");
 
                     b.Property<DateTime>("StateUpdateDate");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(20);
-
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("ShootTypeId");
 
                     b.ToTable("Appointments");
                 });
@@ -229,8 +229,6 @@ namespace PhotoStudioFS.Migrations
 
                     b.Property<string>("ThumbnailPath");
 
-                    b.Property<string>("deneme");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AppointmentId");
@@ -245,23 +243,41 @@ namespace PhotoStudioFS.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("ShootTypeId");
+
                     b.Property<bool>("allDay");
 
                     b.Property<DateTime>("end");
 
                     b.Property<bool>("isEmpty");
 
-                    b.Property<string>("photoShootType")
-                        .HasMaxLength(20);
-
                     b.Property<DateTime>("start");
-
-                    b.Property<string>("title")
-                        .HasMaxLength(50);
 
                     b.HasKey("id");
 
+                    b.HasIndex("ShootTypeId");
+
                     b.ToTable("Schedules");
+                });
+
+            modelBuilder.Entity("PhotoStudioFS.Models.Setting.ShootType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<int?>("ShootTypeId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ShootTypeId");
+
+                    b.ToTable("ShootTypes");
                 });
 
             modelBuilder.Entity("PhotoStudioFS.Models.User", b =>
@@ -374,6 +390,11 @@ namespace PhotoStudioFS.Migrations
                     b.HasOne("PhotoStudioFS.Models.User", "Customer")
                         .WithMany("Appointments")
                         .HasForeignKey("CustomerId");
+
+                    b.HasOne("PhotoStudioFS.Models.Setting.ShootType", "ShootType")
+                        .WithMany()
+                        .HasForeignKey("ShootTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PhotoStudioFS.Models.Photo", b =>
@@ -386,6 +407,21 @@ namespace PhotoStudioFS.Migrations
                     b.HasOne("PhotoStudioFS.Models.User", "Customer")
                         .WithMany("Photos")
                         .HasForeignKey("CustomerId");
+                });
+
+            modelBuilder.Entity("PhotoStudioFS.Models.Schedule", b =>
+                {
+                    b.HasOne("PhotoStudioFS.Models.Setting.ShootType", "ShootType")
+                        .WithMany()
+                        .HasForeignKey("ShootTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PhotoStudioFS.Models.Setting.ShootType", b =>
+                {
+                    b.HasOne("PhotoStudioFS.Models.Setting.ShootType")
+                        .WithMany("ShootTypes")
+                        .HasForeignKey("ShootTypeId");
                 });
 #pragma warning restore 612, 618
         }

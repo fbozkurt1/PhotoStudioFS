@@ -9,8 +9,8 @@ using PhotoStudioFS.Data;
 namespace PhotoStudioFS.Migrations
 {
     [DbContext(typeof(photostudioContext))]
-    [Migration("20200131205856_addShootTypeFK")]
-    partial class addShootTypeFK
+    [Migration("20200201144023_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -252,9 +252,6 @@ namespace PhotoStudioFS.Migrations
                     b.Property<bool>("isEmpty");
 
                     b.Property<DateTime>("start");
-
-                    b.Property<string>("title")
-                        .HasMaxLength(50);
 
                     b.HasKey("id");
 

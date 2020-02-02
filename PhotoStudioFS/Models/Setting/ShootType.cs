@@ -12,7 +12,6 @@ namespace PhotoStudioFS.Models.Setting
         public int Id { get; set; }
 
         [MaxLength(50), Display(Name = "Çekim Türü"), Required]
-
         public string Name { get; set; }
 
         [Display(Name = "Çekim Türü"), Required]

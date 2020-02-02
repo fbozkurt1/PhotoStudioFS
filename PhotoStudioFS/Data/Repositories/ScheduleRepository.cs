@@ -17,13 +17,16 @@ namespace PhotoStudioFS.Data.Repositories
         {
 
             return await photostudioContext.Schedules
+                .Include(s => s.ShootType)
                 .Where(s => s.isEmpty == true && s.start >= start && s.end <= end && s.ShootTypeId == photoType)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<Schedule>> GetSchedules(DateTime start, DateTime end)
         {
-            return await photostudioContext.Schedules.Where(s => s.start >= start && s.end <= end)
+            return await photostudioContext.Schedules
+                .Include(s => s.ShootType)
+                .Where(s => s.start >= start && s.end <= end)
                 .ToListAsync();
         }
 

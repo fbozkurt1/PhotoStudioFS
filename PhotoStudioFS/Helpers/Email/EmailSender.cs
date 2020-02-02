@@ -50,8 +50,9 @@ namespace PhotoStudioFS.Helpers.Email
                     await smtp.SendMailAsync(message);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                string hata = ex.Message;
                 return false;
             }
 

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PhotoStudioFS.Data;
 
 namespace PhotoStudioFS.Migrations
 {
     [DbContext(typeof(photostudioContext))]
-    partial class photostudioContextModelSnapshot : ModelSnapshot
+    [Migration("20200202104153_newMigration3")]
+    partial class newMigration3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -12,9 +12,6 @@ namespace PhotoStudioFS.Models
         [Key]
         public int id { get; set; }
 
-        [MaxLength(50)]
-        public string title { get; set; }
-
         [DataType(DataType.Date), Required]
         public DateTime start { get; set; }
 
@@ -40,9 +37,9 @@ namespace PhotoStudioFS.Models
         public string endHour { get; set; }
         public string photoShootType { get; set; }
         public int photoShootTypeId { get; set; }
-        public bool isEmpty { get; set; }
-        public bool allDay { get; set; }
+        public bool isEmpty { get; set; } = true;
+        public bool allDay { get; set; } = false;
         public string color { get; set; }
-
     }
+
 }

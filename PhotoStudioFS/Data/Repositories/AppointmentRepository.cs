@@ -58,5 +58,14 @@ namespace PhotoStudioFS.Data.Repositories
                 .Where(a => a.CustomerId == customerId)
                 .OrderByDescending(a => a.AppointmentDateStart).ToListAsync();
         }
+
+        public async Task<Appointment> GetAppointment(int id)
+        {
+            return await photostudioContext.Appointments
+             .Include(a => a.Customer)
+             .Include(a => a.ShootType)
+             .Where(a => a.Id == id)
+             .SingleOrDefaultAsync();
+        }
     }
 }

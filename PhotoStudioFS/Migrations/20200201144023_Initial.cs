@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PhotoStudioFS.Migrations
 {
-    public partial class AddInitialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace PhotoStudioFS.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(maxLength: 255, nullable: false),
+                    Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 255, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 255, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
@@ -26,7 +26,7 @@ namespace PhotoStudioFS.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(maxLength: 255, nullable: false),
+                    Id = table.Column<string>(nullable: false),
                     UserName = table.Column<string>(maxLength: 255, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 255, nullable: true),
                     Email = table.Column<string>(maxLength: 255, nullable: true),
@@ -71,21 +71,17 @@ namespace PhotoStudioFS.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Schedules",
+                name: "ShootTypes",
                 columns: table => new
                 {
-                    id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    title = table.Column<string>(maxLength: 50, nullable: true),
-                    start = table.Column<DateTime>(nullable: false),
-                    end = table.Column<DateTime>(nullable: false),
-                    photoShootType = table.Column<string>(maxLength: 20, nullable: true),
-                    isEmpty = table.Column<bool>(nullable: false),
-                    allDay = table.Column<bool>(nullable: false)
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Schedules", x => x.id);
+                    table.PrimaryKey("PK_ShootTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -107,39 +103,6 @@ namespace PhotoStudioFS.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Appointments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
-                    Email = table.Column<string>(maxLength: 50, nullable: false),
-                    Phone = table.Column<string>(maxLength: 15, nullable: false),
-                    Type = table.Column<string>(maxLength: 20, nullable: false),
-                    Message = table.Column<string>(maxLength: 1000, nullable: true),
-                    AppointmentDateStart = table.Column<DateTime>(nullable: false),
-                    AppointmentDateEnd = table.Column<DateTime>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
-                    IsApproved = table.Column<short>(nullable: false),
-                    ScheduleId = table.Column<int>(nullable: false),
-                    State = table.Column<short>(nullable: false),
-                    StateUpdateDate = table.Column<DateTime>(nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(9, 2)", nullable: false),
-                    PricePaid = table.Column<decimal>(type: "decimal(9, 2)", nullable: false),
-                    CustomerId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Appointments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Appointments_AspNetUsers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -211,7 +174,7 @@ namespace PhotoStudioFS.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(maxLength: 255, nullable: false),
+                    UserId = table.Column<string>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
@@ -223,6 +186,68 @@ namespace PhotoStudioFS.Migrations
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Appointments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Email = table.Column<string>(maxLength: 50, nullable: false),
+                    Phone = table.Column<string>(maxLength: 15, nullable: false),
+                    ShootTypeId = table.Column<int>(nullable: false),
+                    Message = table.Column<string>(maxLength: 1000, nullable: true),
+                    AppointmentDateStart = table.Column<DateTime>(nullable: false),
+                    AppointmentDateEnd = table.Column<DateTime>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    IsApproved = table.Column<short>(nullable: false),
+                    ScheduleId = table.Column<int>(nullable: false),
+                    State = table.Column<short>(nullable: false),
+                    StateUpdateDate = table.Column<DateTime>(nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(9, 2)", nullable: false),
+                    PricePaid = table.Column<decimal>(type: "decimal(9, 2)", nullable: false),
+                    CustomerId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Appointments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Appointments_AspNetUsers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Appointments_ShootTypes_ShootTypeId",
+                        column: x => x.ShootTypeId,
+                        principalTable: "ShootTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Schedules",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    start = table.Column<DateTime>(nullable: false),
+                    end = table.Column<DateTime>(nullable: false),
+                    ShootTypeId = table.Column<int>(nullable: false),
+                    isEmpty = table.Column<bool>(nullable: false),
+                    allDay = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Schedules", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Schedules_ShootTypes_ShootTypeId",
+                        column: x => x.ShootTypeId,
+                        principalTable: "ShootTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -260,6 +285,11 @@ namespace PhotoStudioFS.Migrations
                 name: "IX_Appointments_CustomerId",
                 table: "Appointments",
                 column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appointments_ShootTypeId",
+                table: "Appointments",
+                column: "ShootTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -307,6 +337,11 @@ namespace PhotoStudioFS.Migrations
                 name: "IX_Photos_CustomerId",
                 table: "Photos",
                 column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Schedules_ShootTypeId",
+                table: "Schedules",
+                column: "ShootTypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -343,6 +378,9 @@ namespace PhotoStudioFS.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "ShootTypes");
         }
     }
 }

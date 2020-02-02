@@ -10,6 +10,7 @@ using PhotoStudioFS.Data;
 using PhotoStudioFS.Helpers;
 using PhotoStudioFS.Helpers.Email;
 using PhotoStudioFS.Models;
+using PhotoStudioFS.Models.Setting;
 using PhotoStudioFS.Models.ViewModels;
 
 namespace PhotoStudioFS.Controllers
@@ -68,7 +69,7 @@ namespace PhotoStudioFS.Controllers
                             startHour = schedule.start.ToString("HH:mm").Trim(),
                             end = schedule.end.ToString("yyyy-MM-ddTHH:mm"),
                             endHour = schedule.end.ToString("HH:mm").Trim(),
-                            title = schedule.title,
+                            title = schedule.ShootType.Name,
                             photoShootType = schedule.ShootType.Name,
                             photoShootTypeId = schedule.ShootType.Id,
                             color = schedule.isEmpty == true ? "#6ced15" : "#ed4734"
@@ -104,6 +105,11 @@ namespace PhotoStudioFS.Controllers
 
                 try
                 {
+                    if(await unitOfWork.Schedules.Find(s => s.id == appointmentView.ScheduleId && s.isEmpty == true) == null)
+                    {
+                        return BadRequest("Randevu almak istediğiniz tarih dolu!");
+                    }
+
                     if (!await UpdateScheduleIsEmptyField(appointmentView.ScheduleId, false))
                         return NotFound("Schedule Bulunamadı");
 
@@ -138,6 +144,7 @@ namespace PhotoStudioFS.Controllers
             }
 
         }
+
         [HttpGet("GetAppointments")]
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments(string customerId)
         {
@@ -212,7 +219,7 @@ namespace PhotoStudioFS.Controllers
         /*------------------------------------------------------------------------------------------------------------------------------------*/
         /* PHOTO REQUESTS */
 
-        [HttpGet]
+        [HttpGet("GetPhotos")]
         public async Task<ActionResult<IEnumerable<Photo>>> GetPhotos(int appointmentId, string customerId)
         {
             var currentUser = await userManager.FindByIdAsync(customerId);
@@ -239,8 +246,42 @@ namespace PhotoStudioFS.Controllers
 
         /* END PHOTO REQUESTS */
         /*------------------------------------------------------------------------------------------------------------------------------------*/
-        /* PRIVATE REQUESTS */
+        /* PHOTO SHOOT TYPE REQUESTS */
 
+        [HttpGet("GetPhotoShootTypes")]
+        public async Task<ActionResult<IEnumerable<ShootType>>> GetPhotoShootTypes()
+        {
+            try
+            {
+                var shootTypes = await unitOfWork.ShootTypes.Find(s => s.IsActive == true);
+                return Ok(shootTypes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error");
+            }
+        }
+
+        [HttpGet("GetPhotoShootType")]
+        public async Task<ActionResult<ShootType>> GetPhotoShootType(int id)
+        {
+            try
+            {
+                var shootType = await unitOfWork.ShootTypes.Get(id);
+                if (shootType == null)
+                    return NotFound("Bulunamadı");
+                return Ok(shootType);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server error");
+            }
+        }
+
+        /* PHOTO SHOOT TYPE REQUESTS */
+        /*------------------------------------------------------------------------------------------------------------------------------------*/
+        /* PRIVATE REQUESTS */
+        [HttpPost("UpdateScheduleIsEmptyField")]
         private async Task<bool> UpdateScheduleIsEmptyField(int id, bool isEmpty)
         {
             try
