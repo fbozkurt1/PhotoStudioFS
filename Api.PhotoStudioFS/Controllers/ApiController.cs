@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using PhotoStudioFS.Data;
 using PhotoStudioFS.Helpers;
 using PhotoStudioFS.Helpers.Email;
@@ -13,9 +20,9 @@ using PhotoStudioFS.Models;
 using PhotoStudioFS.Models.Setting;
 using PhotoStudioFS.Models.ViewModels;
 
-namespace PhotoStudioFS.Controllers
+namespace Api.PhotoStudioFS.Controllers
 {
-    [Route("[controller]")]
+    [Route("deneme/[controller]")]
     [ApiController]
     public class ApiController : ControllerBase
     {
@@ -25,6 +32,7 @@ namespace PhotoStudioFS.Controllers
         protected photostudioContext context { get; set; }
         protected UserManager<User> userManager { get; private set; }
         protected SignInManager<User> signInManager { get; private set; }
+        private readonly IConfiguration configuration;
         public ApiController(UserManager<User> userManager,
             SignInManager<User> signInManager,
             IConfiguration configuration,
@@ -37,6 +45,7 @@ namespace PhotoStudioFS.Controllers
             emailSender = new EmailSender(razorView);
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.configuration = configuration;
         }
 
         /* APPOINTMENT REQUESTS */
@@ -249,6 +258,7 @@ namespace PhotoStudioFS.Controllers
         /*------------------------------------------------------------------------------------------------------------------------------------*/
         /* PHOTO SHOOT TYPE REQUESTS */
 
+        [Authorize]
         [HttpGet("GetPhotoShootTypes")]
         public async Task<ActionResult<IEnumerable<ShootType>>> GetPhotoShootTypes()
         {
@@ -303,6 +313,53 @@ namespace PhotoStudioFS.Controllers
 
         /*------------------------------------------------------------------------------------------------------------------------------------*/
         /* END PRIVATE REQUESTS */
+
+        [HttpPost("Login")]
+        public async Task<object> Login([FromForm] LoginDto model)
+        {
+            var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+
+            if (result.Succeeded)
+            {
+                var appUser = userManager.Users.SingleOrDefault(r => r.Email == model.Email);
+                return await GenerateJwtToken(model.Email, appUser);
+            }
+
+            throw new ApplicationException("INVALID_LOGIN_ATTEMPT");
+        }
+
+        private async Task<object> GenerateJwtToken(string email, IdentityUser user)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id)
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtKey"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var expires = DateTime.Now.AddDays(Convert.ToDouble(configuration["JwtExpireDays"]));
+
+            var token = new JwtSecurityToken(
+                configuration["JwtIssuer"],
+                configuration["JwtIssuer"],
+                claims,
+                expires: expires,
+                signingCredentials: creds
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+    }
+    public class LoginDto
+    {
+        [Required]
+        public string Email { get; set; }
+
+        [Required]
+        public string Password { get; set; }
 
     }
 }

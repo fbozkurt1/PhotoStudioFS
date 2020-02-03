@@ -59,6 +59,7 @@ namespace PhotoStudioFS.Controllers
                         var userRoleList = await userManager.GetRolesAsync(user);
 
                         var actionToRedirect = GetActionToRedirectByRoles(userRoleList);
+
                         if (!actionToRedirect.Equals(""))
                             return RedirectToAction("Index", actionToRedirect);
 

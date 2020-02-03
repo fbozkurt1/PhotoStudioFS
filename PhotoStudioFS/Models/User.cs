@@ -20,8 +20,9 @@ namespace PhotoStudioFS.Models
         [DataType(DataType.Date), Display(Name = "Kayıt Tarihi"), Required]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        public IList<Photo> Photos { get; set; }
-        public IList<Appointment> Appointments { get; set; }
+        //public IList<Photo> Photos { get; set; }
+
+        //public IList<Appointment> Appointments { get; set; }
     }
 
     public class LoginViewModel
