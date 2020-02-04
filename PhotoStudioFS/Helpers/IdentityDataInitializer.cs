@@ -14,7 +14,6 @@ namespace PhotoStudioFS.Data
         private static RoleManager<IdentityRole> RoleManager;
         private static UserManager<User> UserManager;
         private static string[] roleNames = Roles.GetRoles();
-        private static IdentityResult roleResult;
 
         public static async Task SeedDataAsync(IServiceProvider serviceProvider)
         {

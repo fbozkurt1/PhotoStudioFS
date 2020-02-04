@@ -22,7 +22,8 @@ using PhotoStudioFS.Models.ViewModels;
 
 namespace Api.PhotoStudioFS.Controllers
 {
-    [Route("deneme/[controller]")]
+    [Route("[controller]")]
+    [Authorize]
     [ApiController]
     public class ApiController : ControllerBase
     {
@@ -156,20 +157,22 @@ namespace Api.PhotoStudioFS.Controllers
         }
 
         [HttpGet("GetAppointments")]
-        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments(string customerId)
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
         {
-            if (string.IsNullOrEmpty(customerId) || string.IsNullOrWhiteSpace(customerId) || customerId == null)
+            string userEmail = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userEmail) || string.IsNullOrWhiteSpace(userEmail) || userEmail == null)
             {
-                return UnprocessableEntity("customerId boş!");
+                return NotFound("Token geçerli değil.");
             }
             try
             {
-                var currentUser = await userManager.FindByIdAsync(customerId);
+                var currentUser = await userManager.FindByEmailAsync(userEmail);
                 if (currentUser == null)
                 {
-                    return NotFound("Kullanıcı bulunamadı");
+                    return NotFound("Giriş bilgileri geçerli değil.");
                 }
-                var appointments = await unitOfWork.Appointments.GetAppointmentsByCustomer(customerId);
+                var appointments = await unitOfWork.Appointments.GetAppointmentsByCustomer(currentUser.Id);
                 return Ok(appointments);
             }
             catch (Exception)
@@ -230,12 +233,18 @@ namespace Api.PhotoStudioFS.Controllers
         /* PHOTO REQUESTS */
 
         [HttpGet("GetPhotos")]
-        public async Task<ActionResult<IEnumerable<Photo>>> GetPhotos(int appointmentId, string customerId)
+        public async Task<ActionResult<IEnumerable<Photo>>> GetPhotos(int appointmentId)
         {
-            var currentUser = await userManager.FindByIdAsync(customerId);
+            string userEmail = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userEmail) || string.IsNullOrWhiteSpace(userEmail) || userEmail == null)
+            {
+                return NotFound("Token geçerli değil.");
+            }
+            var currentUser = await userManager.FindByEmailAsync(userEmail);
             if (currentUser == null)
             {
-                return NotFound("Kullanıcı bulunamadı");
+                return NotFound("Kullanıcı bilgileri geçerli değil!");
             }
 
             try
@@ -245,7 +254,7 @@ namespace Api.PhotoStudioFS.Controllers
                     return NotFound("Appointment Bulunamadı");
                 }
 
-                var photos = await unitOfWork.Photos.GetPhotos(appointmentId, customerId);
+                var photos = await unitOfWork.Photos.GetPhotos(appointmentId, currentUser.Id);
                 return Ok(photos);
             }
             catch (Exception)
@@ -258,7 +267,7 @@ namespace Api.PhotoStudioFS.Controllers
         /*------------------------------------------------------------------------------------------------------------------------------------*/
         /* PHOTO SHOOT TYPE REQUESTS */
 
-        [Authorize]
+
         [HttpGet("GetPhotoShootTypes")]
         public async Task<ActionResult<IEnumerable<ShootType>>> GetPhotoShootTypes()
         {
@@ -267,7 +276,7 @@ namespace Api.PhotoStudioFS.Controllers
                 var shootTypes = await unitOfWork.ShootTypes.Find(s => s.IsActive == true);
                 return Ok(shootTypes);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server error");
             }
@@ -283,7 +292,7 @@ namespace Api.PhotoStudioFS.Controllers
                     return NotFound("Bulunamadı");
                 return Ok(shootType);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server error");
             }
@@ -315,7 +324,8 @@ namespace Api.PhotoStudioFS.Controllers
         /* END PRIVATE REQUESTS */
 
         [HttpPost("Login")]
-        public async Task<object> Login([FromForm] LoginDto model)
+        [AllowAnonymous]
+        public async Task<object> Login([FromForm] LoginView model)
         {
             var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 
@@ -325,7 +335,7 @@ namespace Api.PhotoStudioFS.Controllers
                 return await GenerateJwtToken(model.Email, appUser);
             }
 
-            throw new ApplicationException("INVALID_LOGIN_ATTEMPT");
+            return NotFound("Kullanıcı Giriş bilgileri geçerli değil.");
         }
 
         private async Task<object> GenerateJwtToken(string email, IdentityUser user)
@@ -334,7 +344,8 @@ namespace Api.PhotoStudioFS.Controllers
             {
                 new Claim(JwtRegisteredClaimNames.Sub, email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, user.Id)
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Name,user.Id)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtKey"]));
@@ -353,7 +364,7 @@ namespace Api.PhotoStudioFS.Controllers
         }
 
     }
-    public class LoginDto
+    public class LoginView
     {
         [Required]
         public string Email { get; set; }
