@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ using PhotoStudioFS.Models.ViewModels;
 
 namespace PhotoStudioFS.Controllers
 {
+    [Authorize(Roles = "Admin,Employee")]
     public class AppointmentController : BaseController
     {
         private IRazorViewToStringRenderer _renderer;
@@ -106,55 +108,6 @@ namespace PhotoStudioFS.Controllers
                 return View(appointment);
             else
                 return View(appointment).WithDanger("Hata!", error);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(AppointmentView appointmentView)
-        {
-
-            if (ModelState.IsValid)
-            {
-                var appointment = new Appointment()
-                {
-                    Name = appointmentView.Name,
-                    Phone = appointmentView.Phone,
-                    Email = appointmentView.Email,
-                    Message = appointmentView.Message,
-                    AppointmentDateStart = Convert.ToDateTime(appointmentView.Date + " " + appointmentView.DateHourStart, CultureInfo.GetCultureInfo("tr-TR")),
-                    AppointmentDateEnd = Convert.ToDateTime(appointmentView.Date + " " + appointmentView.DateHourEnd, CultureInfo.GetCultureInfo("tr-TR")),
-                    CreatedAt = DateTime.Now,
-                    IsApproved = 0,
-                    ShootTypeId = appointmentView.ShootTypeId,
-                    ScheduleId = appointmentView.ScheduleId
-                };
-
-                if (!await UpdateScheduleIsEmptyField(appointmentView.ScheduleId, false))
-                    return NotFound("Schedule Bulunamadı");
-
-                await unitOfWork.Appointments.Add(appointment);
-                await unitOfWork.Complete();
-
-                var url = Url.Action("Index", "Home",
-                            new { }, protocol: HttpContext.Request.Scheme);
-
-                var resultMail = await emailSender
-                    .SendNotifyEmail(url,
-                        TemplateNames.AppointmentRequest,
-                        "Randevunuz Talebiniz Oluşturuldu",
-                        new MailReceiverInfo()
-                        {
-                            FullName = appointment.Name,
-                            Email = appointment.Email,
-                            Date = appointment.AppointmentDateStart
-                        });
-
-                return Ok("Randevu talebiniz başarıyla eklendi. Talebiniz onaylandığında mail ile bilgilendirileceksiniz.");
-            }
-            else
-            {
-                return BadRequest("hata");
-            }
-
         }
 
         [HttpPost]
@@ -440,12 +393,12 @@ namespace PhotoStudioFS.Controllers
                 schedule.isEmpty = isEmpty;
                 unitOfWork.Schedules.Update(schedule);
                 await unitOfWork.Complete();
+                return true;
             }
             catch (Exception)
             {
                 return false;
             }
-            return true;
         }
     }
 }

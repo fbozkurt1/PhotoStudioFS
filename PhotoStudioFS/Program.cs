@@ -19,7 +19,6 @@ namespace PhotoStudioFS
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-            .UseUrls("https://localhost:5002/")
                 .UseStartup<Startup>();
     }
 }

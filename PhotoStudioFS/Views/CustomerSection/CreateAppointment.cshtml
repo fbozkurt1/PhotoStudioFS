@@ -1,0 +1,122 @@
+﻿@{
+    ViewData["Title"] = "Sinem Kobaner - Randevu Talep Et";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["IsDataTableUsed"] = false;
+    ViewData["PageName"] = "Randevu Talep Et";
+}
+@section Styles{
+
+    <link href='~/Fullcalendar/core/main.css' rel='stylesheet' />
+    <link href='~/Fullcalendar/daygrid/main.css' rel='stylesheet' />
+    <link href='~/Fullcalendar/timegrid/main.css' rel='stylesheet' />
+
+}
+
+<!-- Modal -->
+<div class="modal fade" id="appInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h3 class="modal-title" id="eventModalTitle">Randevuyu Onaylayınız</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+                <h4 id="infoModalSubtitle"></h4>
+                <input hidden disabled id="scheduleId" type="text">
+
+                <div class="row mt-2">
+                    <div class="col-md-10">
+                        <label for="infoAppShootType" class="form-control-label">Randevu Türü</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-camera-retro tx-16 lh-0 op-6"></i>
+                                </div>
+                            </div><!-- input-group-prepend -->
+
+                            <input readonly class="form-control" id="infoAppShootType" type="text">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-10">
+                        <label for="infoAppDate" class="form-control-label">Randevu Tarihi</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-clock-o tx-16 lh-0 op-6"></i>
+                                </div>
+                            </div><!-- input-group-prepend -->
+
+                            <input readonly class="form-control" id="infoAppDate" type="text">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-10">
+                        <label for="infoAppTime" class="form-control-label">Randevu Saati</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-clock-o tx-16 lh-0 op-6"></i>
+                                </div>
+                            </div><!-- input-group-prepend -->
+
+                            <input readonly class="form-control" id="infoAppTime" type="text">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-10">
+                        <label for="infoAppMessage" class="form-control-label">Mesajınız</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-envelope tx-16 lh-0 op-6"></i>
+                                </div>
+                            </div><!-- input-group-prepend -->
+
+                            <textarea name="Message" id="infoAppMessage" cols="30" rows="7" class="form-control" placeholder="Randevu talebiniz hakkında ekstra belirtmek istediğiniz durumlar" required></textarea>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button id="approveAppointment" type="button" class="btn btn-success">Randevuyu Onayla</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal End-->
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0 card-title">Müsait Randevu Takvimi</h3>
+            </div>
+            <div class="card-body">
+                <div id='createAppointmentFullcalendar'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="~/Fullcalendar/core/main.js"></script>
+    <script src='~/Fullcalendar/daygrid/main.js'></script>
+    <script src='~/Fullcalendar/timegrid/main.js'></script>
+    <script src='~/Fullcalendar/interaction/main.js'></script>
+    <script src="~/Fullcalendar/core/locales/tr.js"></script>
+    <script src="~/Admin/js/custom/customerSectionAppointment.js"></script>
+
+}

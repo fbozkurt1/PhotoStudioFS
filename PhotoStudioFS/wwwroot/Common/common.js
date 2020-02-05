@@ -120,13 +120,13 @@ const Api = {
         return postData(`/Schedule/AddSchedule`, data);
     },
     getSchedules: function (start, end, shootId) {
-        return getData(`/Schedule/GetAllSchedules`, {
+        return getData(`/Common/GetAllSchedules`, {
             start,
             end,
             photoType: shootId
         });
     },
     addAppointment: function (data) {
-        return postData(`/Appointment/Create`, data);
+        return postData(`/Common/Create`, data);
     }
 };

@@ -144,5 +144,12 @@ namespace PhotoStudioFS.Controllers
             return File(fileBytes, "application/zip");
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> CreateAppointment()
+        {
+            return View();
+        }
+
     }
 }

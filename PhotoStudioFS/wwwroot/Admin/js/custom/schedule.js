@@ -30,7 +30,7 @@
             };
         },
         events: {
-            url: `/Schedule/GetAllSchedules`,
+            url: `/Common/GetAllSchedules`,
             method: 'GET',
             //extraParams: {
             //    custom_param1: 'something',

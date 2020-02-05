@@ -338,6 +338,27 @@ namespace Api.PhotoStudioFS.Controllers
             return NotFound("Kullanıcı Giriş bilgileri geçerli değil.");
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<object> CheckAuth()
+        {
+            string userEmail = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userEmail) || string.IsNullOrWhiteSpace(userEmail) || userEmail == null)
+            {
+                return NotFound("Token geçerli değil.");
+            }
+
+            var currentUser = await userManager.FindByEmailAsync(userEmail);
+
+            if (currentUser == null)
+            {
+                return NotFound("Kullanıcı bilgileri geçerli değil!");
+            }
+
+            return GenerateJwtToken(userEmail, currentUser);
+        }
+
         private async Task<object> GenerateJwtToken(string email, IdentityUser user)
         {
             var claims = new List<Claim>
