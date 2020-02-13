@@ -36,8 +36,7 @@ namespace PhotoStudioFS
         public void ConfigureServices(IServiceCollection services)
         {
             var connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<photostudioContext>(
-                options =>
+            services.AddDbContext<photostudioContext>(options =>
                 {
                     options.UseMySql(connection);
                     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
@@ -47,6 +46,11 @@ namespace PhotoStudioFS
                 .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddEntityFrameworkStores<photostudioContext>()
                 .AddDefaultTokenProviders();
+
+            services.Configure<DataProtectionTokenProviderOptions>(options =>
+            {
+                options.TokenLifespan = TimeSpan.FromDays(7);
+            });
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -98,24 +102,6 @@ namespace PhotoStudioFS
                     options.SlidingExpiration = true;
                 });
 
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    // Cookie settings
-            //    options.Cookie.HttpOnly = true;
-            //    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-            //    options.LoginPath = "/Account/Login";
-            //    options.LogoutPath = "/Account/Logout";
-            //    options.AccessDeniedPath = "/Account/AccessDenied";
-            //    options.Cookie = new CookieBuilder
-            //    {
-            //        Name = "AspNetCoreIdentityCookie", //Oluşturulacak Cookie'yi isimlendiriyoruz.
-            //        HttpOnly = false, //Kötü niyetli insanların client-side tarafından Cookie'ye erişmesini engelliyoruz.
-            //        SameSite = SameSiteMode.Lax, //Top level navigasyonlara sebep olmayan requestlere Cookie'nin gönderilmemesini belirtiyoruz.
-            //        SecurePolicy = CookieSecurePolicy.Always //HTTPS üzerinden erişilebilir yapıyoruz.
-            //    };
-            //    options.SlidingExpiration = true;
-            //});
-            //services.BuildServiceProvider().GetService<photostudioContext>().Database.Migrate();
             services.AddAuthorization();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

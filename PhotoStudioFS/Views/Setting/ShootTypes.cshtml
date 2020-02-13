@@ -22,6 +22,12 @@
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" placeholder="Ana sayfada görünecek açıklama..." class="form-control">
+                        </textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
                         <input type="submit" value="Ekle" class="btn btn-primary" />
                     </div>
                 </form>
@@ -42,6 +48,7 @@
                         <thead>
                             <tr>
                                 <th class="wd-15p">Çekim Türü</th>
+                                <th class="wd-15p">Açıklama</th>
                                 <th class="wd-15p">Durum</th>
                                 <th class="wd-15p">İşlem</th>
                             </tr>
@@ -53,6 +60,7 @@
 
                                 <tr>
                                     <td>@shootType.Name</td>
+                                    <td>@shootType.Description</td>
                                     @if (shootType.IsActive)
                                     {
                                         <td><span class="badge badge-success">Aktif</span></td>
@@ -109,7 +117,23 @@
 
                     </div>
                 </div>
+                <div class="row mt-2 mb-2">
+                    <div class="col-md-8">
+                        <label class="form-label">Açıklama</label>
+                        <div class="input-group ">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-envelope tx-16 lh-0 op-6"></i>
+                                </div>
+                            </div><!-- input-group-prepend -->
 
+                            <textarea required class="form-control" id="shootTypeDesc"
+                                      placeholder="Ana sayfada görünecek yazı" type="text">
+                            </textarea>
+                        </div>
+
+                    </div>
+                </div>
                 <div class="row mt-2 mb-2">
                     <div class="col-md-8">
                         <div class="form-group">

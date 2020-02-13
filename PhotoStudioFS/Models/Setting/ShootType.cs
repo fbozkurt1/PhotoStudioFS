@@ -14,6 +14,9 @@ namespace PhotoStudioFS.Models.Setting
         [MaxLength(50), Display(Name = "Çekim Türü"), Required]
         public string Name { get; set; }
 
+        [MaxLength(2000), Display(Name = "Açıklama"), Required]
+        public string Description { get; set; }
+
         [Display(Name = "Çekim Türü"), Required]
         public bool IsActive { get; set; } = true;
 

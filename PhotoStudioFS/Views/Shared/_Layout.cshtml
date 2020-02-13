@@ -1,401 +1,373 @@
 ﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="~/Client/images/logo.ico" type="image/x-icon" />
-    <link rel="shortcut icon" type="image/x-icon" href="~/Client/images/logo.ico" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@ViewData["Title"]</title>
-    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="~/css/site.css" />*@
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
 
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400i,700,700i&display=swap" rel="stylesheet">
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:site_name" content="" />
+    <meta property="og:description" content="" />
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:card" content="" />
 
-    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:100,300,400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700" rel="stylesheet">
 
-    <link rel="stylesheet" href="~/Client/css/open-iconic-bootstrap.min.css">
+    <!-- Animate.css -->
     <link rel="stylesheet" href="~/Client/css/animate.css">
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="~/Client/css/icomoon.css">
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="~/Client/css/bootstrap.css">
 
-    <link rel="stylesheet" href="~/Client/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="~/Client/css/owl.theme.default.min.css">
+    <!-- Magnific Popup -->
     <link rel="stylesheet" href="~/Client/css/magnific-popup.css">
 
-    <link rel="stylesheet" href="~/Client/css/aos.css">
-
-    <link rel="stylesheet" href="~/Client/css/ionicons.min.css">
-
-    <link rel="stylesheet" href="~/Client/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="~/Client/css/jquery.timepicker.css">
-
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="~/Client/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Client/css/owl.theme.default.min.css">
     <!-- Date Picker css-->
     <link href="~/Admin/plugins/date-picker/spectrum.css" rel="stylesheet" />
-    <link href="~/Admin/plugins/jquery-ui/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Admin/plugins/jquery-ui2/jquery-ui.css" rel="stylesheet" />
 
     <!---Sweetalert Css-->
     <link href="~/Admin/plugins/sweet-alert/jquery.sweet-modal.min.css" rel="stylesheet" />
     <link href="~/Admin/plugins/sweet-alert/sweetalert.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="~/Client/css/flaticon.css">
-    <link rel="stylesheet" href="~/Client/css/icomoon.css">
+    <!-- Theme style  -->
     <link rel="stylesheet" href="~/Client/css/style.css">
+
+    <!-- Modernizr JS -->
+    <script src="~/Client/js/modernizr-2.6.2.min.js"></script>
+    <!-- FOR IE9 below -->
+    <!--[if lt IE 9]>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
 </head>
+
 <body>
-    <nav id="navbar" class="navbar">
-        <ul class="nav-menu">
-            <li>
-                <a data-scroll="home" href="#home" class="dot active">
-                    <span>Ana Sayfa</span>
-                </a>
-            </li>
-            <li>
-                <a data-scroll="about" href="#about" class="dot">
-                    <span>Hakkımızda</span>
-                </a>
-            </li>
-            <li>
-                <a data-scroll="services" href="#services" class="dot">
-                    <span>Hizmetlerimiz</span>
-                </a>
-            </li>
-            <li>
-                <a data-scroll="work" href="#work" class="dot">
-                    <span>Galeri</span>
-                </a>
-            </li>
-            <li>
-                <a data-scroll="contact" href="#contact" class="dot">
-                    <span>İletişim</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <!-- End Nav Section -->
-    <!-- Start Home Section -->
-    <section id="home" class="hero-wrap js-fullheight" style="background-image: url(Client/images/bg-22.jpg);" data-stellar-background-ratio="0.5">
-        <div class="overlay"></div>
-        <div class="row float-right slider-text text mr-1">
-            <p class="mt-4">
-                <a href="#" class="btn-custom">
-                    Randevu Al
-                    <i class="ml-2 fas fa-arrow-right"></i>
-                </a>
-            </p>
-            <p class="mt-4">
-                <a asp-controller="Account" asp-action="Login" class="btn-custom">
-                    Giriş Yap
-                    <i class="ml-2 fas fa-arrow-right"></i>
-                </a>
-            </p>
 
-        </div>
-        <div class="container">
-            <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center">
-                <div class="col-lg-7 ftco-animate d-flex align-items-center">
-                    <div class="text text-center">
-                        @*<h1 class="logo"><a href="index.html"><span class="flaticon-camera-shutter"></span>Sinem Kobaner<small>Fotoğraf İşleri</small></a></h1>*@
-                        <h1 class="logo"><img src="~/Client/images/logo.png" class="img-fluid img-responsive" style="width:50%;" alt="Sinem Kobaner" /></h1>
-                        @*<h1 class="mb-4">ANILARINIZI <br>ÖLÜMSÜZLEŞTİRİYORUZ</h1>*@
-                        @*<p class="mb-4">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts.</p>*@
-                        @*<p class="mt-5"><a href="#contact" class="btn-custom">İletişime Geçin <span class="ion-ios-arrow-round-forward"></span></a></p>*@
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Home Section -->
-    <!-- Start About Me Section -->
-    <section class="ftco-about img ftco-section" id="about">
-        <div class="container">
-            <div class="row d-flex no-gutters">
-                <div class="col-md-6 col-lg-6 d-flex">
-                    <div class="img-about img d-flex align-items-stretch">
-                        <div class="overlay"></div>
-                        <div class="img img-video d-flex align-self-stretch align-items-center" style="background-image:url(Client/images/ornek-2.jpg);">
-                            @*<div class="video justify-content-center">
-                                    <a href="https://vimeo.com/45830194" class="icon-video popup-vimeo d-flex justify-content-center align-items-center">
-                                        <span class="ion-ios-play"></span>
-                                    </a>
-                                </div>*@
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 pl-md-5">
-                    <div class="heading-section ftco-animate">
-                        <h2 class="mb-4">Snapshot is A Creative Direction, <br>Photography Agency</h2>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-
-                        @*<div class="counter-wrap ftco-animate d-flex my-md-4">
-                                <div class="text">
-                                    <p class="mb-4">
-                                        <span class="number" data-number="120">0</span>
-                                        <span>Project complete</span>
-                                    </p>
-                                </div>
-                            </div>*@
-                        <div class="d-flex w-100">
-                            <div class="img img-about-2 mr-2" style="background-image: url(Client/images/ornek-1.jpg);"></div>
-                            <div class="img img-about-2 ml-2" style="background-image: url(Client/images/ornek-2.jpg);"></div>
-                        </div>
-                        <!--<blockquote class="blockquote mt-5">
-                            <p class="mb-2">"Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.."</p>
-                            <span>&mdash; Lucy Lee</span>
-                        </blockquote>-->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End About Me Section -->
-    <!-- Start Services Section -->
-    <section id="services" class="ftco-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-9">
+    <div class="global-loader"></div>
+    <div id="page">
+        <nav class="colorlib-nav" role="navigation">
+            <div class="top-menu">
+                <div class="container">
                     <div class="row">
-                        <div class="col-md-5 heading-section ftco-animate pb-5">
-                            <h2 class="mb-4">Hizmetlerimiz</h2>
-                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country.</p>
+                        <div class="col-md-2 col-md-push-5 text-center">
+                            <div id="colorlib-logo"><a href="index.html"><img src="~/images/logo.png" class="img-fluid img-responsive" alt="Sinem Kobaner" /></a></div>
+                        </div>
+                        <div class="col-md-5 col-md-pull-2 text-right menu-1">
+                            <ul>
+                                <li><a href="#home">Ana Sayfa</a></li>
+                                <li><a href="#colorlib-services">Hizmetlerimiz</a></li>
+                                <li><a href="#gallery">Galeri</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-5 text-left menu-1">
+                            <ul>
+                                <li><a href="#about">Hakkımızda</a></li>
+                                <li><a href="#appcontact">İletişim</a></li>
+                                <li><a href="#appcontact">Randevu</a></li>
+                                <li class="active"><a asp-controller="Account" asp-action="Login">Giriş Yap</a></li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="media block-6 services d-block ftco-animate">
-                                <div class="icon"><span class="flaticon-video-camera"></span></div>
-                                <div class="media-body">
-                                    <h3 class="heading mb-3">Movies &amp; Advertising Videos</h3>
-                                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="media block-6 services d-block ftco-animate">
-                                <div class="icon"><span class="flaticon-video-player"></span></div>
-                                <div class="media-body">
-                                    <h3 class="heading mb-3">Clip &amp; Music Videos</h3>
-                                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="media block-6 services d-block ftco-animate">
-                                <div class="icon"><span class="flaticon-video-player-1"></span></div>
-                                <div class="media-body">
-                                    <h3 class="heading mb-3">Short Film Productions</h3>
-                                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 d-flex align-items-stretch">
-                    <div class="img w-100" style="background-image: url(Client/images/ornek-2.jpg);"></div>
                 </div>
             </div>
+        </nav>
 
-        </div>
-    </section>
-    <!-- End Services Section -->
-    <!-- Start Testimonials Section -->
-    <section id="work" class="ftco-section">
-
-        <div class="container-fluid px-md-0">
-            <div class="row no-gutters">
-
-                <div class="col-md-4 ftco-animate">
-                    <div class="model img d-flex align-items-end" style="background-image: url(Client/images/ornek-1.jpg);">
-                        <a href="Client/images/ornek-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                            <span class="icon-expand"></span>
-                        </a>
-                        <div class="desc w-100 px-4">
-                            <div class="text w-100 mb-3">
-                                <span>Daylight By</span>
-                                <h2><a href="work-single.html">Sinem Kobaner</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 ftco-animate">
-                    <div class="model img d-flex align-items-end" style="background-image: url(Client/images/ornek-2.jpg);">
-                        <a href="Client/images/ornek-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                            <span class="icon-expand"></span>
-                        </a>
-                        <div class="desc w-100 px-4">
-                            <div class="text w-100 mb-3">
-                                <span>Daylight By</span>
-                                <h2><a href="work-single.html">Sinem Kobaner</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 ftco-animate">
-                    <div class="model img d-flex align-items-end" style="background-image: url(Client/images/ornek-2.jpg);">
-                        <a href="Client/images/ornek-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                            <span class="icon-expand"></span>
-                        </a>
-                        <div class="desc w-100 px-4">
-                            <div class="text w-100 mb-3">
-                                <span>Daylight By</span>
-                                <h2><a href="work-single.html">Sinem Kobaner</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 ftco-animate">
-                    <div class="model img d-flex align-items-end" style="background-image: url(Client/images/ornek-2.jpg);">
-                        <a href="Client/images/ornek-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                            <span class="icon-expand"></span>
-                        </a>
-                        <div class="desc w-100 px-4">
-                            <div class="text w-100 mb-3">
-                                <span>Daylight By</span>
-                                <h2><a href="work-single.html">Sinem Kobaner</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 ftco-animate">
-                    <div class="model img d-flex align-items-end" style="background-image: url(Client/images/ornek-2.jpg);">
-                        <a href="Client/images/ornek-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                            <span class="icon-expand"></span>
-                        </a>
-                        <div class="desc w-100 px-4">
-                            <div class="text w-100 mb-3">
-                                <span>Daylight By</span>
-                                <h2><a href="work-single.html">Sinem Kobaner</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 ftco-animate">
-                    <div class="model img d-flex align-items-end" style="background-image: url(Client/images/ornek-2.jpg);">
-                        <a href="Client/images/ornek-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                            <span class="icon-expand"></span>
-                        </a>
-                        <div class="desc w-100 px-4">
-                            <div class="text w-100 mb-3">
-                                <span>Daylight By</span>
-                                <h2><a href="work-single.html">Sinem Kobaner</a></h2>
+        <section id="home" class="video-hero" style="height: 800px; background-image: url(images/background.jpg);  background-size:cover; background-position: center center;background-attachment:fixed;" data-section="home">
+            <div class="overlay"></div>
+            @*<a class="player" data-property="{videoURL:'https://www.youtube.com/watch?v=Yz5-mrDBbxU',containment:'#home', showControls:false, autoPlay:true, loop:true, mute:true, startAt:0, opacity:1, quality:'default'}"></a>*@
+            <div class="display-t text-center">
+                <div class="display-tc">
+                    <div class="container">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="animate-box">
+                                <h1 class="holder"><span>Fotoğraf İşleri</span></h1>
+                                <h2>Sinem Kobaner</h2>
+                                @*<p>27.03.2018</p>*@
+                                <p><a href="#appointment" class="btn btn-primary btn-custom">Randevu Al</a></p>
+                                <p><a asp-controller="Account" asp-action="Login" class="btn btn-primary btn-custom">Giriş Yap</a></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!-- End Project Section -->
-    <!-- Start Contact Section -->
-    <section class="ftco-section contact-section" id="contact">
+        </section>
         <div class="container">
-            <div class="row justify-content-center mb-5 pb-3">
-                <div class="col-md-4 heading-section text-center ftco-animate">
-                    <h2 class="mb-4">İletişime Geçin</h2>
-                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country.</p>
-                </div>
-            </div>
 
-            <div class="row mb-5">
-                <div class="col-md-3 d-flex ftco-animate">
-                    <div class="align-self-stretch box text-center p-4">
-                        <div class="icon d-flex align-items-center justify-content-center">
-                            <span class="icon-map-signs"></span>
+            <div id="colorlib-services">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 text-center animate-box">
+                            <div class="services">
+                                <span class="icon">
+                                    <i class="icon-camera4"></i>
+                                </span>
+                                <div class="desc">
+                                    <h3>Fotoğraf Çekimi</h3>
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="mb-4">Adres</h3>
-                            <p>Güzelyalı, 25-1, Uğur Mumcu Blv., 01170 Çukurova/Adana</p>
+                        <div class="col-md-4 text-center animate-box">
+                            <div class="services">
+                                <span class="icon">
+                                    <i class="icon-image2"></i>
+                                </span>
+                                <div class="desc">
+                                    <h3>Dış &amp; İç Çekim</h3>
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-3 d-flex ftco-animate">
-                    <div class="align-self-stretch box text-center p-4">
-                        <div class="icon d-flex align-items-center justify-content-center">
-                            <span class="icon-phone2"></span>
-                        </div>
-                        <div>
-                            <h3 class="mb-4">Telefon Numarası</h3>
-                            <p><a href="tel://1234567920">+ 90 534 404 79 39</a></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 d-flex ftco-animate">
-                    <div class="align-self-stretch box text-center p-4">
-                        <div class="icon d-flex align-items-center justify-content-center">
-                            <span class="icon-paper-plane"></span>
-                        </div>
-                        <div>
-                            <h3 class="mb-4">E-posta</h3>
-                            <p><a href="mailto:info@yoursite.com">fuatbozkurt1@gmail.com</a></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 d-flex ftco-animate">
-                    <div class="align-self-stretch box text-center p-4">
-                        <div class="icon d-flex align-items-center justify-content-center">
-                            <span class="icon-calendar"></span>
-                        </div>
-                        <div>
-                            <h3 class="mb-4">Randevu</h3>
-                            <p style="font-size:18px;"><a href="#contact" class="btn-custom" style=" border:1px solid rgba(255, 255, 255, 0.2);">Randevu Al <span class="ion-ios-arrow-round-forward"></span></a></p>
+                        <div class="col-md-4 text-center animate-box">
+                            <div class="services">
+                                <span class="icon">
+                                    <i class="icon-video3"></i>
+                                </span>
+                                <div class="desc">
+                                    <h3>Video Çekimi</h3>
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            @RenderBody()
-
-            <div class="row">
-                <div class="col-md-12 d-flex align-items-stretch">
-                    <div style="height:500px; width:100%;" id="map"></div>
+            <section id="about">
+                <div class="colorlib-about-flex">
+                    <div class="col-half about-flex-img animate-box" style="background-image: url(images/about.jpg);"></div>
+                    <div class="col-half">
+                        <div class="row">
+                            <div class="col-md-12 col-md-pull-2 animate-box">
+                                <div class="about-desc">
+                                    <h2>Sinem Kobaner - Fotoğraf İşleri</h2>
+                                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+                                    <p>The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn’t listen. She packed her seven versalia, put her initial into the belt and made herself on the way.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="gallery">
+                <div class="colorlib-gallery">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2 text-center colorlib-heading animate-box">
+                                <h2>Galeri</h2>
+                                @*<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name</p>*@
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 no-gutters">
+                                <a href="images/gallery-1.jpg" class="gallery-img image-popup-link animate-box">
+                                    <img class="img-responsive" src="images/gallery-1.jpg" alt="">
+                                </a>
+                                <a href="images/gallery-2.jpg" class="gallery-img image-popup-link animate-box">
+                                    <img class="img-responsive" src="images/gallery-2.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="col-md-3 no-gutters">
+                                <a href="images/gallery-3.jpg" class="gallery-img image-popup-link animate-box">
+                                    <img class="img-responsive" src="images/gallery-3.jpg" alt="">
+                                </a>
+                                <a href="images/gallery-4.jpg" class="gallery-img image-popup-link animate-box">
+                                    <img class="img-responsive" src="images/gallery-4.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="col-md-3 no-gutters">
+                                <a href="images/gallery-5.jpg" class="gallery-img image-popup-link animate-box">
+                                    <img class="img-responsive" src="images/gallery-5.jpg" alt="">
+                                </a>
+                                <a href="images/gallery-6.jpg" class="gallery-img image-popup-link animate-box">
+                                    <img class="img-responsive" src="images/gallery-6.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="col-md-3 no-gutters">
+                                <a href="images/gallery-7.jpg" class="gallery-img image-popup-link animate-box">
+                                    <img class="img-responsive" src="images/gallery-7.jpg" alt="">
+                                </a>
+                                <a href="images/gallery-8.jpg" class="gallery-img image-popup-link animate-box">
+                                    <img class="img-responsive" src="images/gallery-8.jpg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            @*<div class="colorlib-blog">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2 text-center colorlib-heading animate-box">
+                                <h2>Recent Blog</h2>
+                                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 animate-box">
+                                <article class="article-entry">
+                                    <a href="blog.html" class="blog-img" style="background-image: url(images/blog-1.jpg);"></a>
+                                    <div class="desc">
+                                        <h2><a href="blog.html">Photoshoot Technique</a></h2>
+                                        <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
+                                    </div>
+                                    <div class="admin">
+                                        <p><span><i class="icon-user2"></i> by: Mark Harris</span> <span class="day"><i class="icon-calendar"></i> 30 March 2018</span> <span><a href="#"><i class="icon-bubble3"></i> 10</a></span></p>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="col-md-4 animate-box">
+                                <article class="article-entry">
+                                    <a href="blog.html" class="blog-img" style="background-image: url(images/blog-2.jpg);"></a>
+                                    <div class="desc">
+                                        <h2><a href="blog.html">Some tricks in Photoshop for your photo</a></h2>
+                                        <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
+                                    </div>
+                                    <div class="admin">
+                                        <p><span><i class="icon-user2"></i> by: Mark Harris</span> <span class="day"><i class="icon-calendar"></i> 30 March 2018</span> <span><a href="#"><i class="icon-bubble3"></i> 10</a></span></p>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="col-md-4 animate-box">
+                                <article class="article-entry">
+                                    <a href="blog.html" class="blog-img" style="background-image: url(images/blog-3.jpg);"></a>
+                                    <div class="desc">
+                                        <h2><a href="blog.html">50 Effects in Photoshop</a></h2>
+                                        <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
+                                    </div>
+                                    <div class="admin">
+                                        <p><span><i class="icon-user2"></i> by: Mark Harris</span> <span class="day"><i class="icon-calendar"></i> 30 March 2018</span> <span><a href="#"><i class="icon-bubble3"></i> 10</a></span></p>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+            <section id="appcontact">
+                @RenderBody()
+            </section>
+            <div id="colorlib-instagram" style="margin-bottom:20px;">
+                <div class="row">
+                    <div class="col-md-12 col-md-offset-0 colorlib-heading text-center animate-box">
+                        <h2><i class="icon-instagram"></i> Instagram</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="instagram-entry animate-box">
+                        <a href="#" class="instagram text-center" style="background-image: url(images/insta-1.jpg);">
+                        </a>
+                        <a href="#" class="instagram text-center" style="background-image: url(images/insta-2.jpg);">
+                        </a>
+                        <a href="#" class="instagram text-center" style="background-image: url(images/insta-3.jpg);">
+                        </a>
+                        <a href="#" class="instagram text-center" style="background-image: url(images/insta-4.jpg);">
+                        </a>
+                        <a href="#" class="instagram text-center" style="background-image: url(images/insta-5.jpg);">
+                        </a>
+                        <a href="#" class="instagram text-center" style="background-image: url(images/insta-6.jpg);">
+                        </a>
+                        <a href="#" class="instagram text-center" style="background-image: url(images/insta-7.jpg);">
+                        </a>
+                        <a href="#" class="instagram text-center" style="background-image: url(images/insta-8.jpg);">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- End Contact Section -->
-    <!-- Start Footer Section -->
-    <footer class="ftco-footer py-5">
-        <div class="container text-center">
-            <div class="row">
-                <div class="col-md-12 text-center">
 
-                    <p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;
-                        <script>document.write(new Date().getFullYear());</script> Tüm hakları saklıdır
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </p>
-
-                    <ul class="ftco-footer-social p-0">
-                        <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                        <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                        <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- End Footer Section -->
-    @*<footer class="border-top footer text-muted">
+        <footer id="colorlib-footer">
             <div class="container">
-                &copy; 2019 - WebApplication1 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                <div class="row row-pb-md">
+                    <div class="col-md-4 colorlib-widget">
+                        <h4>Fotoğraf İşleri</h4>
+                        <p>Far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics</p>
+                        <p>
+                            <ul class="colorlib-social-icons">
+                                <li><a href="#"><i class="icon-twitter"></i></a></li>
+                                <li><a href="#"><i class="icon-facebook"></i></a></li>
+                                <li><a href="#"><i class="icon-instagram"></i></a></li>
+                            </ul>
+                        </p>
+                    </div>
+                    <div class="col-md-4 colorlib-widget">
+                        <h4>Bilgiler</h4>
+                        <p>
+                            <ul class="colorlib-footer-links">
+                                <li><a href="#home"><i class="icon-check"></i> Ana Sayfa</a></li>
+                                <li><a href="#colorlib-services"><i class="icon-check"></i> Hizmetlerimiz</a></li>
+                                <li><a href="#gallery"><i class="icon-check"></i> Galeri</a></li>
+                                <li><a href="#about"><i class="icon-check"></i> Hakkımızda</a></li>
+                                <li><a href="#appcontact"><i class="icon-check"></i> İletişim</a></li>
+                                <li><a href="#appcontact"><i class="icon-check"></i> Randevu</a></li>
+                            </ul>
+                        </p>
+                    </div>
+
+                    <div class="col-md-4 colorlib-widget">
+                        <h4>İletişime Geçin</h4>
+                        <ul class="colorlib-footer-links">
+                            <li>Güzelyalı, 25-1, Uğur Mumcu Blv., <br> 01170 Çukurova/Adana</li>
+                            <li><a href="tel://1234567920"><i class="icon-phone"></i> +90 555 555 55 55</a></li>
+                            <li><a href="mailto:info@yoursite.com"><i class="icon-envelope"></i> fotograf@sinemkobaner.com</a></li>
+                            <li><a href="#"><i class="icon-location4"></i> sinemkobaner.com</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </footer>*@
+            <div class="copy">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <p>
+                                <small class="block">
+                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                    Copyright &copy;
+                                    @*<script>document.write(new Date().getFullYear());</script> Tüm hakları saklıdır | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>*@
+                                    <script>document.write(new Date().getFullYear());</script> Tüm hakları saklıdır | This template is made with
+                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                </small><br>
+                                @*<small class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a>, <a href="http://pexels.com/" target="_blank">Pexels</a></small>*@
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
 
-    <!-- loader -->
-    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
-
+    <div class="gototop js-top">
+        <a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
+    </div>
+    <!-- jQuery -->
     <script src="~/Client/js/jquery.min.js"></script>
-    <script src="~/Client/js/jquery-migrate-3.0.1.min.js"></script>
-    <script src="~/Client/js/popper.min.js"></script>
-    <script src="~/Client/js/bootstrap.min.js"></script>
+    <!-- jQuery Easing -->
     <script src="~/Client/js/jquery.easing.1.3.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/Client/js/bootstrap.min.js"></script>
+    <!-- Waypoints -->
     <script src="~/Client/js/jquery.waypoints.min.js"></script>
+    <!-- Stellar Parallax -->
     <script src="~/Client/js/jquery.stellar.min.js"></script>
+    <!-- YTPlayer -->
+    <script src="~/Client/js/jquery.mb.YTPlayer.min.js"></script>
+    <!-- Owl carousel -->
     <script src="~/Client/js/owl.carousel.min.js"></script>
+    <!-- Magnific Popup -->
     <script src="~/Client/js/jquery.magnific-popup.min.js"></script>
-    <script src="~/Client/js/aos.js"></script>
-    <script src="~/Client/js/jquery.animateNumber.min.js"></script>
-    <script src="~/Client/js/scrollax.min.js"></script>
+    <script src="~/Client/js/magnific-popup-options.js"></script>
     <!-- Datepicker js -->
     <script src="~/Admin/plugins/date-picker/spectrum.js"></script>
     <script src="~/Admin/plugins/date-picker/jquery-ui.js"></script>
@@ -405,14 +377,12 @@
     <script src="~/Admin/plugins/sweet-alert/jquery.sweet-modal.min.js"></script>
     <script src="~/Admin/plugins/sweet-alert/sweetalert.min.js"></script>
     <script src="~/Admin/js/sweet-alert.js"></script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-    <script src="~/Client/js/google-map.js"></script>
+    <!-- Main -->
     <script src="~/Common/Axios/axios.min.js"></script>
+
     <script src="~/Client/js/main.js"></script>
-    <script src="~/Client/js/Client.js"></script>
+    <script src="~/Client/Client.js"></script>
     @RenderSection("Scripts", required: false)
     <script src="~/Common/common.js"></script>
-
 </body>
 </html>

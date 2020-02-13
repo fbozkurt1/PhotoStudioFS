@@ -130,3 +130,22 @@ const Api = {
         return postData(`/Common/Create`, data);
     }
 };
+
+
+function convertDateTo_dmy(str) {
+    let date = new Date(str),
+        m = ("0" + (date.getMonth() + 1)).slice(-2),
+        d = ("0" + date.getDate()).slice(-2);
+    return [d, m, date.getFullYear()].join("/");
+}
+
+/**
+ * it shows or closes global loader
+ * @param {any} isShow
+ */
+function toggleGlobalLoader(isShow) {
+    if (isShow)
+        $(".global-loader").fadeIn("slow");
+    else
+        $(".global-loader").fadeOut("slow");
+}

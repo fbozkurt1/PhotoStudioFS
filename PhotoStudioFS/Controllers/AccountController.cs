@@ -66,7 +66,7 @@ namespace PhotoStudioFS.Controllers
                     }
                     else
                     {
-                        return NotFound("Bulunamadı");
+                        ModelState.AddModelError("NotUser", "E-posta veya şifre yanlış.");
                     }
                 }
 
@@ -93,10 +93,9 @@ namespace PhotoStudioFS.Controllers
                 forgotPasswordView.Token))
             {
                 ModelState.AddModelError("NotUser",
-                    "Şifrenizi oluşasdsadsadereken verileasdsadasdl." +
+                    "Şifrenizi oluştururken bir sorun oluştu." +
                     " Lütfen site yönetimi ile iletişime geçiniz!");
-
-                return BadRequest("Size verilen linki zaten kullanmışsınız veya süresi dolmuş. " +
+                ModelState.AddModelError("NotUser2", "Size verilen linki zaten kullanmışsınız veya süresi dolmuş. " +
                     "Eğer yanlışlık olduğunu düşünüyorsanız, Lütfen site yönetimiyle iletişime geçiniz.");
             }
 
@@ -152,14 +151,16 @@ namespace PhotoStudioFS.Controllers
                 var user = await userManager.FindByEmailAsync(forgotPasswordView.Email);
                 if (user == null || string.IsNullOrEmpty(forgotPasswordView.Token) || string.IsNullOrWhiteSpace(forgotPasswordView.Token))
                 {
-                    return NotFound($"{forgotPasswordView.Email} mail adresine kayıtlı bir kullanıcı bulunamadı.");
+                    ModelState.AddModelError("NotUser", $"{forgotPasswordView.Email} mail adresine kayıtlı bir kullanıcı bulunamadı.");
                 }
-
-                var result = userManager.ResetPasswordAsync(user, forgotPasswordView.Token, forgotPasswordView.Password).Result;
-
-                if (result.Succeeded)
+                else
                 {
-                    return Ok("Şifreniz başarıyla değiştirildi.");
+                    var result = await userManager.ResetPasswordAsync(user, forgotPasswordView.Token, forgotPasswordView.Password);
+
+                    if (result.Succeeded)
+                    {
+                        return Ok("Şifreniz başarıyla değiştirildi.");
+                    }
                 }
 
             }

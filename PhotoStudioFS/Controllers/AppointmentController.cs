@@ -191,19 +191,23 @@ namespace PhotoStudioFS.Controllers
                     var shootType = await unitOfWork.ShootTypes.Get(appointment.ShootTypeId);
                     if (shootType == null)
                     {
-                        return NotFound("Çekim Türü bulunamadı");
+                        ModelState.AddModelError("NotUser", "Lütfen Çekim Türü seçiniz");
+                        return View(appointment);
                     }
                     var oldAppointment = await unitOfWork.Appointments.Get(appointment.Id);
                     if (oldAppointment == null)
                     {
-                        return NotFound();
+                        ModelState.AddModelError("NotUser", "Lütfen tüm alanları doldurunuz!");
+                        return View(appointment);
                     }
 
                     bool scheduleIsEmpty = appointment.IsApproved == 2 ? true : false;
 
                     if (!await UpdateScheduleIsEmptyField(oldAppointment.ScheduleId, scheduleIsEmpty))
-                        return NotFound("Schedule Bulunamadı");
-
+                    {
+                        ModelState.AddModelError("NotUser", "Lütfen tüm alanları doldurunuz!");
+                        return View(appointment);
+                    }
                     if (oldAppointment.Customer == null)
                     {
                         var customer = await AddUserIfNotExist(oldAppointment);
@@ -223,18 +227,24 @@ namespace PhotoStudioFS.Controllers
 
                     oldAppointment.IsApproved = appointment.IsApproved;
                     oldAppointment.State = appointment.State;
+                    oldAppointment.Price = appointment.Price;
+                    oldAppointment.PricePaid = appointment.PricePaid;
+                    oldAppointment.AppointmentDateStart = appointment.AppointmentDateStart;
+                    oldAppointment.AppointmentDateEnd = appointment.AppointmentDateEnd;
                     unitOfWork.Appointments.Update(oldAppointment);
                     await unitOfWork.Complete();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Exception)
                 {
 
-                    return UnprocessableEntity();
+                    ModelState.AddModelError("NotUser2", "Lütfen tüm alanları doldurunuz!");
+                    return View(appointment);
 
                 }
                 return Redirect(redirectTo);
 
             }
+            ModelState.AddModelError("NotUser", "Lütfen tüm alanları doldurunuz!");
             return View(appointment);
         }
 

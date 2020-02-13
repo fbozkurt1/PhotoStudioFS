@@ -4356,9 +4356,10 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
     top: 0;
     right: 0;
     bottom: 0;
-    background: #fff;
+    background: #495057;
     margin: 0 auto;
     text-align: center;
+    opacity: 0.9;
 }
 
     #global-loader img {
@@ -4404,17 +4405,6 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
         font-size: xx-large;
     }
 
-/*#global-loader-upload .progress {
-        position: absolute;
-        left: 0;
-        right: 0;
-        text-align: center;
-        top: 35%;
-        margin: 0 auto;
-        width: 50%;
-        opacity: 1;
-        height: 2rem;
-    }*/
 /*----Profile----*/
 .media {
     display: flex;

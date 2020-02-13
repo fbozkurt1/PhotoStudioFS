@@ -17,9 +17,6 @@
             <div class="card-header">
                 <div class="card-title">Personel Listesi</div>
                 <div class="card-options">
-                    @*<button type="button" class="btn btn-info" data-toggle="ajax-modal" data-target="#userModal" data-url="@Url.Action("Create")">
-                            <i class="fa fa-plus"></i> Yeni Personel Ekle
-                        </button>*@
                     <a class="btn btn-sm btn-primary"
                        asp-action="Create" asp-controller="Employee">
                         <i class="fa fa-edit"></i> Yeni Personel Ekle
@@ -58,17 +55,7 @@
                                         <td><span class="badge badge-danger">Pasif</span></td>
                                     }
                                     <td>
-                                        @*<button class="btn btn-sm btn-primary"
-                                                    data-id=@user.Id
-                                                    data-toggle="ajax-modal" data-target="#userModal"
-                                                    data-url=@Url.Action("GetUser","Employee",new { id=user.Id})>
-                                                <i class="fa fa-edit"></i> Düzenle
-                                            </button>
-                                            <a class="btn btn-sm btn-danger" href="#" data-id=@user.Id><i class="fa fa-trash"></i> Sil</a>
-                                            <a class="btn btn-sm btn-info" href="#" data-id=@user.Id><i class="fa fa-info-circle"></i> Detaylar</a>*@
-
                                         <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-email="@user.Email">Düzenle</a> |
-                                        <a class="btn btn-sm btn-info" asp-action="Details" asp-route-email="@user.Email">Detaylar</a> |
                                         <button class="btn btn-sm btn-danger" onclick="deleteEmployee(this)" data-fullname="@user.FullName" data-email="@user.Email">Sil</button>
                                     </td>
 

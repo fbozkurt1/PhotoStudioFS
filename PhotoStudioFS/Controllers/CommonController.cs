@@ -91,14 +91,20 @@ namespace PhotoStudioFS.Controllers
 
             if (ModelState.IsValid)
             {
+                var schedule = await unitOfWork.Schedules.Find(s => s.id == appointmentView.ScheduleId && s.isEmpty == true);
+                if (!schedule.Any())
+                {
+                    return BadRequest("Randevu almak istediğiniz tarih dolu ve ScheduleId göndermediniz!");
+                }
+
                 var appointment = new Appointment()
                 {
                     Name = appointmentView.Name,
                     Phone = appointmentView.Phone,
                     Email = appointmentView.Email,
                     Message = appointmentView.Message,
-                    AppointmentDateStart = Convert.ToDateTime(appointmentView.Date + " " + appointmentView.DateHourStart, CultureInfo.GetCultureInfo("tr-TR")),
-                    AppointmentDateEnd = Convert.ToDateTime(appointmentView.Date + " " + appointmentView.DateHourEnd, CultureInfo.GetCultureInfo("tr-TR")),
+                    AppointmentDateStart = schedule.First().start,
+                    AppointmentDateEnd = schedule.First().end,
                     CreatedAt = DateTime.Now,
                     IsApproved = 0,
                     ShootTypeId = appointmentView.ShootTypeId,

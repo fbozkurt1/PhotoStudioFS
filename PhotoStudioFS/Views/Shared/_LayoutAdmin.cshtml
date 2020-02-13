@@ -10,6 +10,8 @@
     var user = UserManager.FindByIdAsync(currentUserId).Result;
     var userRole = await UserManager.GetRolesAsync(user);
     ViewData["Username"] = user.FullName;
+    ViewData["Phone"] = user.PhoneNumber;
+    ViewData["Email"] = user.Email;
     ViewData["UserRole"] = userRole[0];
     ViewDataDictionary data = new ViewDataDictionary(ViewData);
 
@@ -21,13 +23,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="Hogo– Creative Admin Multipurpose Responsive Bootstrap4 Dashboard HTML Template" name="description">
-    <meta content="Spruko Technologies Private Limited" name="author">
-    <meta name="keywords" content="html admin template, bootstrap admin template premium, premium responsive admin template, admin dashboard template bootstrap, bootstrap simple admin template premium, web admin template, bootstrap admin template, premium admin template html5, best bootstrap admin template, premium admin panel template, admin template" />
+    <meta content="Sinem Kobaner - Fotoğraf İşleri" name="description">
+    <meta content="Fotoğraf İşleri" name="author">
+    <meta name="keywords" content="fotoğraf,işleri,sinem,kobaner,sinem kobaner, fotoğraf işleri, adana, çukurova, seyhan, mersin, osmaniye, hatay" />
 
     <!-- Favicon -->
-    <link rel="icon" href="~/Client/images/logo.ico" type="image/x-icon" />
-    <link rel="shortcut icon" type="image/x-icon" href="~/Client/images/logo.ico" />
+    <link rel="icon" href="~/images/logo.ico" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/images/logo.ico" />
 
     <!-- Title -->
     <title>@ViewBag.Title</title>
@@ -93,7 +95,7 @@
 </head>
 <body class="app sidebar-mini rtl">
     <!--Global-Loader-->
-    <div id="global-loader">
+    <div id="global-loader" class=".global-loader">
         <img src="~/Admin/images/icons/loader.svg" alt="loader">
     </div>
 

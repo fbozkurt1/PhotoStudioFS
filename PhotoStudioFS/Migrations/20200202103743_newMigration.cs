@@ -14,7 +14,7 @@ namespace PhotoStudioFS.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "UserName",
                 table: "AspNetUsers",
-                maxLength: 256,
+                maxLength: 255,
                 nullable: true,
                 oldClrType: typeof(string),
                 oldMaxLength: 255,
@@ -23,7 +23,7 @@ namespace PhotoStudioFS.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "NormalizedUserName",
                 table: "AspNetUsers",
-                maxLength: 256,
+                maxLength: 255,
                 nullable: true,
                 oldClrType: typeof(string),
                 oldMaxLength: 255,
@@ -32,7 +32,7 @@ namespace PhotoStudioFS.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "NormalizedEmail",
                 table: "AspNetUsers",
-                maxLength: 256,
+                maxLength: 255,
                 nullable: true,
                 oldClrType: typeof(string),
                 oldMaxLength: 255,
@@ -41,7 +41,7 @@ namespace PhotoStudioFS.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "Email",
                 table: "AspNetUsers",
-                maxLength: 256,
+                maxLength: 255,
                 nullable: true,
                 oldClrType: typeof(string),
                 oldMaxLength: 255,
@@ -50,7 +50,7 @@ namespace PhotoStudioFS.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "NormalizedName",
                 table: "AspNetRoles",
-                maxLength: 256,
+                maxLength: 255,
                 nullable: true,
                 oldClrType: typeof(string),
                 oldMaxLength: 255,
@@ -59,7 +59,7 @@ namespace PhotoStudioFS.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
                 table: "AspNetRoles",
-                maxLength: 256,
+                maxLength: 255,
                 nullable: true,
                 oldClrType: typeof(string),
                 oldMaxLength: 255,

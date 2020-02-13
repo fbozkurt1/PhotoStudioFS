@@ -24,7 +24,7 @@ namespace PhotoStudioFS.Data.Repositories
                 .Include(a => a.Customer)
                 .Include(a => a.ShootType)
                 .Where(a => a.IsApproved == isApproved)
-                .OrderByDescending(a => a.CreatedAt).ToListAsync();
+                .OrderBy(a => a.AppointmentDateStart).ToListAsync();
         }
 
         public async Task<IEnumerable<Appointment>> GetAppointmentsByState(short state)
@@ -33,7 +33,7 @@ namespace PhotoStudioFS.Data.Repositories
                 .Include(a => a.Customer)
                 .Include(a => a.ShootType)
                 .Where(a => a.State == state && a.CustomerId != null)
-                .OrderBy(a => a.CreatedAt).ToListAsync();
+                .OrderBy(a => a.AppointmentDateStart).ToListAsync();
         }
 
         public async Task<int> GetCountAppointmentsByState(short state)

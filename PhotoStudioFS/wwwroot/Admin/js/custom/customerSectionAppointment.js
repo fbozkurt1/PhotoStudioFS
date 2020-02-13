@@ -12,8 +12,6 @@
             dayGridMonth: { // name of view
                 titleFormat: { year: 'numeric', month: '2-digit', day: '2-digit' },
                 displayEventEnd: true
-
-                // other view-specific options here
             },
             timeGridWeek: {
                 titleFormat: { year: 'numeric', month: '2-digit', day: '2-digit' }
@@ -32,10 +30,6 @@
         events: {
             url: `/Common/GetAllSchedules`,
             method: 'GET',
-            //extraParams: {
-            //    custom_param1: 'something',
-            //    custom_param2: 'somethingelse'
-            //},
             success: function (data) {
                 console.log(data);
             },
@@ -48,7 +42,7 @@
             let eventProps = info.event.extendedProps;
             console.log(info.event);
             console.log(info.event.extendedProps);
-
+            let appModal = '#appInfoModal';
             if (!eventProps.isEmpty) {
                 swal({
                     title: "Üzgünüz",
@@ -58,29 +52,69 @@
                     dangerMode: true,
                 });
             } else {
+                const app = {
+                    date: convertDateTo_dmy(event.start),
+                    startH: eventProps.startHour,
+                    endH: eventProps.endHour,
+                    shootType: eventProps.photoShootType,
+                    shootTypeId: eventProps.photoShootTypeId,
+                    scheduleId: event.id
+                };
+                $(appModal).modal('show');
+                $(appModal + ' #infoAppShootType').val(app.shootType);
+                $(appModal + ' #infoAppDate').val(app.date);
+                $(appModal + ' #infoAppTime').val(app.startH + ' - ' + app.endH);
+                $(appModal + ' #scheduleId').val(app.scheduleId);
+                $(appModal + ' #shootTypeId').val(app.shootTypeId);
+
 
             }
-            
-
-            //});
-
-            // change the border color just for fun
-            //info.el.style.borderColor = 'red';
         },
         selectable: true,
-        eventMouseEnter: function (info) {
-            //alert(info.event.title);
-        }
-        
-        //dateClick: function (dateInfo) {
-        //    console.log(dateInfo);
-
-        //    $('#eventModal').modal('show');
-        //    $('#eventModalDateInfo').text(dateInfo.dateStr + ' tarihine randevu saati oluşturmak üzeresiniz.');
-        //    $('#eventModalDate').val(dateInfo.dateStr);
-        //}
     });
     calendar.setOption('locale', 'tr');
     calendar.render();
+
+});
+
+
+$('#appForm').submit((event) => {
+
+    event.preventDefault();
+    const formId = '#appForm';
+
+    const formData = $(formId).serialize();
+
+    toggleGlobalLoader(1);
+
+    Api.addAppointment(formData)
+        .then(res => {
+
+            toggleGlobalLoader(0);
+
+            swal({
+                title: 'Başarılı!',
+                text: res.data,
+                type: "success",
+                showCancelButton: false,
+                confirmButtonText: 'Tamam'
+            }, (isConfirm) => {
+                if (isConfirm) {
+                    window.location.href = "/CustomerSection/Index";
+                }
+            });
+        })
+        .catch(err => {
+
+            toggleGlobalLoader(0);
+
+            swal({
+                title: 'Başarısız!',
+                text: error.response.data,
+                type: "warning",
+                showCancelButton: false,
+                confirmButtonText: 'Tamam'
+            });
+        });
 
 });

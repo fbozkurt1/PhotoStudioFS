@@ -73,10 +73,6 @@ namespace PhotoStudioFS.Models
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Message { get; set; }
-        public string Date { get; set; }
-        public string DateHourStart { get; set; }
-        public string DateHourEnd { get; set; }
-        public string CreatedAt { get; set; } = DateTime.Now.ToString();
         public short IsApproved { get; set; } = 0;
         public int ScheduleId { get; set; }
         public int ShootTypeId { get; set; }

@@ -263,6 +263,10 @@ namespace PhotoStudioFS.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(2000);
+
                     b.Property<bool>("IsActive");
 
                     b.Property<string>("Name")
@@ -382,11 +386,11 @@ namespace PhotoStudioFS.Migrations
             modelBuilder.Entity("PhotoStudioFS.Models.Appointment", b =>
                 {
                     b.HasOne("PhotoStudioFS.Models.User", "Customer")
-                        .WithMany("Appointments")
+                        .WithMany()
                         .HasForeignKey("CustomerId");
 
                     b.HasOne("PhotoStudioFS.Models.Setting.ShootType", "ShootType")
-                        .WithMany("Appointments")
+                        .WithMany()
                         .HasForeignKey("ShootTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -399,7 +403,7 @@ namespace PhotoStudioFS.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PhotoStudioFS.Models.User", "Customer")
-                        .WithMany("Photos")
+                        .WithMany()
                         .HasForeignKey("CustomerId");
                 });
 

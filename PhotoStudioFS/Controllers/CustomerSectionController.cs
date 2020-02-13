@@ -34,10 +34,7 @@ namespace PhotoStudioFS.Controllers
         {
             var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var currentUser = await userManager.FindByIdAsync(currentUserId);
-            if (currentUser == null)
-            {
-                return NotFound("Kullanıcı bulunamadı");
-            }
+
             var appointments = await unitOfWork.Appointments.GetAppointmentsByCustomer(currentUser.Id);
             ViewData["PageName"] = "Randevularım";
             return View(appointments);
@@ -148,6 +145,9 @@ namespace PhotoStudioFS.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateAppointment()
         {
+            var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var currentUser = await userManager.FindByIdAsync(currentUserId);
+            ViewBag.User = currentUser;
             return View();
         }
 

@@ -1,0 +1,419 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="~/Client/images/logo.ico" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Client/images/logo.ico" />
+    <title>@ViewData["Title"]</title>
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" />*@
+
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400i,700,700i&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/Client/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="~/Client/css/animate.css">
+
+    <link rel="stylesheet" href="~/Client/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Client/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/Client/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="~/Client/css/aos.css">
+
+    <link rel="stylesheet" href="~/Client/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="~/Client/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="~/Client/css/jquery.timepicker.css">
+
+    <!-- Date Picker css-->
+    <link href="~/Admin/plugins/date-picker/spectrum.css" rel="stylesheet" />
+    <link href="~/Admin/plugins/jquery-ui/jquery-ui.css" rel="stylesheet" />
+
+    <!---Sweetalert Css-->
+    <link href="~/Admin/plugins/sweet-alert/jquery.sweet-modal.min.css" rel="stylesheet" />
+    <link href="~/Admin/plugins/sweet-alert/sweetalert.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/Client/css/flaticon.css">
+    <link rel="stylesheet" href="~/Client/css/icomoon.css">
+    <link rel="stylesheet" href="~/Client/css/style.css">
+</head>
+<body>
+    <nav id="navbar" class="navbar">
+        <ul class="nav-menu">
+            <li>
+                <a data-scroll="home" href="#home" class="dot active">
+                    <span>Ana Sayfa</span>
+                </a>
+            </li>
+            <li>
+                <a data-scroll="about" href="#about" class="dot">
+                    <span>Hakkımızda</span>
+                </a>
+            </li>
+            <li>
+                <a data-scroll="services" href="#services" class="dot">
+                    <span>Hizmetlerimiz</span>
+                </a>
+            </li>
+            <li>
+                <a data-scroll="work" href="#work" class="dot">
+                    <span>Galeri</span>
+                </a>
+            </li>
+            <li>
+                <a data-scroll="contact" href="#contact" class="dot">
+                    <span>İletişim</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- End Nav Section -->
+    <!-- Start Home Section -->
+    <section id="home" class="hero-wrap js-fullheight" style="background-image: url(Client/images/bg-22.jpg);" data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="row float-right slider-text text mr-1">
+            <p class="mt-4">
+                <a href="#" class="btn-custom">
+                    Randevu Al
+                    <i class="ml-2 fas fa-arrow-right"></i>
+                </a>
+            </p>
+            <p class="mt-4">
+                <a asp-controller="Account" asp-action="Login" class="btn-custom">
+                    Giriş Yap
+                    <i class="ml-2 fas fa-arrow-right"></i>
+                </a>
+            </p>
+
+        </div>
+        <div class="container">
+            <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center">
+                <div class="col-lg-7 ftco-animate d-flex align-items-center">
+                    <div class="text text-center">
+                        @*<h1 class="logo"><a href="index.html"><span class="flaticon-camera-shutter"></span>Sinem Kobaner<small>Fotoğraf İşleri</small></a></h1>*@
+                        <h1 class="logo"><img src="~/Client/images/logo.png" class="img-fluid img-responsive" style="width:50%;" alt="Sinem Kobaner" /></h1>
+                        @*<h1 class="mb-4">ANILARINIZI <br>ÖLÜMSÜZLEŞTİRİYORUZ</h1>*@
+                        @*<p class="mb-4">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts.</p>*@
+                        @*<p class="mt-5"><a href="#contact" class="btn-custom">İletişime Geçin <span class="ion-ios-arrow-round-forward"></span></a></p>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Home Section -->
+    <!-- Start About Me Section -->
+    <section class="ftco-about img ftco-section" id="about">
+        <div class="container">
+            <div class="row d-flex no-gutters">
+                <div class="col-md-6 col-lg-6 d-flex">
+                    <div class="img-about img d-flex align-items-stretch">
+                        <div class="overlay"></div>
+                        <div class="img img-video d-flex align-self-stretch align-items-center" style="background-image:url(Client/images/ornek-2.jpg);">
+                            @*<div class="video justify-content-center">
+                                    <a href="https://vimeo.com/45830194" class="icon-video popup-vimeo d-flex justify-content-center align-items-center">
+                                        <span class="ion-ios-play"></span>
+                                    </a>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 pl-md-5">
+                    <div class="heading-section ftco-animate">
+                        <h2 class="mb-4">Snapshot is A Creative Direction, <br>Photography Agency</h2>
+                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+
+                        @*<div class="counter-wrap ftco-animate d-flex my-md-4">
+                                <div class="text">
+                                    <p class="mb-4">
+                                        <span class="number" data-number="120">0</span>
+                                        <span>Project complete</span>
+                                    </p>
+                                </div>
+                            </div>*@
+                        <div class="d-flex w-100">
+                            <div class="img img-about-2 mr-2" style="background-image: url(Client/images/ornek-1.jpg);"></div>
+                            <div class="img img-about-2 ml-2" style="background-image: url(Client/images/ornek-2.jpg);"></div>
+                        </div>
+                        <!--<blockquote class="blockquote mt-5">
+                            <p class="mb-2">"Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.."</p>
+                            <span>&mdash; Lucy Lee</span>
+                        </blockquote>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End About Me Section -->
+    <!-- Start Services Section -->
+    <section id="services" class="ftco-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-5 heading-section ftco-animate pb-5">
+                            <h2 class="mb-4">Hizmetlerimiz</h2>
+                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="media block-6 services d-block ftco-animate">
+                                <div class="icon"><span class="flaticon-video-camera"></span></div>
+                                <div class="media-body">
+                                    <h3 class="heading mb-3">Movies &amp; Advertising Videos</h3>
+                                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="media block-6 services d-block ftco-animate">
+                                <div class="icon"><span class="flaticon-video-player"></span></div>
+                                <div class="media-body">
+                                    <h3 class="heading mb-3">Clip &amp; Music Videos</h3>
+                                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="media block-6 services d-block ftco-animate">
+                                <div class="icon"><span class="flaticon-video-player-1"></span></div>
+                                <div class="media-body">
+                                    <h3 class="heading mb-3">Short Film Productions</h3>
+                                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex align-items-stretch">
+                    <div class="img w-100" style="background-image: url(Client/images/ornek-2.jpg);"></div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- End Services Section -->
+    <!-- Start Testimonials Section -->
+    <section id="work" class="ftco-section">
+
+        <div class="container-fluid px-md-0">
+            <div class="row no-gutters">
+
+                <div class="col-md-4 ftco-animate">
+                    <div class="model img d-flex align-items-end" style="background-image: url(Client/images/ornek-1.jpg);">
+                        <a href="Client/images/ornek-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="icon-expand"></span>
+                        </a>
+                        <div class="desc w-100 px-4">
+                            <div class="text w-100 mb-3">
+                                <span>Daylight By</span>
+                                <h2><a href="work-single.html">Sinem Kobaner</a></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 ftco-animate">
+                    <div class="model img d-flex align-items-end" style="background-image: url(Client/images/ornek-2.jpg);">
+                        <a href="Client/images/ornek-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="icon-expand"></span>
+                        </a>
+                        <div class="desc w-100 px-4">
+                            <div class="text w-100 mb-3">
+                                <span>Daylight By</span>
+                                <h2><a href="work-single.html">Sinem Kobaner</a></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 ftco-animate">
+                    <div class="model img d-flex align-items-end" style="background-image: url(Client/images/ornek-2.jpg);">
+                        <a href="Client/images/ornek-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="icon-expand"></span>
+                        </a>
+                        <div class="desc w-100 px-4">
+                            <div class="text w-100 mb-3">
+                                <span>Daylight By</span>
+                                <h2><a href="work-single.html">Sinem Kobaner</a></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 ftco-animate">
+                    <div class="model img d-flex align-items-end" style="background-image: url(Client/images/ornek-2.jpg);">
+                        <a href="Client/images/ornek-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="icon-expand"></span>
+                        </a>
+                        <div class="desc w-100 px-4">
+                            <div class="text w-100 mb-3">
+                                <span>Daylight By</span>
+                                <h2><a href="work-single.html">Sinem Kobaner</a></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 ftco-animate">
+                    <div class="model img d-flex align-items-end" style="background-image: url(Client/images/ornek-2.jpg);">
+                        <a href="Client/images/ornek-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="icon-expand"></span>
+                        </a>
+                        <div class="desc w-100 px-4">
+                            <div class="text w-100 mb-3">
+                                <span>Daylight By</span>
+                                <h2><a href="work-single.html">Sinem Kobaner</a></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 ftco-animate">
+                    <div class="model img d-flex align-items-end" style="background-image: url(Client/images/ornek-2.jpg);">
+                        <a href="Client/images/ornek-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="icon-expand"></span>
+                        </a>
+                        <div class="desc w-100 px-4">
+                            <div class="text w-100 mb-3">
+                                <span>Daylight By</span>
+                                <h2><a href="work-single.html">Sinem Kobaner</a></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Project Section -->
+    <!-- Start Contact Section -->
+    <section class="ftco-section contact-section" id="contact">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-3">
+                <div class="col-md-4 heading-section text-center ftco-animate">
+                    <h2 class="mb-4">İletişime Geçin</h2>
+                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country.</p>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-md-3 d-flex ftco-animate">
+                    <div class="align-self-stretch box text-center p-4">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="icon-map-signs"></span>
+                        </div>
+                        <div>
+                            <h3 class="mb-4">Adres</h3>
+                            <p>Güzelyalı, 25-1, Uğur Mumcu Blv., 01170 Çukurova/Adana</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex ftco-animate">
+                    <div class="align-self-stretch box text-center p-4">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="icon-phone2"></span>
+                        </div>
+                        <div>
+                            <h3 class="mb-4">Telefon Numarası</h3>
+                            <p><a href="tel://1234567920">+ 90 534 404 79 39</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex ftco-animate">
+                    <div class="align-self-stretch box text-center p-4">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="icon-paper-plane"></span>
+                        </div>
+                        <div>
+                            <h3 class="mb-4">E-posta</h3>
+                            <p><a href="mailto:info@yoursite.com">fuatbozkurt1@gmail.com</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex ftco-animate">
+                    <div class="align-self-stretch box text-center p-4">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="icon-calendar"></span>
+                        </div>
+                        <div>
+                            <h3 class="mb-4">Randevu</h3>
+                            <p style="font-size:18px;"><a href="#contact" class="btn-custom" style=" border:1px solid rgba(255, 255, 255, 0.2);">Randevu Al <span class="ion-ios-arrow-round-forward"></span></a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @RenderBody()
+
+            <div class="row">
+                <div class="col-md-12 d-flex align-items-stretch">
+                    <div style="height:500px; width:100%;" id="map"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Contact Section -->
+    <!-- Start Footer Section -->
+    <footer class="ftco-footer py-5">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-12 text-center">
+
+                    <p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;
+                        <script>document.write(new Date().getFullYear());</script> Tüm hakları saklıdır
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </p>
+
+                    <ul class="ftco-footer-social p-0">
+                        <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer Section -->
+    @*<footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2019 - WebApplication1 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
+
+    <script src="~/Client/js/jquery.min.js"></script>
+    <script src="~/Client/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="~/Client/js/popper.min.js"></script>
+    <script src="~/Client/js/bootstrap.min.js"></script>
+    <script src="~/Client/js/jquery.easing.1.3.js"></script>
+    <script src="~/Client/js/jquery.waypoints.min.js"></script>
+    <script src="~/Client/js/jquery.stellar.min.js"></script>
+    <script src="~/Client/js/owl.carousel.min.js"></script>
+    <script src="~/Client/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/Client/js/aos.js"></script>
+    <script src="~/Client/js/jquery.animateNumber.min.js"></script>
+    <script src="~/Client/js/scrollax.min.js"></script>
+
+    <!-- Datepicker js -->
+    <script src="~/Admin/plugins/date-picker/spectrum.js"></script>
+    <script src="~/Admin/plugins/date-picker/jquery-ui.js"></script>
+    <script src="~/Admin/plugins/input-mask/jquery.maskedinput.js"></script>
+
+    <!-- Sweet alert js-->
+    <script src="~/Admin/plugins/sweet-alert/jquery.sweet-modal.min.js"></script>
+    <script src="~/Admin/plugins/sweet-alert/sweetalert.min.js"></script>
+    <script src="~/Admin/js/sweet-alert.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="~/Client/js/google-map.js"></script>
+    <script src="~/Common/Axios/axios.min.js"></script>
+    <script src="~/Client/js/main.js"></script>
+    <script src="~/Client/js/Client.js"></script>
+    @RenderSection("Scripts", required: false)
+    <script src="~/Common/common.js"></script>
+
+</body>
+</html>

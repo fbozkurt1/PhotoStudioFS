@@ -37,21 +37,6 @@ namespace PhotoStudioFS.Controllers
             return View(users);
         }
 
-        public async Task<IActionResult> Details(string email)
-        {
-            if (string.IsNullOrEmpty(email) || string.IsNullOrWhiteSpace(email))
-            {
-                return NotFound();
-            }
-            var user = await userManager.FindByEmailAsync(email);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
-        }
-
         public IActionResult Create()
         {
             return View();
