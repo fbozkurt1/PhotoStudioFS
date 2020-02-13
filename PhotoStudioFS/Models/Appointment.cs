@@ -38,7 +38,7 @@ namespace PhotoStudioFS.Models
         [DataType(DataType.DateTime), Display(Name = "Randevu Tarihi Bitiş"), Required]
         public DateTime AppointmentDateEnd { get; set; }
 
-        [DataType(DataType.DateTime), Required]
+        [DataType(DataType.DateTime)]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         [Display(Name = "Randevu Durumu"), Range(0, 2), Required]
@@ -51,7 +51,7 @@ namespace PhotoStudioFS.Models
         public short State { get; set; } = 0; // 0- bekliyor, 1- çekim tamamlandı (resimler hazırlanıyor), 2- Hazır (resimler yüklendi)
 
 
-        [DataType(DataType.DateTime), Required]
+        [DataType(DataType.DateTime)]
         public DateTime StateUpdateDate { get; set; } = DateTime.Now;
 
 

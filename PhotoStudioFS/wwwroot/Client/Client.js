@@ -14,7 +14,7 @@ $(document).ready(($) => {
             else {
                 swal({
                     title: 'Uyarı',
-                    text: "Randevu alabileceğiniz saatleri görmeniz için lütfen ilk önce 'Çekim Türü' seçimi yapınız.",
+                    text: "Randevu alabileceğiniz saatleri görmeniz için lütfen 'Çekim Türü' seçimi yapınız.",
                     type: "warning",
                     showCancelButton: false,
                     confirmButtonText: 'Tamam'
@@ -60,9 +60,7 @@ $(document).ready(($) => {
                         showCancelButton: false,
                         confirmButtonText: 'Tamam'
                     }, (isConfirm) => {
-                        if (isConfirm) {
-                            setTimeout("location.reload();", 500);
-                        }
+                            $(formId)[0].reset();
                     });
                 }
             }).catch(err => {
@@ -101,9 +99,8 @@ $(document).ready(($) => {
                     showCancelButton: false,
                     confirmButtonText: 'Tamam'
                 }, (isConfirm) => {
-                    if (isConfirm) {
-                        setTimeout("location.reload();", 500);
-                    }
+                        $(formId)[0].reset();
+
                 });
 
             }).catch(error => {
@@ -119,6 +116,15 @@ $(document).ready(($) => {
             });
 
     });
+
+    $('#formAppointment #appType').change(function () {
+        const date = $('#formAppointment #appDate').val();
+        const appType = $(this).val();
+        if (date && appType != 0) {
+            getAvailableHoursInDay(date, appType);
+        } 
+    });
+    $("#appPhone").inputmask({ "mask": "(999) 999-9999" });
 });
 
 
@@ -129,6 +135,7 @@ const getAvailableHoursInDay = (date, photoType) => {
     toggleGlobalLoader(1);
     Api.getSchedules(date, '', photoType)
         .then(res => {
+
             toggleGlobalLoader(0);
 
             if (res.status >= 200 && res.status < 300) {
@@ -139,6 +146,15 @@ const getAvailableHoursInDay = (date, photoType) => {
                 for (let i = 0; i < data.length; i++) {
                     appDateHour.append(`<option data-start="${data[i].startHour}" data-end="${data[i].endHour}" value="${data[i].id}">` +
                         `${data[i].startHour} - ${data[i].endHour}</option>`)
+                }
+                if (data.length == 0) {
+                    swal({
+                        title: 'Üzgünüz :(',
+                        text: `Maalesef ${date} tarihi için uygun randevu saati yok. Dilerseniz başka tarihlere bakabilir veya daha detaylı bilgi için bizim ile iletişime geçebilirsiniz.`,
+                        type: "info",
+                        showCancelButton: false,
+                        confirmButtonText: 'Tamam'
+                    });
                 }
             }
         })

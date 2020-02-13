@@ -40,6 +40,7 @@
     <None Include="wwwroot\Admin\plugins\accordion1\js\jquery-1.9.1.min.js" />
     <None Include="wwwroot\Admin\plugins\accordion\accordion.min.js" />
     <None Include="wwwroot\Admin\plugins\accordion\accordions.js" />
+    <None Include="wwwroot\Admin\plugins\masked-input\bindings\inputmask.binding.js" />
     <None Include="wwwroot\Client\css\.DS_Store" />
     <None Include="wwwroot\Client\css\bootstrap.css.map" />
     <None Include="wwwroot\Client\css\style.css.map" />
