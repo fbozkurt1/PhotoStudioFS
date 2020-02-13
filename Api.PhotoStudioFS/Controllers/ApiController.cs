@@ -34,6 +34,7 @@ namespace Api.PhotoStudioFS.Controllers
         protected UserManager<User> userManager { get; private set; }
         protected SignInManager<User> signInManager { get; private set; }
         private readonly IConfiguration configuration;
+
         public ApiController(UserManager<User> userManager,
             SignInManager<User> signInManager,
             IConfiguration configuration,
@@ -48,6 +49,7 @@ namespace Api.PhotoStudioFS.Controllers
             this.signInManager = signInManager;
             this.configuration = configuration;
         }
+
 
         /* APPOINTMENT REQUESTS */
 
@@ -95,7 +97,9 @@ namespace Api.PhotoStudioFS.Controllers
             }
 
         }
+
         [HttpPost("AddAppointmentRequest")]
+        [AllowAnonymous]
         public async Task<ActionResult<Appointment>> AddAppointmentRequest([FromForm]AppointmentView appointmentView)
         {
             if (ModelState.IsValid)
@@ -211,6 +215,7 @@ namespace Api.PhotoStudioFS.Controllers
         }
 
         [HttpPost("AddContactRequest")]
+        [AllowAnonymous]
         public async Task<ActionResult<Contact>> AddContactRequest([FromForm]Contact contact)
         {
             if (ModelState.IsValid)
@@ -349,7 +354,7 @@ namespace Api.PhotoStudioFS.Controllers
 
             if (string.IsNullOrEmpty(userEmail) || string.IsNullOrWhiteSpace(userEmail) || userEmail == null)
             {
-                return NotFound("Token geçerli değil.");
+                return NotFound("Token geçerli değilqweqweqwe.");
             }
 
             var currentUser = await userManager.FindByEmailAsync(userEmail);
