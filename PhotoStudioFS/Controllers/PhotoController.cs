@@ -49,7 +49,7 @@ namespace PhotoStudioFS.Controllers
                 return BadRequest("Bir sorun var");
             }
 
-            if (!photoView.File.ContentType.Contains("image") || !photoView.File.ContentType.Contains("video"))
+            if (!photoView.File.ContentType.Contains("image") && !photoView.File.ContentType.Contains("video"))
             {
                 return BadRequest("Geçersiz Dosya Türü");
             }
