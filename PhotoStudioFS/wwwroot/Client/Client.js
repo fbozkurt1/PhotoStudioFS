@@ -60,7 +60,7 @@ $(document).ready(($) => {
                         showCancelButton: false,
                         confirmButtonText: 'Tamam'
                     }, (isConfirm) => {
-                            $(formId)[0].reset();
+                        $(formId)[0].reset();
                     });
                 }
             }).catch(err => {
@@ -99,7 +99,7 @@ $(document).ready(($) => {
                     showCancelButton: false,
                     confirmButtonText: 'Tamam'
                 }, (isConfirm) => {
-                        $(formId)[0].reset();
+                    $(formId)[0].reset();
 
                 });
 
@@ -122,9 +122,10 @@ $(document).ready(($) => {
         const appType = $(this).val();
         if (date && appType != 0) {
             getAvailableHoursInDay(date, appType);
-        } 
+        }
     });
     $("#appPhone").inputmask({ "mask": "(999) 999-9999" });
+    $("#contactPhone").inputmask({ "mask": "(999) 999-9999" });
 });
 
 

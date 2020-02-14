@@ -81,6 +81,60 @@ namespace PhotoStudioFS.Models
 
     }
 
+    public class AppointmentViewModel
+    {
+        public int Id { get; set; }
+
+        [MaxLength(50), Display(Name = "Adı ve Soyadı"), Required]
+        public string Name { get; set; }
+
+        [MaxLength(50), Display(Name = "Email Adresi"), Required, EmailAddress]
+        public string Email { get; set; }
+
+        [MaxLength(15), Display(Name = "Telefon"), Required, Phone]
+        public string Phone { get; set; }
+
+        public int ShootTypeId { get; set; }
+        public int ShootTypeName { get; set; }
+
+
+        [MaxLength(1000), Display(Name = "Müşteri Mesajı")]
+        public string Message { get; set; }
+
+        [DataType(DataType.DateTime), Display(Name = "Randevu Tarihi Başlangıç"), Required]
+        public DateTime AppointmentDateStart { get; set; }
+
+        [DataType(DataType.DateTime), Display(Name = "Randevu Tarihi Bitiş"), Required]
+        public DateTime AppointmentDateEnd { get; set; }
+
+        [DataType(DataType.DateTime)]
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        [Display(Name = "Randevu Durumu"), Range(0, 2), Required]
+        public short IsApproved { get; set; } = 0; // 0- Onay Bekliyor, 1- Onaylandı, 2- Ret
+
+        public int ScheduleId { get; set; }
+
+
+        [Display(Name = "Çekim Durumu"), Range(0, 2)]
+        public short State { get; set; } = 0; // 0- bekliyor, 1- çekim tamamlandı (resimler hazırlanıyor), 2- Hazır (resimler yüklendi)
+
+
+        [DataType(DataType.DateTime)]
+        public DateTime StateUpdateDate { get; set; } = DateTime.Now;
+
+
+        [Column(TypeName = "decimal(9, 2)"), Display(Name = "Çekim Ücreti")]
+        public decimal Price { get; set; } = 0;
+
+
+        [Column(TypeName = "decimal(9, 2)"), Display(Name = "Ödenen Toplam Ücret")]
+        public decimal PricePaid { get; set; } = 0;
+
+        public string CustomerId { get; set; }
+    }
+
+
     public class AppointmentScheduleView
     {
         public int id { get; set; }

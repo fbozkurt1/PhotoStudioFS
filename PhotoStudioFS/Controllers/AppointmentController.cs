@@ -111,24 +111,26 @@ namespace PhotoStudioFS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateToCustomer(Appointment appointment, string redirectTo)
+        public async Task<IActionResult> CreateToCustomer(AppointmentViewModel appointmentView, string redirectTo)
         {
+
+            ViewBag.RedirectTo = redirectTo;
 
             if (ModelState.IsValid)
             {
-                var customer = await userManager.FindByIdAsync(appointment.CustomerId);
+                var customer = await userManager.FindByIdAsync(appointmentView.CustomerId);
                 if (customer == null)
                 {
                     ModelState.AddModelError("NotUser", "Lütfen müşteriyi seçip tekrar deneyiniz!");
                     return RedirectToAction("Create",
                         new
                         {
-                            email = appointment.Email,
+                            email = appointmentView.Email,
                             redirectTo = redirectTo,
                             error = "Müşterinin verileri bulunamadı! Lütfen müşteriyi seçip tekrar deneyiniz."
                         });
                 }
-                var shootType = await unitOfWork.ShootTypes.Get(appointment.ShootTypeId);
+                var shootType = await unitOfWork.ShootTypes.Get(appointmentView.ShootTypeId);
                 if (shootType == null || !shootType.IsActive)
                 {
                     ModelState.AddModelError("NotShootType", "Lütfen Çekim Türü seçiniz!");
@@ -137,16 +139,33 @@ namespace PhotoStudioFS.Controllers
                 Schedule schedule = new Schedule()
                 {
                     allDay = false,
-                    start = appointment.AppointmentDateStart,
-                    end = appointment.AppointmentDateEnd,
+                    start = appointmentView.AppointmentDateStart,
+                    end = appointmentView.AppointmentDateEnd,
                     isEmpty = false,
-                    ShootTypeId = appointment.ShootTypeId,
+                    ShootTypeId = appointmentView.ShootTypeId,
                 };
 
                 await unitOfWork.Schedules.Add(schedule);
                 await unitOfWork.Complete();
 
-                appointment.ScheduleId = schedule.id;
+
+                var appointment = new Appointment()
+                {
+                    AppointmentDateEnd = appointmentView.AppointmentDateEnd,
+                    AppointmentDateStart = appointmentView.AppointmentDateStart,
+                    CreatedAt = appointmentView.CreatedAt,
+                    CustomerId = appointmentView.CustomerId,
+                    ScheduleId = schedule.id,
+                    Email = customer.Email,
+                    Name = customer.FullName,
+                    Phone = customer.PhoneNumber,
+                    IsApproved = appointmentView.IsApproved,
+                    Price = appointmentView.Price,
+                    PricePaid = appointmentView.PricePaid,
+                    State = appointmentView.State,
+                    Message = appointmentView.Message,
+                    ShootTypeId = shootType.Id,
+                };
 
                 await unitOfWork.Appointments.Add(appointment);
                 await unitOfWork.Complete();
@@ -159,7 +178,7 @@ namespace PhotoStudioFS.Controllers
                 }
                 return RedirectToAction("Details", "Customer", new { email = appointment.Email });
             }
-            return RedirectToAction("Create", "Appointment", new { email = appointment.Email, redirectTo = redirectTo });
+            return RedirectToAction("Create", "Appointment", new { email = appointmentView.Email, redirectTo = redirectTo });
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -171,58 +190,85 @@ namespace PhotoStudioFS.Controllers
             {
                 return NotFound();
             }
-            ViewData["RedirectTo"] = Request.Headers["Referer"];
+
+            ViewBag.RedirectTo = Request.Headers["Referer"];
             return View(appointment);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Appointment appointment, string redirectTo)
+        public async Task<IActionResult> Edit(int id, AppointmentViewModel appointmentView, string redirectTo)
         {
-            if (id != appointment.Id || string.IsNullOrEmpty(redirectTo) || string.IsNullOrWhiteSpace(redirectTo))
+            ViewBag.RedirectTo = redirectTo;
+
+            var appointment = new Appointment()
             {
-                return NotFound();
+                Id = appointmentView.Id,
+                AppointmentDateEnd = appointmentView.AppointmentDateEnd,
+                AppointmentDateStart = appointmentView.AppointmentDateStart,
+                CreatedAt = appointmentView.CreatedAt,
+                CustomerId = appointmentView.CustomerId,
+                ScheduleId = appointmentView.ScheduleId,
+                Email = appointmentView.Email,
+                Name = appointmentView.Name,
+                Phone = appointmentView.Phone,
+                IsApproved = appointmentView.IsApproved,
+                Price = appointmentView.Price,
+                PricePaid = appointmentView.PricePaid,
+                State = appointmentView.State,
+                Message = appointmentView.Message,
+                ShootTypeId = appointmentView.ShootTypeId
+            };
+
+            if (id != appointmentView.Id || string.IsNullOrWhiteSpace(redirectTo))
+            {
+                ModelState.AddModelError("NotUser", "Lütfen tüm alanları doldurunuz!");
+                return View(appointment);
             }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var shootType = await unitOfWork.ShootTypes.Get(appointment.ShootTypeId);
+
+                    var shootType = await unitOfWork.ShootTypes.Get(appointmentView.ShootTypeId);
                     if (shootType == null)
                     {
                         ModelState.AddModelError("NotUser", "Lütfen Çekim Türü seçiniz");
                         return View(appointment);
                     }
-                    var oldAppointment = await unitOfWork.Appointments.Get(appointment.Id);
+                    appointment.ShootType = shootType;
+
+                    var oldAppointment = await unitOfWork.Appointments.Get(appointmentView.Id);
                     if (oldAppointment == null)
                     {
                         ModelState.AddModelError("NotUser", "Lütfen tüm alanları doldurunuz!");
                         return View(appointment);
                     }
 
-                    bool scheduleIsEmpty = appointment.IsApproved == 2 ? true : false;
+                    bool scheduleIsEmpty = appointmentView.IsApproved == 2 ? true : false;
 
                     if (!await UpdateScheduleIsEmptyField(oldAppointment.ScheduleId, scheduleIsEmpty))
                     {
                         ModelState.AddModelError("NotUser", "Lütfen tüm alanları doldurunuz!");
                         return View(appointment);
                     }
+                    User customer = null;
                     if (oldAppointment.Customer == null)
                     {
-                        var customer = await AddUserIfNotExist(oldAppointment);
+                        customer = await AddUserIfNotExist(oldAppointment);
                         if (customer == null)
                         {
                             ModelState.AddModelError("NotUser", "Müşteri hesabı oluşturulamadı. Lütfen tekrar deneyiniz!");
-                            return View(appointment);
+                            return View(appointmentView);
                         }
                         oldAppointment.CustomerId = customer.Id;
-                        oldAppointment.Customer = customer;
                     }
-                    if (!await SendNotify(appointment, oldAppointment, oldAppointment.Customer))
+
+                    if (!await SendNotify(appointment, oldAppointment, customer))
                     {
                         ModelState.AddModelError("NotUser2", "Kullanıcıya randevusuyla ilgili bildirim gönderilemedi. Lütfen tekrar deneyiniz!");
-                        return View(appointment);
+                        return View(appointmentView);
                     }
 
                     oldAppointment.IsApproved = appointment.IsApproved;
@@ -231,16 +277,19 @@ namespace PhotoStudioFS.Controllers
                     oldAppointment.PricePaid = appointment.PricePaid;
                     oldAppointment.AppointmentDateStart = appointment.AppointmentDateStart;
                     oldAppointment.AppointmentDateEnd = appointment.AppointmentDateEnd;
+
                     unitOfWork.Appointments.Update(oldAppointment);
                     await unitOfWork.Complete();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
                     ModelState.AddModelError("NotUser2", "Lütfen tüm alanları doldurunuz!");
                     return View(appointment);
 
                 }
+                if (string.IsNullOrEmpty(redirectTo))
+                    return RedirectToAction("Index", "Admin");
+
                 return Redirect(redirectTo);
 
             }
@@ -324,6 +373,7 @@ namespace PhotoStudioFS.Controllers
             var url = Url.Action("Login", "Account", new { }, protocol: HttpContext.Request.Scheme);
             bool isAppointmentNotifySent = true, isPhotoStateNotifySent = true;
             // State of appointment
+
             if (appointment.IsApproved != oldAppointment.IsApproved)
             {
                 string template = "", subject = "";
@@ -388,6 +438,7 @@ namespace PhotoStudioFS.Controllers
                            });
                 }
             }
+
 
             return isAppointmentNotifySent && isPhotoStateNotifySent;
 

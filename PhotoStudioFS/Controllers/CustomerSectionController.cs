@@ -151,5 +151,11 @@ namespace PhotoStudioFS.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Feedback()
+        {
+            return View();
+
+        }
     }
 }

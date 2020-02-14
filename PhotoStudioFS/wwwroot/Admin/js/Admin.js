@@ -20,6 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
         elem.addEventListener('keypress', event => validateDecimal(event));
     });
 
+    document.querySelectorAll('input.phone').forEach(elem => {
+        elem.addEventListener('keypress', event => validateDecimal(event));
+    });
+
+    $('.phoneMasked').inputmask({ "mask": "(999) 999-9999" });
 
 }, false);
 

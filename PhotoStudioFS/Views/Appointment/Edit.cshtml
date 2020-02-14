@@ -19,7 +19,7 @@
                     <input type="hidden" asp-for="Id" />
                     <input type="hidden" asp-for="ScheduleId" />
                     <input type="hidden" asp-for="ShootTypeId" />
-                    <input type="hidden" name="redirectTo" value="@ViewData["RedirectTo"]" />
+                    <input type="hidden" name="redirectTo" value="@ViewBag.RedirectTo" />
                     <div class="form-group">
                         <label asp-for="Name" class="control-label"></label>
                         <input readonly asp-for="Name" class="form-control" />
