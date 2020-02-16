@@ -54,6 +54,7 @@ namespace Api.PhotoStudioFS.Controllers
         /* APPOINTMENT REQUESTS */
 
         [HttpGet("GetAvailableAppointmentDates")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<ScheduleView>>> GetAvailableAppointmentDates(string start, int photoShootType)
         {
             if (string.IsNullOrEmpty(start) || string.IsNullOrWhiteSpace(start) || start == null)
@@ -277,6 +278,7 @@ namespace Api.PhotoStudioFS.Controllers
 
 
         [HttpGet("GetPhotoShootTypes")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<ShootType>>> GetPhotoShootTypes()
         {
             try
@@ -291,6 +293,7 @@ namespace Api.PhotoStudioFS.Controllers
         }
 
         [HttpGet("GetPhotoShootType")]
+        [AllowAnonymous]
         public async Task<ActionResult<ShootType>> GetPhotoShootType(int id)
         {
             try
@@ -333,38 +336,80 @@ namespace Api.PhotoStudioFS.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous]
-        public async Task<object> Login([FromForm] LoginView model)
+        public async Task<ActionResult> Login([FromForm] LoginView model)
         {
             var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 
             if (result.Succeeded)
             {
-                var appUser = userManager.Users.SingleOrDefault(r => r.Email == model.Email);
-                return await GenerateJwtToken(model.Email, appUser);
+                var appUser = userManager.Users.SingleOrDefault(u => u.Email == model.Email);
+                var userView = new UserView()
+                {
+                    Token = await GenerateJwtToken(model.Email, appUser),
+                    Email = appUser.Email,
+                    Name = appUser.FullName,
+                    Phone = appUser.PhoneNumber,
+                    Success = true
+                };
+                return Ok(userView);
+
             }
 
-            return NotFound("Kullanıcı Giriş bilgileri geçerli değil.");
+            return NotFound(new UserView()
+            {
+                Email = model.Email,
+                Success = false
+            });
         }
+
 
         [HttpGet("CheckAuth")]
         [AllowAnonymous]
-        public async Task<object> CheckAuth()
+        public async Task<ActionResult> CheckAuth()
         {
-            string userEmail = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            string tokenWithBearer = Request.Headers["Authorization"];
 
-            if (string.IsNullOrEmpty(userEmail) || string.IsNullOrWhiteSpace(userEmail) || userEmail == null)
+            var tokenWithBearerArray = tokenWithBearer.Split(' '); // takes bearer string and token to array
+            if (tokenWithBearerArray.Count() != 2)
             {
-                return NotFound("Token geçerli değilqweqweqwe.");
+                return BadRequest(new UserView()
+                {
+                    Success = false,
+                    Token = "Token geçerli değil."
+                });
+            }
+            var token = tokenWithBearerArray[1];
+            string userId = User.FindFirst("userId")?.Value;
+
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrWhiteSpace(userId) || userId == null)
+            {
+                return NotFound(new UserView()
+                {
+                    Success = false,
+                    Token = "Token geçerli değil."
+                });
             }
 
-            var currentUser = await userManager.FindByEmailAsync(userEmail);
+            var currentUser = await userManager.FindByIdAsync(userId);
 
             if (currentUser == null)
             {
-                return NotFound("Kullanıcı bilgileri geçerli değil!");
+                return NotFound(new UserView()
+                {
+                    Success = false,
+                    Token = "Kullanıcı bilgileri geçerli değil."
+                });
             }
 
-            return GenerateJwtToken(userEmail, currentUser);
+            var userView = new UserView()
+            {
+                Email = currentUser.Email,
+                Name = currentUser.FullName,
+                Phone = currentUser.PhoneNumber,
+                Success = true,
+                Token = token
+            };
+            return Ok(userView);
         }
 
         private async Task<object> GenerateJwtToken(string email, IdentityUser user)
@@ -373,8 +418,9 @@ namespace Api.PhotoStudioFS.Controllers
             {
                 new Claim(JwtRegisteredClaimNames.Sub, email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Name,user.Id)
+                new Claim(ClaimTypes.NameIdentifier, user.Email),
+                new Claim(ClaimTypes.Name,user.Id),
+                new Claim("userId",user.Id)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtKey"]));
@@ -401,5 +447,18 @@ namespace Api.PhotoStudioFS.Controllers
         [Required]
         public string Password { get; set; }
 
+    }
+
+    public class UserView
+    {
+        public string Name { get; set; }
+
+        public string Email { get; set; }
+
+        public string Phone { get; set; }
+
+        public bool Success { get; set; }
+
+        public object Token { get; set; }
     }
 }

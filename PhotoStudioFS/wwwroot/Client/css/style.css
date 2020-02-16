@@ -17,7 +17,9 @@ body {
     font-size: 18px;
     line-height: 1.5;
     color: gray;
-    background: whitesmoke;
+    /*background: whitesmoke;*/
+    /*background: #fae7b5;*/
+    background: #f7efd7;
 }
 
 #page {
@@ -67,7 +69,7 @@ p {
 }
 
 h1, h2, h3, h4, h5, h6, figure {
-    color: #000;
+    /*color: #000;*/
     font-family: "Amatic SC", cursive;
     font-weight: 400;
     margin: 0 0 20px 0;
@@ -178,7 +180,8 @@ h1, h2, h3, h4, h5, h6, figure {
             position: relative;
             font-size: 14px;
             padding: 20px 12px;
-            color: rgba(255, 255, 255, 0.9);
+            color: #cfc1a5;
+            /*color: rgba(255, 255, 255, 0.9);*/
             -webkit-transition: 0.5s;
             -o-transition: 0.5s;
             transition: 0.5s;
@@ -394,7 +397,8 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 
     .video-hero .display-tc .holder {
-        color: #fff;
+        color: #cfc1a5;
+        /*color: #fff;*/
         font-family: "Josefin Sans", Arial, sans-serif;
         font-size: 18px;
         text-transform: uppercase;
@@ -410,7 +414,8 @@ h1, h2, h3, h4, h5, h6, figure {
                 top: 49%;
                 width: 100px;
                 height: 2px;
-                background: #fff;
+                /*background: #fff;*/
+                background: #cfc1a5;
                 content: '';
             }
 
@@ -446,7 +451,8 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 
 .video-hero .display-tc h2 {
-    color: #fff;
+    /*color: #fff;*/
+    color: #cfc1a5;
     font-size: 80px;
     margin-bottom: 20px;
     text-transform: uppercase;
@@ -475,7 +481,7 @@ h1, h2, h3, h4, h5, h6, figure {
 
 .video-hero .display-tc .btn-custom {
     letter-spacing: 5px;
-    color: #000 !important;
+    color: #cfc1a5 !important;
 }
 
 .colorlib-gallery,
@@ -546,7 +552,7 @@ h1, h2, h3, h4, h5, h6, figure {
 
         .services .icon i {
             font-size: 50px;
-            color: #000;
+            /*color: #000;*/
             z-index: 1;
         }
 
@@ -1429,20 +1435,22 @@ input[type="text"] {
     }
 
 .btn-primary {
-    background: #FFDD00;
-    color: #fff;
-    border: 2px solid #FFDD00;
+    background: transparent;
+    /*background: #FFDD00;*/
+    color: #cfc1a5;
+    border: 2px solid #cfc1a5;
+    /*border: 2px solid #FFDD00;*/
 }
 
     .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
-        background: #ffe01a !important;
-        border-color: #ffe01a !important;
+        background: gray !important;
+        border-color: #cfc1a5 !important;
     }
 
     .btn-primary.btn-outline {
         background: transparent;
-        color: #FFDD00;
-        border: 2px solid #FFDD00;
+        color: #cfc1a5;
+        border: 2px solid #cfc1a5;
     }
 
         .btn-primary.btn-outline:hover, .btn-primary.btn-outline:focus, .btn-primary.btn-outline:active {
