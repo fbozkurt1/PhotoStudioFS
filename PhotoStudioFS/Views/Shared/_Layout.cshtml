@@ -20,38 +20,41 @@
     <meta name="twitter:url" content="" />
     <meta name="twitter:card" content="" />
 
-    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:100,300,400,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:100,300,400,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
 
     <!-- Animate.css -->
-    <link rel="stylesheet" href="~/Client/css/animate.css">
+    <link rel="stylesheet" href="~/Client/css/animate.css" asp-append-version="true">
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">*@
     <!-- Icomoon Icon Fonts-->
-    <link rel="stylesheet" href="~/Client/css/icomoon.css">
+    <link rel="stylesheet" href="~/Client/css/icomoon.css" asp-append-version="true">
     <!-- Bootstrap  -->
-    <link rel="stylesheet" href="~/Client/css/bootstrap.css">
+    <link rel="stylesheet" href="~/Client/css/bootstrap.css" asp-append-version="true">
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js">*@
 
     <!-- Magnific Popup -->
-    <link rel="stylesheet" href="~/Client/css/magnific-popup.css">
+    @*<link rel="stylesheet" href="~/Client/css/magnific-popup.css" asp-append-version="true">*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/0.9.9/magnific-popup.min.css">
 
     <!-- Owl Carousel -->
-    <link rel="stylesheet" href="~/Client/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="~/Client/css/owl.theme.default.min.css">
+    @*<link rel="stylesheet" href="~/Client/css/owl.carousel.min.css" asp-append-version="true">*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css">
+    @*<link rel="stylesheet" href="~/Client/css/owl.theme.default.min.css" asp-append-version="true">*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css">
     <!-- Date Picker css-->
-    <link href="~/Admin/plugins/date-picker/spectrum.css" rel="stylesheet" />
-    <link href="~/Admin/plugins/jquery-ui2/jquery-ui.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css" />
+    @*<link href="~/Admin/plugins/date-picker/spectrum.css" rel="stylesheet" asp-append-version="true" />*@
+    @*<link href="~/Admin/plugins/jquery-ui2/jquery-ui.css" rel="stylesheet" asp-append-version="true" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
 
     <!---Sweetalert Css-->
-    <link href="~/Admin/plugins/sweet-alert/jquery.sweet-modal.min.css" rel="stylesheet" />
-    <link href="~/Admin/plugins/sweet-alert/sweetalert.css" rel="stylesheet" />
+    <link href="~/Admin/plugins/sweet-alert/jquery.sweet-modal.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/Admin/plugins/sweet-alert/sweetalert.css" rel="stylesheet" asp-append-version="true" />
     <!-- Theme style  -->
-    <link rel="stylesheet" href="~/Client/css/style.css">
+    <link rel="stylesheet" href="~/Client/css/style.css" asp-append-version="true">
 
-    <!-- Modernizr JS -->
-    <script src="~/Client/js/modernizr-2.6.2.min.js"></script>
-    <!-- FOR IE9 below -->
-    <!--[if lt IE 9]>
-    <script src="js/respond.min.js"></script>
-    <![endif]-->
+    <script src="~/Client/js/modernizr-2.6.2.min.js" asp-append-version="true"></script>
+
 
 </head>
 
@@ -352,36 +355,47 @@
         <a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
     </div>
     <!-- jQuery -->
-    <script src="~/Client/js/jquery.min.js"></script>
+    @*<script src="~/Client/js/jquery.min.js" asp-append-version="true"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
     <!-- jQuery Easing -->
-    <script src="~/Client/js/jquery.easing.1.3.min.js"></script>
+    @*<script src="~/Client/js/jquery.easing.1.3.min.js" asp-append-version="true"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" defer></script>
     <!-- Bootstrap -->
-    <script src="~/Client/js/bootstrap.min.js"></script>
+    @*<script src="~/Client/js/bootstrap.min.js" asp-append-version="true"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js" defer></script>
     <!-- Waypoints -->
-    <script src="~/Client/js/jquery.waypoints.min.js"></script>
+    @*<script src="~/Client/js/jquery.waypoints.min.js" asp-append-version="true"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/jquery.waypoints.min.js" defer></script>
     <!-- Stellar Parallax -->
-    <script src="~/Client/js/jquery.stellar.min.js"></script>
+    <script src="~/Client/js/jquery.stellar.min.js" asp-append-version="true" defer></script>
     <!-- Owl carousel -->
-    <script src="~/Client/js/owl.carousel.min.js"></script>
+    @*<script src="~/Client/js/owl.carousel.min.js" asp-append-version="true"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js" defer></script>
     <!-- Magnific Popup -->
-    <script src="~/Client/js/jquery.magnific-popup.min.js"></script>
-    <script src="~/Client/js/magnific-popup-options.min.js"></script>
+    @*<script src="~/Client/js/jquery.magnific-popup.min.js" asp-append-version="true"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/0.9.9/jquery.magnific-popup.min.js" defer></script>
+
+    <script src="~/Client/js/magnific-popup-options.min.js" asp-append-version="true" defer></script>
     <!-- Datepicker js -->
-    <script src="~/Admin/plugins/date-picker/spectrum.min.js"></script>
-    <script src="~/Admin/plugins/date-picker/jquery-ui.min.js"></script>
-    <script src="~/Admin/plugins/input-mask/jquery.maskedinput.min.js"></script>
+    @*<script src="~/Admin/plugins/date-picker/spectrum.min.js" asp-append-version="true"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+    @*<script src="~/Admin/plugins/date-picker/jquery-ui.min.js" asp-append-version="true"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    @*<script src="~/Admin/plugins/input-mask/jquery.maskedinput.min.js" asp-append-version="true"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
 
     <!-- Sweet alert js-->
-    <script src="~/Admin/plugins/sweet-alert/jquery.sweet-modal.min.js"></script>
-    <script src="~/Admin/plugins/sweet-alert/sweetalert.min.js"></script>
-    <script src="~/Admin/js/sweet-alert.min.js"></script>
-    <script src="~/Admin/plugins/masked-input/jquery.inputmask.min.js"></script>
+    <script src="~/Admin/plugins/sweet-alert/jquery.sweet-modal.min.js" asp-append-version="true" defer></script>
+    <script src="~/Admin/plugins/sweet-alert/sweetalert.min.js" asp-append-version="true" defer></script>
+    <script src="~/Admin/js/sweet-alert.min.js" asp-append-version="true" defer></script>
+    <script src="~/Admin/plugins/masked-input/jquery.inputmask.min.js" asp-append-version="true" defer></script>
     <!-- Main -->
-    <script src="~/Common/Axios/axios.min.js"></script>
+    <script src="~/Common/Axios/axios.min.js" asp-append-version="true" defer></script>
 
-    <script src="~/Client/js/main.js"></script>
-    <script src="~/Client/Client.js"></script>
+    <script src="~/Client/js/main.js" asp-append-version="true" defer></script>
+    <script src="~/Client/Client.js" defer></script>
     @RenderSection("Scripts", required: false)
-    <script src="~/Common/common.js"></script>
+    <script src="~/Common/common.js" defer></script>
 </body>
 </html>
