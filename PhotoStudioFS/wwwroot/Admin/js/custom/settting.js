@@ -53,3 +53,56 @@ const editShootType = () => {
             });
         });
 }
+
+const onChangeShootTypePhoto = (elem) => {
+
+    let selectedPhotoName = elem.files.item(0).name;
+    document.getElementById('labelShootTypePhoto').innerHTML = selectedPhotoName;
+    console.log(elem.files.item(0).name);
+
+    let reader = new FileReader();
+    reader.onload = function (e) {
+        $('#shootTypePreviewPhoto').attr('src', e.target.result);
+    }
+    reader.readAsDataURL(elem.files.item(0));
+}
+
+
+$('#formCreateShootType').submit((event) => {
+
+    event.preventDefault();
+
+    const formId = '#formCreateShootType';
+
+    toggleGlobalLoader(1);
+    const formData = new FormData($(formId)[0]);
+
+    Api.addPhotoShootType(newFormData)
+        .then(res => {
+
+            toggleGlobalLoader(0);
+
+            swal({
+                title: 'Başarılı!',
+                text: res.data,
+                type: "success",
+                showCancelButton: false,
+                confirmButtonText: 'Tamam'
+            }, (isConfirm) => {
+                $(formId)[0].reset();
+
+            });
+
+        }).catch(error => {
+            toggleGlobalLoader(0);
+
+            swal({
+                title: 'Başarısız!',
+                text: error.response.data,
+                type: "warning",
+                showCancelButton: false,
+                confirmButtonText: 'Tamam'
+            });
+        });
+
+});

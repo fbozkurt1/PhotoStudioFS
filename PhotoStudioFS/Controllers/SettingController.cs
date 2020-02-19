@@ -38,14 +38,17 @@ namespace PhotoStudioFS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateShootType(ShootType shootType)
+        public async Task<IActionResult> CreateShootType(ShootTypeView shootType)
         {
             if (ModelState.IsValid)
             {
+                /*
+                 @TODO: fotoğraf ve icon eklnecek
+                 */
                 try
                 {
-                    await unitOfWork.ShootTypes.Add(shootType);
-                    await unitOfWork.Complete();
+                    //await unitOfWork.ShootTypes.Add(shootType);
+                    //await unitOfWork.Complete();
 
                     return RedirectToAction("ShootTypes", "Setting");
                 }

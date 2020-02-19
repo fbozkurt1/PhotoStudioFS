@@ -128,6 +128,9 @@ const Api = {
     },
     addAppointment: function (data) {
         return postData(`/Common/Create`, data);
+    },
+    addPhotoShootType: function (formData) {
+        return postData(`/Setting/CreateShootType`, formData);
     }
 };
 

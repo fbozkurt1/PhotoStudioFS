@@ -5,20 +5,28 @@
     ViewData["IsDataTableUsed"] = true;
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-
+@section Styles{
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <style>
+        .icon {
+            font-size: 50px;
+            margin-right: 10px;
+        }
+    </style>
+}
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Yeni Çekim Türü Ekle</h3>
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-md-6">
-                <form asp-controller="Setting" asp-action="CreateShootType" method="post">
+            <div class="col-8">
+                <form asp-controller="Setting" asp-action="CreateShootType" method="post" id="formCreateShootType">
                     <div class="text-left text-danger" asp-validation-summary="All"></div>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="Name" class="form-control-label"></label>
-                        <input id="name" type="text" class="form-control" asp-for="Name">
+                        <input id="name" type="text" class="form-control" asp-for="Name" placeholder="Ana sayfada görünecek Çekim Türü Adı">
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -26,6 +34,45 @@
                         <textarea asp-for="Description" placeholder="Ana sayfada görünecek açıklama..." class="form-control">
                         </textarea>
                         <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="shootTypePhoto" class="control-label">Kapak Fotoğrafı</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="Photo" id="shootTypePhoto" accept="image/*" onchange="onChangeShootTypePhoto(this)">
+                            <label class="custom-file-label" for="shootTypePhoto" id="labelShootTypePhoto">Örnek kapak fotoğrafı seçiniz</label>
+                        </div>
+                    </div>
+                    <div class="form-group mt-2">
+                        <img id="shootTypePreviewPhoto" class="img-fluid img-responsive" src="" alt="Çekim Türü Örnek Fotoğraf" width="200" height="200" />
+                    </div>
+                    <div class="form-group mt-2">
+                        <label class="control-label">Ana Sayfada Görünecek icon</label>
+                        <br />
+                        <label class="radio-inline">
+                            <input type="radio" name="Icon" value="las la-camera icon">
+                            <i class="las la-camera icon"></i>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="Icon" value="las la-video icon">
+                            <i class="las la-video icon"></i>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="Icon" value="las la-camera-retro icon">
+                            <i class="las la-camera-retro icon"></i>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="Icon" value="las la-photo-video icon">
+                            <i class="las la-photo-video icon"></i>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="Icon" value="las la-film icon">
+                            <i class="las la-film icon"></i>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="Icon" value="las la-file-video icon">
+                            <i class="las la-file-video icon"></i>
+                        </label>
+
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Ekle" class="btn btn-primary" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,7 +18,25 @@ namespace PhotoStudioFS.Models.Setting
         [MaxLength(2000), Display(Name = "Açıklama"), Required]
         public string Description { get; set; }
 
-        [Display(Name = "Çekim Türü"), Required]
+        [Required]
+        public bool IsActive { get; set; } = true;
+
+    }
+
+    public class ShootTypeView
+    {
+
+        [MaxLength(50), Display(Name = "Çekim Türü"), Required]
+        public string Name { get; set; }
+
+        [MaxLength(2000), Display(Name = "Açıklama"), Required]
+        public string Description { get; set; }
+
+        public IFormFile Photo { get; set; }
+
+        public string Icon { get; set; }
+
+        [Required]
         public bool IsActive { get; set; } = true;
 
     }
