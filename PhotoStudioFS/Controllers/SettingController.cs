@@ -42,20 +42,21 @@ namespace PhotoStudioFS.Controllers
         {
             if (ModelState.IsValid)
             {
-                /*
-                 @TODO: fotoğraf ve icon eklnecek
-                 */
-                try
-                {
-                    //await unitOfWork.ShootTypes.Add(shootType);
-                    //await unitOfWork.Complete();
+                if (shootType.Photo == null)
+                    /*
+                     @TODO: fotoğraf ve icon eklnecek
+                     */
+                    try
+                    {
+                        //await unitOfWork.ShootTypes.Add(shootType);
+                        //await unitOfWork.Complete();
 
-                    return RedirectToAction("ShootTypes", "Setting");
-                }
-                catch (Exception)
-                {
-                    ModelState.AddModelError("NotShootType", "Bir Sorun oluştu, tekrar deneyiniz!");
-                }
+                        return RedirectToAction("ShootTypes", "Setting");
+                    }
+                    catch (Exception)
+                    {
+                        ModelState.AddModelError("NotShootType", "Bir Sorun oluştu, tekrar deneyiniz!");
+                    }
             }
             return View("ShootTypes", shootType);
 

@@ -1044,6 +1044,11 @@ input[type="text"] {
         float: left;
         height: 200px;
     }
+    .instagram-entry .instagram.visible {
+        width: 12.5%;
+        float: left;
+        height: 200px;
+    }
 
 @media screen and (max-width: 768px) {
     .instagram-entry .instagram {
