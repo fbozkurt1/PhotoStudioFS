@@ -2,14 +2,23 @@
 
 namespace PhotoStudioFS.Migrations
 {
-    public partial class newMigration : Migration
+    public partial class AddPhotoPathFieldToShootType : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "ShootTypeId",
+            migrationBuilder.AddColumn<string>(
+                name: "Icon",
                 table: "ShootTypes",
-                nullable: true);
+                maxLength: 64,
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
+                name: "PhotoPath",
+                table: "ShootTypes",
+                maxLength: 1000,
+                nullable: false,
+                defaultValue: "");
 
             migrationBuilder.AlterColumn<string>(
                 name: "UserName",
@@ -64,33 +73,16 @@ namespace PhotoStudioFS.Migrations
                 oldClrType: typeof(string),
                 oldMaxLength: 255,
                 oldNullable: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ShootTypes_ShootTypeId",
-                table: "ShootTypes",
-                column: "ShootTypeId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_ShootTypes_ShootTypes_ShootTypeId",
-                table: "ShootTypes",
-                column: "ShootTypeId",
-                principalTable: "ShootTypes",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_ShootTypes_ShootTypes_ShootTypeId",
-                table: "ShootTypes");
-
-            migrationBuilder.DropIndex(
-                name: "IX_ShootTypes_ShootTypeId",
+            migrationBuilder.DropColumn(
+                name: "Icon",
                 table: "ShootTypes");
 
             migrationBuilder.DropColumn(
-                name: "ShootTypeId",
+                name: "PhotoPath",
                 table: "ShootTypes");
 
             migrationBuilder.AlterColumn<string>(

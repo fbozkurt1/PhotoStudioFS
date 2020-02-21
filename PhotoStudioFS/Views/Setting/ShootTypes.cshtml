@@ -1,4 +1,4 @@
-﻿@model PhotoStudioFS.Models.Setting.ShootType
+﻿@model PhotoStudioFS.Models.Setting.ShootTypeView
 @{
     ViewData["Title"] = "Sinem Kobaner / Çekim Türleri";
     ViewData["PageName"] = "Çekim Türleri";
@@ -38,7 +38,7 @@
                     <div class="form-group">
                         <label for="shootTypePhoto" class="control-label">Kapak Fotoğrafı</label>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="Photo" id="shootTypePhoto" accept="image/*" onchange="onChangeShootTypePhoto(this)">
+                            <input type="file" class="custom-file-input" name="Photo" id="shootTypePhoto" accept="image/*" onchange="onChangeShootTypePhoto(this)" required>
                             <label class="custom-file-label" for="shootTypePhoto" id="labelShootTypePhoto">Örnek kapak fotoğrafı seçiniz</label>
                         </div>
                     </div>
@@ -89,13 +89,14 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div class="table-responsive">
                     <table id="dataTable" class="table table-striped table-bordered text-nowrap w-100">
                         <thead>
                             <tr>
+                                <th class="wd-5p">Fotoğraf</th>
                                 <th class="wd-15p">Çekim Türü</th>
-                                <th class="wd-15p">Açıklama</th>
+                                <th class="wd-15p">İkon</th>
                                 <th class="wd-15p">Durum</th>
                                 <th class="wd-15p">İşlem</th>
                             </tr>
@@ -106,8 +107,9 @@
                             {
 
                                 <tr>
+                                    <td><img class="img-fluid img-responsive" width="75" src="@shootType.PhotoPath" alt="Alternate Text" /></td>
                                     <td>@shootType.Name</td>
-                                    <td>@shootType.Description</td>
+                                    <td><i class="@shootType.Icon"></i></td>
                                     @if (shootType.IsActive)
                                     {
                                         <td><span class="badge badge-success">Aktif</span></td>
@@ -121,7 +123,10 @@
                                                 onclick="onClickEditShootType(this)"
                                                 data-id="@shootType.Id"
                                                 data-name="@shootType.Name"
-                                                data-isactive="@shootType.IsActive">
+                                                data-description="@shootType.Description"
+                                                data-isactive="@shootType.IsActive"
+                                                data-photopath="@shootType.PhotoPath"
+                                                data-icon="@shootType.Icon">
                                             Düzenle
                                         </button>
                                     </td>
@@ -147,10 +152,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h5 id="shootTypeModalInfo"></h5><br />
                 <input hidden type="text" id="shootTypeId" value="" />
-                <div class="row">
-                    <div class="col-md-8">
+                <div class="row mb-2">
+                    <div class="col-md-10">
                         <label class="form-label">Çekim Türü</label>
                         <div class="input-group ">
                             <div class="input-group-prepend">
@@ -164,8 +168,8 @@
 
                     </div>
                 </div>
-                <div class="row mt-2 mb-2">
-                    <div class="col-md-8">
+                <div class="row mb-2">
+                    <div class="col-md-10">
                         <label class="form-label">Açıklama</label>
                         <div class="input-group ">
                             <div class="input-group-prepend">
@@ -181,8 +185,18 @@
 
                     </div>
                 </div>
-                <div class="row mt-2 mb-2">
-                    <div class="col-md-8">
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <label class="form-label">Kapak Fotoğrafı</label>
+                        <img id="shootTypePhoto" class="img-fluid img-responsive" src="" alt="Çekim Türü Örnek Fotoğraf" width="100" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">İkon</label>
+                        <i id="shootTypeIcon"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
                         <div class="form-group">
                             <label class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="shootTypeIsActive" />

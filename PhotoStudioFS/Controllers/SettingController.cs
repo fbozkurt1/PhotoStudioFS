@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using PhotoStudioFS.Data;
+using PhotoStudioFS.Helpers;
 using PhotoStudioFS.Models;
 using PhotoStudioFS.Models.Setting;
 
@@ -12,10 +14,12 @@ namespace PhotoStudioFS.Controllers
 {
     public class SettingController : BaseController
     {
-        public SettingController(UserManager<User> userManager, SignInManager<User> signInManager, photostudioContext context)
+        private readonly IOptions<AWSModel> appSettings;
+
+        public SettingController(UserManager<User> userManager, SignInManager<User> signInManager, photostudioContext context, IOptions<AWSModel> appSettings)
             : base(context, userManager, signInManager)
         {
-
+            this.appSettings = appSettings;
         }
 
         public IActionResult Index()
@@ -38,27 +42,47 @@ namespace PhotoStudioFS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateShootType(ShootTypeView shootType)
+        public async Task<IActionResult> CreateShootType(ShootTypeView shootTypeView)
         {
             if (ModelState.IsValid)
             {
-                if (shootType.Photo == null)
-                    /*
-                     @TODO: fotoğraf ve icon eklnecek
-                     */
-                    try
-                    {
-                        //await unitOfWork.ShootTypes.Add(shootType);
-                        //await unitOfWork.Complete();
+                if (shootTypeView.Photo == null || !shootTypeView.Photo.ContentType.Contains("image"))
+                {
+                    return BadRequest("Geçersiz Dosya Türü Lütfen bir fotoğraf seçiniz.");
+                }
 
-                        return RedirectToAction("ShootTypes", "Setting");
-                    }
-                    catch (Exception)
+                try
+                {
+                    var amazon = new AmazonS3Service(
+                           appSettings.Value.AccessKey,
+                           appSettings.Value.SecretAccessKey,
+                           appSettings.Value.BucketName);
+
+
+                    var response = await amazon.UploadFileAsync(file: shootTypeView.Photo, subFolderName: "ShootTypePhotos");
+
+                    if (response.Success)
                     {
-                        ModelState.AddModelError("NotShootType", "Bir Sorun oluştu, tekrar deneyiniz!");
+                        var shootType = new ShootType()
+                        {
+                            Name = shootTypeView.Name,
+                            IsActive = shootTypeView.IsActive,
+                            Icon = shootTypeView.Icon,
+                            Description = shootTypeView.Description,
+                            PhotoPath = response.ThumbnailUrl
+                        };
+                        await unitOfWork.ShootTypes.Add(shootType);
+                        await unitOfWork.Complete();
+
+                        return Ok("Çekim Türü başarıyla eklendi.");
                     }
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError("NotShootType", "Bir Sorun oluştu, tekrar deneyiniz!");
+                }
             }
-            return View("ShootTypes", shootType);
+            return View("ShootTypes", shootTypeView);
 
         }
 

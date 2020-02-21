@@ -5,14 +5,17 @@ const onClickEditShootType = (elem) => {
     const description = elem.getAttribute('data-description');
     const id = elem.getAttribute('data-id');
     const isActive = elem.getAttribute('data-isactive');
-    console.log(isActive);
+    const photoPath = elem.getAttribute('data-photopath');
+    const icon = elem.getAttribute('data-icon');
 
     let shootModal = '#shootTypeModal';
     $(shootModal).modal('show');
     $(shootModal + ' #shootTypeName').val(name);
     $(shootModal + ' #shootTypeId').val(id);
     $(shootModal + ' #shootTypeDesc').val(description);
-    document.getElementById('shootTypeIsActive').checked = true;
+    $(shootModal + ' #shootTypePhoto').attr('src', photoPath);
+    $(shootModal + ' #shootTypeIcon').addClass(icon);
+    document.getElementById('shootTypeIsActive').checked = isActive;
 }
 
 const editShootType = () => {
@@ -22,11 +25,15 @@ const editShootType = () => {
     const id = $(shootModal + ' #shootTypeId').val();
     const description = $(shootModal + ' #shootTypeDesc').val();
     const isActive = document.getElementById('shootTypeIsActive').checked;
+    const photoPath = $(shootModal + ' #shootTypePhoto').attr('src');
+    const icon = $(shootModal + ' #shootTypeIcon').attr('class');
 
     let formData = new FormData();
     formData.append("Name", name);
     formData.append("IsActive", isActive);
     formData.append("Description", description);
+    formData.append("PhotoPath", photoPath);
+    formData.append("Icon", icon);
 
     Api.updateShootType(id, formData)
         .then(res => {
@@ -77,7 +84,7 @@ $('#formCreateShootType').submit((event) => {
     toggleGlobalLoader(1);
     const formData = new FormData($(formId)[0]);
 
-    Api.addPhotoShootType(newFormData)
+    Api.addPhotoShootType(formData)
         .then(res => {
 
             toggleGlobalLoader(0);
@@ -89,7 +96,10 @@ $('#formCreateShootType').submit((event) => {
                 showCancelButton: false,
                 confirmButtonText: 'Tamam'
             }, (isConfirm) => {
-                $(formId)[0].reset();
+                if (isConfirm) {
+                    $(formId)[0].reset();
+                    setTimeout("location.reload();", 500);
+                }
 
             });
 

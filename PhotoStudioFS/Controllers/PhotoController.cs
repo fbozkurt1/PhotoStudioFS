@@ -68,7 +68,7 @@ namespace PhotoStudioFS.Controllers
                 appSettings.Value.BucketName);
 
 
-            var response = await amazon.UploadFileAsync(photoView.File, photoView.CustomerId);
+            var response = await amazon.UploadFileAsync(file: photoView.File, subFolderName: photoView.CustomerId);
 
             if (response.Success)
             {

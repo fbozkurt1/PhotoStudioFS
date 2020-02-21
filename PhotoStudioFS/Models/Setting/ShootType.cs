@@ -18,6 +18,11 @@ namespace PhotoStudioFS.Models.Setting
         [MaxLength(2000), Display(Name = "Açıklama"), Required]
         public string Description { get; set; }
 
+        [MaxLength(1000), Required]
+        public string PhotoPath { get; set; }
+        [MaxLength(64), Required]
+        public string Icon { get; set; }
+
         [Required]
         public bool IsActive { get; set; } = true;
 
