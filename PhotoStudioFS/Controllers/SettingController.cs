@@ -79,10 +79,9 @@ namespace PhotoStudioFS.Controllers
                 }
                 catch (Exception)
                 {
-                    ModelState.AddModelError("NotShootType", "Bir Sorun oluştu, tekrar deneyiniz!");
                 }
             }
-            return View("ShootTypes", shootTypeView);
+            return BadRequest("Başarısız. Lütfen eksik alan bırakmayınız. Fotoğraf ve İkon seçilmesi gerek.");
 
         }
 
