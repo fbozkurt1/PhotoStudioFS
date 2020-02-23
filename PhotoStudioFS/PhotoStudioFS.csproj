@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="bundleconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="script-deneme.sql" />
   </ItemGroup>
 
@@ -30,10 +34,12 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\Common\Line-Awesome\" />
   </ItemGroup>
 
 
   <ItemGroup>
+    <None Include="bundleconfig.json" />
     <None Include="wwwroot\Admin\plugins\accordion-Wizard-Form\jquery.accordion-wizard.min.js" />
     <None Include="wwwroot\Admin\plugins\accordion1\js\easyResponsiveTabs.js" />
     <None Include="wwwroot\Admin\plugins\accordion1\js\jquery-1.6.3.min.js" />

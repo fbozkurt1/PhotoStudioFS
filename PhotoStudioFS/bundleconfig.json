@@ -1,0 +1,43 @@
+[
+  {
+    "outputFileName": "wwwroot/Client/css/bundle.css",
+    "inputFiles": [
+      "wwwroot/Client/css/animate.css",
+      "wwwroot/Client/css/bootstrap.css",
+      "wwwroot/Client/css/flexslider.css",
+      "wwwroot/Client/css/magnific-popup.css",
+      "wwwroot/Client/css/owl.carousel.min.css",
+      "wwwroot/Client/css/owl.theme.default.min.css",
+      "wwwroot/Admin/plugins/date-picker/spectrum.css",
+      "wwwroot/Admin/plugins/jquery-ui2/jquery-ui.css",
+      "wwwroot/Admin/plugins/sweet-alert/jquery.sweet-modal.min.css",
+      "wwwroot/Admin/plugins/sweet-alert/sweetalert.css",
+      "wwwroot/Common/Line-Awesome/line-awesome.min.css",
+      "wwwroot/Client/css/style.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Client/js/bundle.js",
+    "inputFiles": [
+      "wwwroot/Client/js/jquery.min.js",
+      "wwwroot/Client/js/jquery.easing.1.3.js",
+      "wwwroot/Client/js/bootstrap.min.js",
+      "wwwroot/Client/js/jquery.waypoints.min.js",
+      "wwwroot/Client/js/jquery.stellar.min.js",
+      "wwwroot/Client/js/owl.carousel.min.js",
+      "wwwroot/Client/js/jquery.magnific-popup.min.js",
+      "wwwroot/Client/js/magnific-popup-options.js",
+      "wwwroot/Admin/plugins/date-picker/spectrum.min.js",
+      "wwwroot/Admin/plugins/date-picker/jquery-ui.min.js",
+      "wwwroot/Admin/plugins/input-mask/jquery.maskedinput.min.js",
+      "wwwroot/Admin/plugins/sweet-alert/jquery.sweet-modal.min.js",
+      "wwwroot/Admin/plugins/sweet-alert/sweetalert.min.js",
+      "wwwroot/Admin/js/sweet-alert.min.js",
+      "wwwroot/Admin/plugins/masked-input/jquery.inputmask.min.js",
+      "wwwroot/Common/Axios/axios.min.js",
+      "wwwroot/Client/js/main.js",
+      "wwwroot/Client/Client.js",
+      "wwwroot/Common/common.js"
+    ]
+  }
+]
